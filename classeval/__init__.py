@@ -26,8 +26,21 @@ classeval is a python package that contains functionalities and plots for fast a
 
 Example
 -------
+>>> from sklearn.model_selection import train_test_split
+>>> from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
+>>> gb = GradientBoostingClassifier()
+>>>
 >>> import classeval as clf
->>> out = clf.summary(y_true, y_proba)
+>>>
+>>> X, y = clf.load_example('breast')
+>>> X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+>>>
+>>> model = gb.fit(X_train, y_train)
+>>> y_proba = model.predict_proba(X_test)
+>>> y_pred = model.predict(X_test)
+>>>
+>>> results = clf.summary(y_test, y_proba[:,1])
+>>> print(results['report'])
 
 
 References

@@ -13,7 +13,7 @@ import classeval.confmatrix as confmatrix
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 # module level doc-string
 __doc__ = """
@@ -23,6 +23,7 @@ classeval
 Description
 -----------
 classeval is a python package that contains functionalities and plots for fast and easy classifier evaluation.
+
 
 Example
 -------

@@ -2,10 +2,10 @@ from classeval.classeval import (
     summary,
     two_class,
     MCC,
-    AP_curve,
-    proba_curve,
-    ROC,
+    AP,
     CAP,
+    ROC,
+    proba_curve,
     load_example,
 )
 
@@ -27,8 +27,8 @@ classeval is a python package that contains functionalities and plots for fast a
 Example
 -------
 >>> import classeval as clf
->>> results = clf.eval(model)
->>> fig,ax = clf.plot(model)
+>>> out = clf.summary(y_true, y_proba)
+
 
 References
 ----------

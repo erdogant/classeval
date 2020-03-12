@@ -1,57 +1,58 @@
 # %%
-import classeval
-print(classeval.__version__)
+import classeval as clf
+print(clf.__version__)
 
 
 # %% Import example dataset
-X,y = classeval.load_example()
-X['y'] = y
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
+gb = GradientBoostingClassifier()
 
 
 # %%
-# !pip install df2onehot
-from sklearn.model_selection import train_test_split
-import df2onehot
+X, y = clf.load_example('breast')
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
-out = df2onehot.df2onehot(X)['numeric']
-out.dropna(inplace=True)
-y=out['y'].astype(float).values
-del out['y']
-[X_train, X_test, y_train, y_true]=train_test_split(out, y, test_size=0.2)
-
-
-# %% libraries
-from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
-gb = GradientBoostingClassifier()
+# %% Two-class
 
 # Prediction
 model = gb.fit(X_train, y_train)
 y_proba = model.predict_proba(X_test)
 y_pred = model.predict(X_test)
 
-results = classeval.summary(y_true, y_proba[:,1])
-
-out = classeval.confmatrix.eval(y_true, y_pred, normalize=True)
-out = classeval.confmatrix.eval(y_true, y_pred, normalize=False)
-classeval.confmatrix.plot(out)
-results_CAP = classeval.CAP(y_true, y_proba[:,1])
-
-
-# %%
-from sklearn import datasets
-from sklearn.datasets import make_classification
-from sklearn.multioutput import MultiOutputClassifier
-from sklearn.ensemble import RandomForestClassifier
-
-X, y_true = datasets.load_iris(return_X_y=True)
-model = RandomForestClassifier(random_state=1).fit(X, y_true)
-y_pred = model.predict(X)
-y_proba = model.predict_proba(X)
-
-out = classeval.confmatrix.eval(y_true, y_pred, normalize=True)
-out = classeval.confmatrix.eval(y_true, y_pred, normalize=False)
-classeval.confmatrix.plot(out)
-
-results = classeval.summary(y_true==0, y_proba[:,0])
+results = clf.summary(y_test, y_proba[:,1])
 print(results['report'])
 
+out = clf.confmatrix.eval(y_test, y_pred, normalize=True)
+clf.confmatrix.plot(out)
+out = clf.confmatrix.eval(y_test, y_pred, normalize=False)
+clf.confmatrix.plot(out)
+
+# CAP
+results_CAP = clf.CAP(y_test, y_proba[:,1])
+# MCC
+results_MCC = clf.MCC(y_test, y_proba[:,1])
+# MCC
+results_proba = clf.proba_curve(y_test, y_proba[:,1])
+
+
+# %% Multi-class
+X, y = clf.load_example('iris')
+
+y=y.astype(str)
+y[y=='0']='iris'
+y[y=='1']='bla'
+y[y=='2']='tulip'
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+model = gb.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+y_proba = model.predict_proba(X_test)
+
+out = clf.confmatrix.eval(y_test, y_pred, normalize=True)
+clf.confmatrix.plot(out)
+out = clf.confmatrix.eval(y_test, y_pred, normalize=False)
+clf.confmatrix.plot(out)
+
+print(results['report'])

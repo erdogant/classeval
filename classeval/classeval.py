@@ -7,7 +7,6 @@
 # Licence     : MIT
 # -----------------------------------------------------
 
-import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -49,8 +48,6 @@ def summary(y_true, y_proba, threshold=0.5, title='', showfig=True, verbose=3):
         print('[classeval] pandas DataFrame not allowed as input for y_proba. Use lists or numpy array-like')
     if isinstance(y_true, pd.DataFrame):
         print('[classeval] pandas DataFrame not allowed as input for y_true. Use lists or numpy array-like')
-    if len(np.unique(y_true))>2:
-        raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
 
     if showfig:
         [fig, ax] = plt.subplots(2,2,figsize=(28,16))
@@ -62,7 +59,7 @@ def summary(y_true, y_proba, threshold=0.5, title='', showfig=True, verbose=3):
     # Create classification report
     out = two_class(y_true, y_proba, threshold=threshold, verbose=verbose)
     # pr curve
-    AP_curve(y_true, y_proba, title=title, ax=ax[1][0], showfig=showfig)
+    AP(y_true, y_proba, title=title, ax=ax[1][0], showfig=showfig)
     # ROC plot
     _ = ROC(y_true, y_proba, threshold=threshold, title=title, ax=ax[0][0], showfig=showfig, verbose=0)
     # CAP plot
@@ -73,9 +70,9 @@ def summary(y_true, y_proba, threshold=0.5, title='', showfig=True, verbose=3):
     if showfig: plt.show()
 
     # Confusion matrix
-    out['confmatrix'] = confmatrix.eval(y_true, (y_proba>=threshold).astype(int), verbose=verbose)
+    out['confmat'] = confmatrix.eval(y_true, (y_proba>=threshold).astype(int), verbose=verbose)
     if showfig:
-        _ = confmatrix.plot(out['confmatrix'], title=title, cmap=plt.cm.Blues, figsize=(8,8))
+        _ = confmatrix.plot(out['confmat'], title=title, cmap=plt.cm.Blues, figsize=(8,8))
     # Return
     return(out)
 
@@ -100,6 +97,8 @@ def two_class(y_true, y_proba, threshold=0.5, verbose=3):
     dict containing results.
 
     """
+    if len(np.unique(y_true))>2:
+        raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
     # ROC curve
     [fpr, tpr, thresholds] = roc_curve(y_true, y_proba)
     # AUC
@@ -173,20 +172,20 @@ def MCC(y_true, y_proba, threshold=0.5, verbose=3):
 
 
 # %% Creating probabilty classification plot
-def AP_curve(y_true, y_proba, title='', ax=None, showfig=True):
+def AP(y_true, y_proba, title='', ax=None, showfig=True):
     """AP (Average Precision) method.
 
     Description
     -----------
     A better metric in an imbalanced situation is the AUC PR (Area Under the Curve Precision Recall), or also called AP (Average Precision).
     If the precision decreases when we increase the recall, it shows that we have to choose a prediction thresold adapted to our needs.
-    If our goal is to have a high recall, we should set a low prediction thresold that will allow us to detect most of the observations of the positive class, 
-    but with a low precision. On the contrary, if we want to be really confident about our predictions but don't mind about not finding all the positive observations, 
+    If our goal is to have a high recall, we should set a low prediction thresold that will allow us to detect most of the observations of the positive class,
+    but with a low precision. On the contrary, if we want to be really confident about our predictions but don't mind about not finding all the positive observations,
     we should set a high thresold that will get us a high precision and a low recall.
-    In order to know if our model performs better than another classifier, we can simply use the AP metric. To assess the quality of our model, 
+    In order to know if our model performs better than another classifier, we can simply use the AP metric. To assess the quality of our model,
     we can compare it to a simple decision baseline. Let's take a random classifier as a baseline here that would predict half of the time 1 and half of the time 0 for the label.
-    Such a classifier would have a precision of 4.3%, which corresponds to the proportion of positive observations. 
-    For every recall value the precision would stay the same, and this would lead us to an AP of 0.043. The AP of our model is approximately 0.35, which is more than 8 times higher than the AP of the random method. 
+    Such a classifier would have a precision of 4.3%, which corresponds to the proportion of positive observations.
+    For every recall value the precision would stay the same, and this would lead us to an AP of 0.043. The AP of our model is approximately 0.35, which is more than 8 times higher than the AP of the random method.
     This means that our model has a good predictive power.
 
     Parameters
@@ -232,9 +231,9 @@ def AP_curve(y_true, y_proba, title='', ax=None, showfig=True):
         ax.grid(True)
 
     out = {}
-    out['AP']=average_precision
-    out['precision']=precision
-    out['recall']=recall
+    out['AP'] = average_precision
+    out['precision'] = precision
+    out['recall'] = recall
     return(out)
 
 
@@ -291,7 +290,7 @@ def proba_curve(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True)
         ax.plot(tmpout['pred_class'].loc[Ifn], 'r.',label='False negative')
         # Styling
         ax.hlines(threshold, 0,len(Itrue), 'r', linestyles='dashed')
-        ax.set_ylim([0,1])
+        ax.set_ylim([-0.1, 1.1])
         ax.set_ylabel('P(class | X)')
         ax.set_xlabel('Samples')
         ax.grid(True)
@@ -299,10 +298,10 @@ def proba_curve(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True)
         plt.show()
 
     out = {}
-    out['TP']=np.where(Itp)[0]
-    out['TN']=np.where(Itn)[0]
-    out['FP']=np.where(Ifp)[0]
-    out['FN']=np.where(Ifn)[0]
+    out['TP'] = np.where(Itp)[0]
+    out['TN'] = np.where(Itn)[0]
+    out['FP'] = np.where(Ifp)[0]
+    out['FN'] = np.where(Ifn)[0]
 
     return(out)
 
@@ -422,36 +421,31 @@ def CAP(y_true, y_pred, label='Classifier', ax=None, showfig=True):
 
 
 # %% Import example dataset from github.
-def load_example(url='https://erdogant.github.io/datasets/titanic_train.zip', verbose=3):
-    """Import example dataset from github.
+def load_example(data='breast'):
+    """Import example dataset from sklearn.
 
     Parameters
     ----------
-    url : str, optional
-        url-Link to dataset. The default is 'https://erdogant.github.io/datasets/titanic_train.zip'.
-    verbose : int, optional
-        Print message to screen. The default is 3.
+    'breast' : str, two-class
+    'titanic': str, two-class
+    'iris' : str, multi-class
 
     Returns
     -------
     tuple containing dataset and response variable (X,y).
 
     """
-    import wget
-    curpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data')
-    PATH_TO_DATA = os.path.join(curpath, wget.filename_from_url(url))
+    try:
+        from sklearn import datasets
+    except:
+        print('This requires: <pip install sklearn>')
+        return None, None
+    
+    if data=='iris':
+        X, y = datasets.load_iris(return_X_y=True)
+    elif data=='breast':
+        X, y = datasets.load_breast_cancer(return_X_y=True)
+    elif data=='titanic':
+        X, y = datasets.fetch_openml("titanic", version=1, as_frame=True, return_X_y=True)
 
-    # Check file exists.
-    if not os.path.isfile(PATH_TO_DATA):
-        if verbose>=3: print('[classeval] Downloading example dataset..')
-        wget.download(url, curpath)
-
-    # Import local dataset
-    if verbose>=3: print('[classeval] Import dataset..')
-    df = pd.read_csv(PATH_TO_DATA)
-
-    # Get data
-    # y = df['Survived'].values
-    # X = df.drop(labels=['Survived'], axis=1)
-    # Return
-    return df
+    return X, y

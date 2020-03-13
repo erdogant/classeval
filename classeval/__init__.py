@@ -1,15 +1,11 @@
 from classeval.classeval import (
-    summary,
-    two_class,
-    MCC,
-    AP,
-    CAP,
-    ROC,
-    proba_curve,
+    eval,
+    plot,
     load_example,
 )
 
 import classeval.confmatrix as confmatrix
+import classeval.ROC as ROC
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
@@ -40,7 +36,7 @@ Example
 >>> y_proba = model.predict_proba(X_test)
 >>> y_pred = model.predict(X_test)
 >>>
->>> results = clf.summary(y_test, y_proba[:,1])
+>>> results = clf.eval(y_test, y_proba[:,1])
 >>> print(results['report'])
 
 
@@ -49,6 +45,8 @@ References
 * https://github.com/erdogant/classeval
 * https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter
 * http://arogozhnikov.github.io/2015/10/05/roc-curve.html
+* https://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html#sphx-glr-auto-examples-model-selection-plot-roc-py
+* https://medium.com/apprentice-journal/evaluating-multi-class-classifiers-12b2946e755b
 
 
 """

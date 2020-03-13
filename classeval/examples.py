@@ -1,5 +1,6 @@
 # %%
 import classeval as clf
+print(dir(clf))
 print(clf.__version__)
 
 
@@ -8,49 +9,88 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 gb = GradientBoostingClassifier()
 
-
 # %% Two-class
 X, y = clf.load_example('breast')
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
 
 # Prediction
 model = gb.fit(X_train, y_train)
-y_proba = model.predict_proba(X_test)
+y_proba = model.predict_proba(X_test)[:,1]
 y_pred = model.predict(X_test)
 
-results = clf.summary(y_test, y_proba[:,1])
-print(results['report'])
+# ROC evaluation
+out_ROC = clf.ROC.eval(y_true, y_proba, pos_label='malignant')
+ax = clf.ROC.plot(out_ROC, title='Breast dataset')
+# Its also OK to set the y_true as bool.
+out_ROC = clf.ROC.eval(y_true=='malignant', y_proba)
+ax = clf.ROC.plot(out_ROC, title='Breast dataset')
 
-out = clf.confmatrix.eval(y_test, y_pred, normalize=True)
-clf.confmatrix.plot(out)
-out = clf.confmatrix.eval(y_test, y_pred, normalize=False)
-clf.confmatrix.plot(out)
+# Confmatrix evaluation
+out_CONFMAT = clf.confmatrix.eval(y_true, y_pred, normalize=True)
+clf.confmatrix.plot(out_CONFMAT, fontsize=18)
+out_CONFMAT = clf.confmatrix.eval(y_true, y_pred, normalize=False)
+clf.confmatrix.plot(out_CONFMAT)
 
-# CAP
-results_CAP = clf.CAP(y_test, y_proba[:,1])
-# MCC
-results_MCC = clf.MCC(y_test, y_proba[:,1])
-# MCC
-results_proba = clf.proba_curve(y_test, y_proba[:,1])
+# Total evaluation
+out = clf.eval(y_true, y_proba, pos_label='malignant')
+out = clf.eval(y_true=='malignant', y_proba)
+ax = clf.plot(out, figsize=(20,15), fontsize=14)
+
+# Some results
+print(out['report'])
 
 
 # %% Multi-class
-X, y = clf.load_example('iris')
-
-y=y.astype(str)
-y[y=='0']='iris'
-y[y=='1']='bla'
-y[y=='2']='tulip'
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X,y = clf.load_example('iris')
+X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.5)
 
 model = gb.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 y_proba = model.predict_proba(X_test)
+y_score = model.decision_function(X_test)
 
-out = clf.confmatrix.eval(y_test, y_pred, normalize=True)
-clf.confmatrix.plot(out)
-out = clf.confmatrix.eval(y_test, y_pred, normalize=False)
-clf.confmatrix.plot(out)
+# ROC evaluation
+out_ROC = clf.ROC.eval(y_true, y_proba, y_score)
+ax = clf.ROC.plot(out_ROC, title='Iris dataset')
 
-print(results['report'])
+# Confmatrix evaluation
+out_CONFMAT = clf.confmatrix.eval(y_true, y_pred, normalize=True)
+ax = clf.confmatrix.plot(out_CONFMAT)
+out_CONFMAT = clf.confmatrix.eval(y_true, y_pred, normalize=False)
+ax = clf.confmatrix.plot(out_CONFMAT)
+
+out = clf.eval(y_true, y_proba, y_score, y_pred)
+ax = clf.plot(out)
+
+
+# from yellowbrick.classifier import ClassPredictionError
+# visualizer = ClassPredictionError(model, classes=np.unique(y_true))
+# visualizer.fit(X_train, y_train)  # Fit the visualizer and the model
+# visualizer.score(X_test, y_true)  # Evaluate the model on the test data 
+# visualizer.poof()
+
+# from yellowbrick.classifier import ClassificationReport
+# visualizer = ClassificationReport(model, classes=np.unique(y_true), support=True)
+# visualizer.fit(X_train, y_train)  # Fit the visualizer and the model
+# visualizer.score(X_test, y_true)  # Evaluate the model on the test data
+# visualizer.poof()
+ 
+# from yellowbrick.classifier import ConfusionMatrix
+# visualizer = ConfusionMatrix(model, classes=np.unique(y_true), percent=True)
+# visualizer.fit(X_train, y_train)  # Fit the visualizer and the model
+# visualizer.score(X_test, y_true)  # Evaluate the model on the test data 
+# visualizer.poof()
+
+# %% Multiclass
+from sklearn import datasets
+X, y = clf.load_example('iris')
+
+X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
+model = gb.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+y_proba = model.predict_proba(X_test)
+y_score = model.decision_function(X_test)
+
+clf.ROC(y_pred, y_proba, y_score, showfig=True)
+
+

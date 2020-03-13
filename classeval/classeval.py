@@ -10,18 +10,52 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.metrics import roc_curve, auc
 from sklearn.metrics import f1_score
 from sklearn.metrics import classification_report
 from sklearn.metrics import cohen_kappa_score
 from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import average_precision_score, precision_recall_curve
+from sklearn.metrics import roc_auc_score
 from funcsigs import signature
 import classeval.confmatrix as confmatrix
+import classeval.ROC as ROC
 
 
 # %% Main function for all two class results.
-def summary(y_true, y_proba, threshold=0.5, title='', showfig=True, verbose=3):
+def plot(out, title='', fontsize=12, figsize=(20,15)):
+
+    y_true = out['y_true']
+    y_proba = out['y_proba']
+    threshold = out['threshold']
+
+    if len(out['class_names'])==2:
+        # Setup figure
+        [fig, ax] = plt.subplots(2,2, figsize=figsize)
+        # pr curve
+        AP(y_true, y_proba, fontsize=fontsize, title=title, ax=ax[1][0], showfig=True)
+        # ROC plot
+        _ = ROC.plot(out, fontsize=fontsize, title=title, ax=ax[0][0], verbose=0)
+        # CAP plot
+        _ = CAP(y_true, y_proba, fontsize=fontsize, ax=ax[0][1], showfig=True)
+        # Probability plot
+        _ = TPFP(y_true, y_proba, fontsize=fontsize, threshold=threshold, title=title, ax=ax[1][1], showfig=True)
+        # Show plot
+        plt.show()
+        # Confusion matrix
+        _ = confmatrix.plot(out['confmat'], title=title, cmap=plt.cm.Blues)
+    elif len(out['class_names'])>2:
+        # Setup figure
+        # [fig, ax] = plt.subplots(2,1,figsize=figsize)
+        ax = None
+        _ = ROC.plot(out['ROCAUC'], fontsize=fontsize)
+        _ = confmatrix.plot(out['confmat'])
+        _ = _stackedbar_multiclass(out['y_true'], out['y_pred'], showfig=True, fontsize=fontsize)
+
+    return ax
+
+
+# %% Main function for all two class results.
+def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0.5, verbose=3):
     """Evaluate and make plots for two-class models.
 
     Parameters
@@ -48,37 +82,62 @@ def summary(y_true, y_proba, threshold=0.5, title='', showfig=True, verbose=3):
         print('[classeval] pandas DataFrame not allowed as input for y_proba. Use lists or numpy array-like')
     if isinstance(y_true, pd.DataFrame):
         print('[classeval] pandas DataFrame not allowed as input for y_true. Use lists or numpy array-like')
-
-    if showfig:
-        [fig, ax] = plt.subplots(2,2,figsize=(28,16))
-    else:
-        ax = {}
-        ax[0] = [None,None]
-        ax[1] = [None,None]
+    if pos_label is not None:
+        if not np.any(y_true==pos_label):
+            raise Exception(['[classeval] pos_label is not found in y_true!'])
 
     # Create classification report
-    out = two_class(y_true, y_proba, threshold=threshold, verbose=verbose)
-    # pr curve
-    AP(y_true, y_proba, title=title, ax=ax[1][0], showfig=showfig)
-    # ROC plot
-    _ = ROC(y_true, y_proba, threshold=threshold, title=title, ax=ax[0][0], showfig=showfig, verbose=0)
-    # CAP plot
-    out['CAP'] = CAP(y_true, y_proba, ax=ax[0][1], showfig=showfig)
-    # Probability plot
-    out['TPFP'] = proba_curve(y_true, y_proba, threshold=threshold, title=title, ax=ax[1][1], showfig=showfig)
-    # Show plot
-    if showfig: plt.show()
+    class_names = np.unique(y_true)
+    if len(class_names)==2:
+        out = eval_twoclass(y_true, y_proba, threshold=threshold, pos_label=pos_label, verbose=verbose)
+    elif len(class_names)>2:
+        out = eval_multiclass(y_true, y_proba, y_score, y_pred, threshold=threshold, verbose=verbose)
+    else:
+        out=None
 
-    # Confusion matrix
-    out['confmat'] = confmatrix.eval(y_true, (y_proba>=threshold).astype(int), verbose=verbose)
-    if showfig:
-        _ = confmatrix.plot(out['confmat'], title=title, cmap=plt.cm.Blues, figsize=(8,8))
     # Return
     return(out)
 
 
 # %% Two class results
-def two_class(y_true, y_proba, threshold=0.5, verbose=3):
+def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False, verbose=3):
+    uiy = np.unique(y_true)
+    df = pd.DataFrame(data=np.zeros((3,3)), index=uiy, columns=uiy)
+    for i, y in enumerate(uiy):
+        I = y_true==y
+        labels, n = np.unique(y_pred[I], return_counts=True)
+        df[y].loc[labels]=n
+
+    if showfig:
+        df.plot(kind='bar', stacked=True)
+        plt.ylabel('Number of predicted classes', fontsize=fontsize)
+        plt.xlabel('True class', fontsize=12)
+        plt.title('Class prediction', fontsize=12)
+    
+    return(df)
+
+
+# %% Two class results
+def eval_multiclass(y_true, y_proba, y_score, y_pred, threshold=0.5, normalize=False, verbose=3):
+    roc_scores = ROC.eval(y_true, y_proba, y_score, verbose=verbose)
+    stackbar = _stackedbar_multiclass(y_true, y_pred, showfig=False, verbose=verbose)
+    confmat = confmatrix.eval(y_true, y_pred, normalize=normalize)
+
+    out = {}
+    out['y_true'] = y_true
+    out['y_pred'] = y_pred
+    out['y_proba'] = y_proba
+    out['threshold'] = threshold
+    out['class_names'] = np.unique(y_true)
+    out['ROCAUC'] = roc_scores
+    out['stackbar'] = stackbar
+    out['confmat'] = confmat
+
+    return(out)
+
+
+# %% Two class results
+def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=False, verbose=3):
     """Evaluate for two-class model.
 
     Parameters
@@ -87,8 +146,12 @@ def two_class(y_true, y_proba, threshold=0.5, verbose=3):
         True labels of the classes.
     y_proba : array of floats
         Probabilities of the predicted labels.
+    pos_label : str
+        Positive label (only for the two-class models and when y_ture is of type string. If you set bool, then the positive label is True)
     threshold : float [0-1], optional
         Cut-off point to define the class label. The default is 0.5 in a two-class model.
+    normalize : bool, optional
+        Normalize the values in the confusion matrix. The default is False.
     verbose : int, optional
         print message to screen. The default is 3.
 
@@ -97,41 +160,66 @@ def two_class(y_true, y_proba, threshold=0.5, verbose=3):
     dict containing results.
 
     """
-    if len(np.unique(y_true))>2:
+    class_names = np.unique(y_true)
+    if len(class_names)>2:
         raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
-    # ROC curve
-    [fpr, tpr, thresholds] = roc_curve(y_true, y_proba)
-    # AUC
-    roc_auc = auc(fpr, tpr)
-    if verbose>=3: print('[classeval] AUC: %.2f' %(roc_auc))
+    if (pos_label is None) and (y_true.dtype=='O'):
+        raise Exception('[classeval] CAP should have [pos_label] or [y_true] being bool.')
+    if (pos_label is not None) and (y_true.dtype=='O'):
+        y_label = y_true
+        y_true = y_label==pos_label
+
+    # y_label = y_true
+    # y_true = y_label==pos_label
+
+    # ROC plot
+    ROC_scores = ROC.eval(y_true, y_proba, threshold=threshold, verbose=verbose)
+    if verbose>=3: print('[classeval] AUC: %.2f' %(ROC_scores['auc']))
     # F1 score
     f1score = f1_score(y_true, y_proba>=threshold)
     if verbose>=3: print('[classeval] F1: %.2f' %(f1score))
     # Classification report
     clreport = classification_report(y_true, (y_proba>=threshold).astype(int))
     # Kappa score
-    kappscore = cohen_kappa_score(y_true, y_proba>=threshold)
-    if verbose>=3: print('[classeval] Kappa: %.2f' %(kappscore))
-    # Average precision score
-    average_precision = average_precision_score(y_true, y_proba)
+    kappa_score = cohen_kappa_score(y_true, y_proba>=threshold)
+    if verbose>=3: print('[classeval] Kappa: %.2f' %(kappa_score))
     # Recall
     [precision, recall, _] = precision_recall_curve(y_true, y_proba)
     # MCC (Matthews Correlation Coefficient)
     outMCC = MCC(y_true, y_proba, threshold=threshold)
+    if verbose>=3: print('[classeval] MCC score: %.2f' %(outMCC))
+    # Average precision score
+    average_precision = AP(y_true, y_proba, showfig=False)['AP']
+    if verbose>=3: print('[classeval] Average precision (AP): %.2f' %(average_precision))
+    # CAP plot
+    CAP_score = CAP(y_true, y_proba, showfig=False)
+    if verbose>=3: print('[classeval] CAP: %.0f' %(CAP_score))
+    # Probability plot
+    TPFP_scores = TPFP(y_true, y_proba, threshold=threshold, showfig=False)
+    # Confusion matrix
+    confmat = confmatrix.eval(y_true, (y_proba>=threshold).astype(int), normalize=normalize, verbose=verbose)
 
     # Store and return
     out = {}
-    out['auc'] = roc_auc
+    out['class_names'] = class_names
+    out['y_true'] = y_true
+    out['y_pred'] = (y_proba>=threshold)
+    out['y_proba'] = y_proba
+    out['auc'] = ROC_scores['auc']
     out['f1'] = f1score
-    out['kappa'] = kappscore
+    out['kappa'] = kappa_score
     out['report'] = clreport
-    out['thresholds'] = thresholds
-    out['fpr'] = fpr
-    out['tpr'] = tpr
+    out['thresholds'] = ROC_scores['thresholds']
+    out['fpr'] = ROC_scores['fpr']
+    out['tpr'] = ROC_scores['tpr']
     out['average_precision'] = average_precision
     out['precision'] = precision
     out['recall'] = recall
     out['MCC'] = outMCC
+    out['CAP'] = CAP_score
+    out['TPFP'] = TPFP_scores
+    out['confmat'] = confmat
+    out['threshold'] = threshold
 
     return(out)
 
@@ -172,7 +260,7 @@ def MCC(y_true, y_proba, threshold=0.5, verbose=3):
 
 
 # %% Creating probabilty classification plot
-def AP(y_true, y_proba, title='', ax=None, showfig=True):
+def AP(y_true, y_proba, title='', ax=None, figsize=(12,8), fontsize=12, showfig=False):
     """AP (Average Precision) method.
 
     Description
@@ -219,15 +307,15 @@ def AP(y_true, y_proba, title='', ax=None, showfig=True):
     # Plot figure
     if showfig:
         if isinstance(ax,type(None)):
-            [fig,ax]= plt.subplots(figsize=(15,8))
+            [fig,ax]= plt.subplots(figsize=figsize)
 
         ax.step(recall, precision, color='b', alpha=0.2, where='post')
         ax.fill_between(recall, precision, alpha=0.2, color='b', **step_kwargs)
-        ax.set_xlabel('Recall')
-        ax.set_ylabel('Precision')
         ax.set_ylim([0.0, 1.05])
         ax.set_xlim([0.0, 1.0])
-        ax.set_title('2-class Precision-Recall curve: AP={0:0.2f}'.format(average_precision))
+        ax.set_xlabel('Recall', fontsize=fontsize)
+        ax.set_ylabel('Precision', fontsize=fontsize)
+        ax.set_title('2-class Precision-Recall curve: AP={0:0.2f}'.format(average_precision), fontsize=fontsize)
         ax.grid(True)
 
     out = {}
@@ -238,7 +326,7 @@ def AP(y_true, y_proba, title='', ax=None, showfig=True):
 
 
 # %% Creating probabilty classification plot
-def proba_curve(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True):
+def TPFP(y_true, y_proba, threshold=0.5, fontsize=12, title='', ax=None, figsize=(12,8), showfig=False):
     """Plot the probabilties for both classes in a ordered manner.
 
     Parameters
@@ -279,7 +367,7 @@ def proba_curve(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True)
 
     # Plot figure
     if showfig:
-        if isinstance(ax,type(None)): [fig,ax]= plt.subplots(figsize=(20,8))
+        if isinstance(ax,type(None)): [fig,ax]= plt.subplots(figsize=figsize)
         # True Positive class
         ax.plot(tmpout['pred_class'].loc[Itp], 'g.',label='True Positive')
         # True negative class
@@ -291,10 +379,10 @@ def proba_curve(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True)
         # Styling
         ax.hlines(threshold, 0,len(Itrue), 'r', linestyles='dashed')
         ax.set_ylim([-0.1, 1.1])
-        ax.set_ylabel('P(class | X)')
-        ax.set_xlabel('Samples')
+        ax.set_ylabel('P(class | X)', fontsize=fontsize)
+        ax.set_xlabel('Samples', fontsize=fontsize)
+        ax.legend(fontsize=fontsize)
         ax.grid(True)
-        ax.legend()
         plt.show()
 
     out = {}
@@ -306,9 +394,15 @@ def proba_curve(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True)
     return(out)
 
 
-# %% ROC plot
-def ROC(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True, verbose=3):
-    """Receiver operator Curve.
+# %% AUC multi-class
+def AUC_multiclass(y_true, y_proba, verbose=3):
+    """AUC scoring for multiclass predictions.
+    
+    Description
+    -----------
+    Calculate the AUC using the One-vs-Rest scheme (OvR) and One-vs-One scheme (OvO) schemes.
+    The multi-class One-vs-One scheme compares every unique pairwise combination of classes.
+    Macro average, and a prevalence-weighted average.
 
     Parameters
     ----------
@@ -316,14 +410,6 @@ def ROC(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True, verbose
         True labels of the classes.
     y_proba : array of floats
         Probabilities of the predicted labels.
-    threshold : float [0-1], optional
-        Cut-off point to define the class label. The default is 0.5 in a two-class model.
-    title : str, optional
-        Title of the figure. The default is ''.
-    ax : figure object, optional
-        Figure axis. The default is None.
-    showfig : bool, optional
-        Show the figure. The default is True.
     verbose : int, optional
         print message to screen. The default is 3.
 
@@ -332,30 +418,25 @@ def ROC(y_true, y_proba, threshold=0.5, title='', ax=None, showfig=True, verbose
     dict containing results.
 
     """
-    # Create classification report
-    out=two_class(y_true, y_proba, threshold=threshold, verbose=verbose)
-
-    # Plot figure
-    if showfig:
-        if isinstance(ax,type(None)):
-            [fig,ax]= plt.subplots(figsize=(12,8))
-
-        lw = 2
-        ax.plot(out['fpr'], out['tpr'], color='darkorange', lw=lw, label='ROC curve (area = %0.2f)' % out['auc'])
-        ax.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
-        ax.set_xlim([0.0, 1.0])
-        ax.set_ylim([0.0, 1.05])
-        ax.set_xlabel('False Positive Rate')
-        ax.set_ylabel('True Positive Rate')
-        ax.set_title('[%s] Receiver operating characteristic. F1:%.3f, Kappa:%.3f' %(title, out['f1'], out['kappa']))
-        ax.legend(loc="lower right")
-        ax.grid(True)
-
+    
+    macro_roc_auc_ovo = roc_auc_score(y_true, y_proba, multi_class="ovo", average="macro")
+    weighted_roc_auc_ovo = roc_auc_score(y_true, y_proba, multi_class="ovo", average="weighted")
+    macro_roc_auc_ovr = roc_auc_score(y_true, y_proba, multi_class="ovr", average="macro")
+    weighted_roc_auc_ovr = roc_auc_score(y_true, y_proba, multi_class="ovr", average="weighted")
+    if verbose>=3:
+        print("One-vs-One ROC AUC scores:\n{:.6f} (macro),\n{:.6f} " "(weighted by prevalence)" .format(macro_roc_auc_ovo, weighted_roc_auc_ovo))
+        print("One-vs-Rest ROC AUC scores:\n{:.6f} (macro),\n{:.6f} " "(weighted by prevalence)" .format(macro_roc_auc_ovr, weighted_roc_auc_ovr))
+    
+    out = {}
+    out['macro_roc_auc_ovo'] = macro_roc_auc_ovo
+    out['weighted_roc_auc_ovo'] = weighted_roc_auc_ovo
+    out['macro_roc_auc_ovr'] = macro_roc_auc_ovr
+    out['weighted_roc_auc_ovr'] = weighted_roc_auc_ovr
     return(out)
 
-
+    
 # %% CAP
-def CAP(y_true, y_pred, label='Classifier', ax=None, showfig=True):
+def CAP(y_true, y_pred, pos_label=None, label='Classifier', ax=None, figsize=(12,8), fontsize=12, showfig=False):
     """Compute Cumulitive Accuracy Profile (CAP) to measure the performance in a two class classifier.
 
     Description
@@ -364,6 +445,8 @@ def CAP(y_true, y_pred, label='Classifier', ax=None, showfig=True):
     This function computes Cumulitive Accuracy Profile (CAP) to measure the performance of a classifier.
     It ranks the predicted class probabilities (high to low), together with the true values.
     With that, it computes the cumsum which is the final line.
+    A perfect model is one which will detect all class 1.0 data points in the same number of tries as there are class 1.0 data points.
+
 
     Parameters
     ----------
@@ -375,6 +458,8 @@ def CAP(y_true, y_pred, label='Classifier', ax=None, showfig=True):
         Label. The default is 'Classifier'.
     ax : figure object, optional
         provide an existing axis to make the plot. The default is None.
+    fontsize : int, optional
+        Fontsize in the figures. The default is 12.
     showfig : bool, optional
         Show figure. The default is True.
 
@@ -383,41 +468,39 @@ def CAP(y_true, y_pred, label='Classifier', ax=None, showfig=True):
     float : CAP score.
 
     """
-    config = dict()
-    config['label']=label
-    fontsize=14
+    # if (pos_label is None) and (y_true.dtype=='O'):
+    #     raise Exception('[classeval] CAP should have [pos_label] or [y_true] being bool.')
+    # if (pos_label is not None) and (y_true.dtype=='O'):
+    #     y_label = y_true
+    #     y_true = y_label==pos_label
 
     total = len(y_true)
-    class_1_count = np.sum(y_true)
-
-    if showfig:
-        if ax is None: fig,ax = plt.subplots(figsize=(20, 12))
-        ax.plot([0, total], [0, class_1_count], c='navy', linestyle='--', label='Random Model')
-        ax.set_xlabel('Total observations', fontsize=fontsize)
-        ax.set_ylabel('Class observations', fontsize=fontsize)
-        ax.set_title('Cumulitive Accuracy Profile (CAP)', fontsize=fontsize)
-        ax.grid(True)
-
-        # A perfect model is one which will detect all class 1.0 data points in the same number of tries as there are class 1.0 data points.
-        # It takes exactly 58 tries for the perfect model to identify 58 class 1.0 data points.
-        ax.plot([0, class_1_count, total], [0, class_1_count, class_1_count], c='grey', linewidth=1, label='Perfect Model')
-
     # Probs and y_test are zipped together.
     # Sort this zip in the reverse order of probabilities such that the maximum probability comes first and then lower probabilities follow.
     # I extract only the y_test values in an array and store it in model_y.
     prob_and_true = sorted(zip(y_pred, y_true), reverse=True)
     model_y = [y for _, y in prob_and_true]
-
     # creates an array of values while cumulatively adding all previous values in the array to the present value.
     y_values = np.append([0], np.cumsum(model_y))
     x_values = np.arange(0, total + 1)
+    CAP_score = max(y_values)
 
-    # Plot accuracy
     if showfig:
-        ax.plot(x_values, y_values, c='darkorange', label=config['label'], linewidth=2)
+        # Setup figure
+        if ax is None: fig,ax = plt.subplots(figsize=figsize)
+        class_1_count = np.sum(y_true)
+        ax.plot([0, total], [0, class_1_count], c='navy', linestyle='--', label='Random Model')
+        ax.plot([0, class_1_count, total], [0, class_1_count, class_1_count], c='grey', linewidth=1, label='Perfect Model')
+        # Plot accuracy
+        ax.plot(x_values, y_values, c='darkorange', label=label, linewidth=2)
+        # Set legends
         ax.legend(loc='lower right', fontsize=fontsize)
+        ax.set_xlabel('Total observations', fontsize=fontsize)
+        ax.set_ylabel('Class observations', fontsize=fontsize)
+        ax.set_title(('Cumulitive Accuracy Profile (CAP), score: %s' %(CAP_score)), fontsize=fontsize)
+        ax.grid(True)
 
-    return(max(y_values))
+    return(CAP_score)
 
 
 # %% Import example dataset from github.
@@ -440,12 +523,19 @@ def load_example(data='breast'):
     except:
         print('This requires: <pip install sklearn>')
         return None, None
-    
+
     if data=='iris':
-        X, y = datasets.load_iris(return_X_y=True)
+        iris = datasets.load_iris()
+        X = pd.DataFrame(index=iris['target_names'][iris['target']], data=iris['data'], columns=iris['feature_names'])
+        y = X.index.values
     elif data=='breast':
-        X, y = datasets.load_breast_cancer(return_X_y=True)
+        breast = datasets.load_breast_cancer()
+        X = pd.DataFrame(index=breast['target_names'][breast['target']], data=breast['data'], columns=breast['feature_names'])
+        y = X.index.values
     elif data=='titanic':
         X, y = datasets.fetch_openml("titanic", version=1, as_frame=True, return_X_y=True)
-
+        y=y.astype(str)
+        y[y=='1']='survived'
+        y[y=='0']='dead'
+        X.index = y
     return X, y

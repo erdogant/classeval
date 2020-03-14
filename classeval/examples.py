@@ -64,34 +64,4 @@ out = clf.eval(y_true, y_proba, y_score, y_pred)
 ax = clf.plot(out)
 
 
-# from yellowbrick.classifier import ClassPredictionError
-# visualizer = ClassPredictionError(model, classes=np.unique(y_true))
-# visualizer.fit(X_train, y_train)  # Fit the visualizer and the model
-# visualizer.score(X_test, y_true)  # Evaluate the model on the test data 
-# visualizer.poof()
-
-# from yellowbrick.classifier import ClassificationReport
-# visualizer = ClassificationReport(model, classes=np.unique(y_true), support=True)
-# visualizer.fit(X_train, y_train)  # Fit the visualizer and the model
-# visualizer.score(X_test, y_true)  # Evaluate the model on the test data
-# visualizer.poof()
- 
-# from yellowbrick.classifier import ConfusionMatrix
-# visualizer = ConfusionMatrix(model, classes=np.unique(y_true), percent=True)
-# visualizer.fit(X_train, y_train)  # Fit the visualizer and the model
-# visualizer.score(X_test, y_true)  # Evaluate the model on the test data 
-# visualizer.poof()
-
-# %% Multiclass
-from sklearn import datasets
-X, y = clf.load_example('iris')
-
-X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
-model = gb.fit(X_train, y_train)
-y_pred = model.predict(X_test)
-y_proba = model.predict_proba(X_test)
-y_score = model.decision_function(X_test)
-
-clf.ROC(y_pred, y_proba, y_score, showfig=True)
-
-
+# %% Fin

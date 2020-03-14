@@ -110,9 +110,9 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
     # Create classification report
     class_names = np.unique(y_true)
     if len(class_names)==2:
-        out = eval_twoclass(y_true, y_proba, threshold=threshold, pos_label=pos_label, verbose=verbose)
+        out = eval_twoclass(y_true, y_proba, threshold=threshold, pos_label=pos_label, normalize=normalize, verbose=verbose)
     elif len(class_names)>2:
-        out = eval_multiclass(y_true, y_proba, y_score, y_pred, threshold=threshold, verbose=verbose)
+        out = eval_multiclass(y_true, y_proba, y_score, y_pred, normalize=normalize, verbose=verbose)
     else:
         out=None
 
@@ -121,25 +121,7 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
 
 
 # %% Two class results
-def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False, verbose=3):
-    uiy = np.unique(y_true)
-    df = pd.DataFrame(data=np.zeros((3,3)), index=uiy, columns=uiy)
-    for i, y in enumerate(uiy):
-        I = y_true==y
-        labels, n = np.unique(y_pred[I], return_counts=True)
-        df[y].loc[labels]=n
-
-    if showfig:
-        df.plot(kind='bar', stacked=True)
-        plt.ylabel('Number of predicted classes', fontsize=fontsize)
-        plt.xlabel('True class', fontsize=12)
-        plt.title('Class prediction', fontsize=12)
-
-    return(df)
-
-
-# %% Two class results
-def eval_multiclass(y_true, y_proba, y_score, y_pred, threshold=0.5, normalize=False, verbose=3):
+def eval_multiclass(y_true, y_proba, y_score, y_pred, normalize=False, verbose=3):
     """Evaluate for multi-class model.
 
     Parameters
@@ -152,8 +134,6 @@ def eval_multiclass(y_true, y_proba, y_score, y_pred, threshold=0.5, normalize=F
         decision_function for the predicted labels. (only required in case of multi-class)
     y_pred : array-like
         Predicted labels from model.
-    threshold : float [0-1], optional
-        Cut-off point to define the class label. The default is 0.5 in a two-class model.
     normalize : bool, optional
         Normalize the values in the confusion matrix. The default is False.
     verbose : int, optional
@@ -172,7 +152,6 @@ def eval_multiclass(y_true, y_proba, y_score, y_pred, threshold=0.5, normalize=F
     out['y_true'] = y_true
     out['y_pred'] = y_pred
     out['y_proba'] = y_proba
-    out['threshold'] = threshold
     out['class_names'] = np.unique(y_true)
     out['ROCAUC'] = roc_scores
     out['stackbar'] = stackbar
@@ -205,18 +184,17 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
     dict containing results.
 
     """
-    class_names = np.unique(y_true)
     y_label = y_true.astype(str)
     y_pred = y_proba>=threshold
 
-    if len(class_names)>2:
+    if len(np.unique(y_true))>2:
         raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
     if (pos_label is None) and (y_true.dtype!='bool'):
         raise Exception('[classeval] CAP should have input argument <pos_label> or <y_true> being of type bool.')
     if (pos_label is not None) and (y_true.dtype!='bool'):
         # If y_true is strings, convert to bool based on positive label
         y_true = y_label==pos_label
-        neg_label = np.setdiff1d(class_names,pos_label)[0]
+        neg_label = np.setdiff1d(np.unique(y_label),pos_label)[0]
         # Determine y_pred
         y_pred_label = np.repeat('',len(y_true)).astype(y_label.dtype)
         I = y_proba>=threshold
@@ -226,6 +204,11 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
         pos_label=True
         neg_label=False
         y_pred_label = y_pred.astype(str)
+
+    # In sklearn, the output of the proba function has 2 columns.
+    # The first column is the probability that the entry has the -1 label
+    # The second column is the probability that the entry has the +1 label
+    class_names = [neg_label, pos_label]
 
     # ROC plot
     ROC_scores = ROC.eval(y_true, y_proba, threshold=threshold, verbose=verbose)
@@ -596,3 +579,20 @@ def load_example(data='breast'):
         y[y=='0']='dead'
         X.index = y
     return X, y
+
+# %% Two class results
+def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False, verbose=3):
+    uiy = np.unique(y_true)
+    df = pd.DataFrame(data=np.zeros((3,3)), index=uiy, columns=uiy)
+    for i, y in enumerate(uiy):
+        I = y_true==y
+        labels, n = np.unique(y_pred[I], return_counts=True)
+        df[y].loc[labels]=n
+
+    if showfig:
+        df.plot(kind='bar', stacked=True)
+        plt.ylabel('Number of predicted classes', fontsize=fontsize)
+        plt.xlabel('True class', fontsize=12)
+        plt.title('Class prediction', fontsize=12)
+
+    return(df)

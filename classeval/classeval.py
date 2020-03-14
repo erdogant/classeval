@@ -43,7 +43,7 @@ def plot(out, title='', fontsize=12, figsize=(20,15)):
     """
     y_true = out['y_true']
     y_proba = out['y_proba']
-    threshold = out['threshold']
+    threshold = out.get('threshold', None)
 
     if len(out['class_names'])==2:
         # Setup figure
@@ -60,6 +60,11 @@ def plot(out, title='', fontsize=12, figsize=(20,15)):
         plt.show()
         # Confusion matrix
         _ = confmatrix.plot(out['confmat'], title=title, cmap=plt.cm.Blues)
+        # Stacked bar
+        class_names = {True:str(out['pos_label']), False:str(out['neg_label'])}
+        y_true_str = np.array(list(map(lambda x: class_names.get(x), y_true)))
+        y_pred_str = np.array(list(map(lambda x: class_names.get(x), out['y_pred'])))
+        _ = _stackedbar_multiclass(y_true_str, y_pred_str, showfig=True, fontsize=fontsize)
     elif len(out['class_names'])>2:
         # Setup figure
         # [fig, ax] = plt.subplots(2,1,figsize=figsize)
@@ -583,7 +588,7 @@ def load_example(data='breast'):
 # %% Two class results
 def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False, verbose=3):
     uiy = np.unique(y_true)
-    df = pd.DataFrame(data=np.zeros((3,3)), index=uiy, columns=uiy)
+    df = pd.DataFrame(data=np.zeros((len(uiy),len(uiy))), index=uiy, columns=uiy)
     for i, y in enumerate(uiy):
         I = y_true==y
         labels, n = np.unique(y_pred[I], return_counts=True)
@@ -594,5 +599,6 @@ def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False, verbose=3
         plt.ylabel('Number of predicted classes', fontsize=fontsize)
         plt.xlabel('True class', fontsize=12)
         plt.title('Class prediction', fontsize=12)
+        plt.grid(True)
 
     return(df)

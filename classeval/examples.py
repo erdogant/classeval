@@ -34,6 +34,8 @@ clf.confmatrix.plot(out_CONFMAT)
 
 # Total evaluation
 out = clf.eval(y_true, y_proba, pos_label='malignant')
+ax = clf.plot(out, figsize=(20,15), fontsize=14)
+
 out = clf.eval(y_true=='malignant', y_proba)
 ax = clf.plot(out, figsize=(20,15), fontsize=14)
 

@@ -10,7 +10,6 @@
 
 ### Contents
 - [Installation](#-installation)
-- [Requirements](#-Requirements)
 - [Quick Start](#-quick-start)
 - [Contribute](#-contribute)
 - [Citation](#-citation)
@@ -20,14 +19,6 @@
 ### Installation
 * Install classeval from PyPI (recommended). classeval is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
 * It is distributed under the MIT license.
-
-### Requirements
-* It is advisable to create a new environment. 
-```python
-conda create -n env_classeval python=3.6
-conda activate env_classeval
-pip install -r requirements
-```
 
 #### Quick Start
 ```
@@ -69,9 +60,6 @@ Please cite classeval in your publications if this is useful for your research. 
 }
 ```
 
-#### References
-* 
-   
 #### Maintainers
 * Erdogan Taskesen, github: [erdogant](https://github.com/erdogant)
 

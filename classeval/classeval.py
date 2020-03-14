@@ -23,7 +23,24 @@ import classeval.ROC as ROC
 
 # %% Main function for all two class results.
 def plot(out, title='', fontsize=12, figsize=(20,15)):
+    """Make plot based on evaluated model.
 
+    Parameters
+    ----------
+    out : dict
+        Evaluated model from the eval() function.
+    title : str, optional
+        Title of the figure. The default is ''.
+    fontsize : int, optional
+        Font-size. The default is 12.
+    figsize : tuple, optional
+        Figure size. The default is (20,15).
+
+    Returns
+    -------
+    ax : Object
+
+    """
     y_true = out['y_true']
     y_proba = out['y_proba']
     threshold = out['threshold']
@@ -55,7 +72,7 @@ def plot(out, title='', fontsize=12, figsize=(20,15)):
 
 
 # %% Main function for all two class results.
-def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0.5, verbose=3):
+def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0.5, normalize=False, verbose=3):
     """Evaluate and make plots for two-class models.
 
     Parameters
@@ -64,12 +81,16 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
         True labels of the classes.
     y_proba : array of floats
         Probabilities of the predicted labels.
+    y_score : array of floats
+        decision_function for the predicted labels. (only required in case of multi-class)
+    y_pred : array-like
+        Predicted labels from model.
+    pos_label : str
+        Positive label (only for the two-class models and when y_true is of type string. If you set bool, then the positive label is True)
     threshold : float [0-1], optional
         Cut-off point to define the class label. The default is 0.5 in a two-class model.
-    title : str, optional
-        Title of the plot. The default is ''.
-    showfig : bool, optional
-        Show the figure to screen. The default is True.
+    normalize : bool, optional
+        Normalize the values in the confusion matrix. The default is False.
     verbose : int, optional
         print message to screen. The default is 3.
 

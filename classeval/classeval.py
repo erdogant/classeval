@@ -113,12 +113,36 @@ def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False, verbose=3
         plt.ylabel('Number of predicted classes', fontsize=fontsize)
         plt.xlabel('True class', fontsize=12)
         plt.title('Class prediction', fontsize=12)
-    
+
     return(df)
 
 
 # %% Two class results
 def eval_multiclass(y_true, y_proba, y_score, y_pred, threshold=0.5, normalize=False, verbose=3):
+    """Evaluate for multi-class model.
+
+    Parameters
+    ----------
+    y_true : array-like [list or int]
+        True labels of the classes.
+    y_proba : array of floats
+        Probabilities of the predicted labels.
+    y_score : array of floats
+        decision_function for the predicted labels. (only required in case of multi-class)
+    y_pred : array-like
+        Predicted labels from model.
+    threshold : float [0-1], optional
+        Cut-off point to define the class label. The default is 0.5 in a two-class model.
+    normalize : bool, optional
+        Normalize the values in the confusion matrix. The default is False.
+    verbose : int, optional
+        print message to screen. The default is 3.
+
+    Returns
+    -------
+    dict containing results.
+
+    """
     roc_scores = ROC.eval(y_true, y_proba, y_score, verbose=verbose)
     stackbar = _stackedbar_multiclass(y_true, y_pred, showfig=False, verbose=verbose)
     confmat = confmatrix.eval(y_true, y_pred, normalize=normalize)
@@ -161,27 +185,37 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
 
     """
     class_names = np.unique(y_true)
+    y_label = y_true.astype(str)
+    y_pred = y_proba>=threshold
+
     if len(class_names)>2:
         raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
-    if (pos_label is None) and (y_true.dtype=='O'):
-        raise Exception('[classeval] CAP should have [pos_label] or [y_true] being bool.')
-    if (pos_label is not None) and (y_true.dtype=='O'):
-        y_label = y_true
+    if (pos_label is None) and (y_true.dtype!='bool'):
+        raise Exception('[classeval] CAP should have input argument <pos_label> or <y_true> being of type bool.')
+    if (pos_label is not None) and (y_true.dtype!='bool'):
+        # If y_true is strings, convert to bool based on positive label
         y_true = y_label==pos_label
-
-    # y_label = y_true
-    # y_true = y_label==pos_label
+        neg_label = np.setdiff1d(class_names,pos_label)[0]
+        # Determine y_pred
+        y_pred_label = np.repeat('',len(y_true)).astype(y_label.dtype)
+        I = y_proba>=threshold
+        y_pred_label[I] = pos_label
+        y_pred_label[I==False] = neg_label
+    else:
+        pos_label=True
+        neg_label=False
+        y_pred_label = y_pred.astype(str)
 
     # ROC plot
     ROC_scores = ROC.eval(y_true, y_proba, threshold=threshold, verbose=verbose)
     if verbose>=3: print('[classeval] AUC: %.2f' %(ROC_scores['auc']))
     # F1 score
-    f1score = f1_score(y_true, y_proba>=threshold)
+    f1score = f1_score(y_true, y_pred)
     if verbose>=3: print('[classeval] F1: %.2f' %(f1score))
     # Classification report
-    clreport = classification_report(y_true, (y_proba>=threshold).astype(int))
+    clreport = classification_report(y_true, (y_pred).astype(int))
     # Kappa score
-    kappa_score = cohen_kappa_score(y_true, y_proba>=threshold)
+    kappa_score = cohen_kappa_score(y_true, y_pred)
     if verbose>=3: print('[classeval] Kappa: %.2f' %(kappa_score))
     # Recall
     [precision, recall, _] = precision_recall_curve(y_true, y_proba)
@@ -197,13 +231,15 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
     # Probability plot
     TPFP_scores = TPFP(y_true, y_proba, threshold=threshold, showfig=False)
     # Confusion matrix
-    confmat = confmatrix.eval(y_true, (y_proba>=threshold).astype(int), normalize=normalize, verbose=verbose)
+    confmat = confmatrix.eval(y_label, y_pred_label, normalize=normalize, verbose=verbose)
 
     # Store and return
     out = {}
     out['class_names'] = class_names
+    out['pos_label'] = pos_label
+    out['neg_label'] = neg_label
     out['y_true'] = y_true
-    out['y_pred'] = (y_proba>=threshold)
+    out['y_pred'] = y_pred
     out['y_proba'] = y_proba
     out['auc'] = ROC_scores['auc']
     out['f1'] = f1score

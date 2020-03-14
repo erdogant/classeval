@@ -53,8 +53,8 @@ model = classeval.fit(df)
 G = classeval.plot(model)
 ```
 <p align="center">
-  <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/fig1.png" width="600" />
-  
+  <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/Figure_1.png" width="600" />
+  <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/Figure_2.png" width="400" />
 </p>
 
 

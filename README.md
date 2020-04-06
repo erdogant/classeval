@@ -34,20 +34,46 @@ python setup.py install
 
 #### Import classeval package
 ```python
-import classeval as classeval
+import classeval as clf
 ```
 
-#### Example:
+#### Example two-class model:
 ```python
-df = pd.read_csv('https://github.com/erdogant/hnet/blob/master/classeval/data/example_data.csv')
-model = classeval.fit(df)
-G = classeval.plot(model)
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
+gb = GradientBoostingClassifier()
+
+X, y = clf.load_example('breast')
+X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
+model = gb.fit(X_train, y_train)
+y_proba = model.predict_proba(X_test)[:,1]
+y_pred = model.predict(X_test)
+
+# Evaluate
+out = clf.eval(y_true, y_proba, pos_label='malignant')
+ax = clf.plot(out, figsize=(20,15), fontsize=14)
 ```
+
 <p align="center">
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/Figure_1.png" width="600" />
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/Figure_2.png" width="400" />
 </p>
 
+#### Example multi-class model:
+```python
+
+X,y = clf.load_example('iris')
+X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.5)
+
+model = gb.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+y_proba = model.predict_proba(X_test)
+y_score = model.decision_function(X_test)
+
+# All
+out = clf.eval(y_true, y_proba, y_score, y_pred)
+ax = clf.plot(out)
+```
 
 #### Citation
 Please cite classeval in your publications if this is useful for your research. Here is an example BibTeX entry:

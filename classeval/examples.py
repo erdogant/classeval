@@ -32,11 +32,32 @@ clf.confmatrix.plot(out_CONFMAT, fontsize=18)
 out_CONFMAT = clf.confmatrix.eval(y_true, y_pred, normalize=False)
 clf.confmatrix.plot(out_CONFMAT)
 
-# Total evaluation
-out = clf.eval(y_true, y_proba, pos_label='malignant')
+# %% Performance
+X, y = clf.load_example('breast')
+X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
+model = gb.fit(X_train, y_train)
+y_proba = model.predict_proba(X_test)[:,1]
+y_pred = model.predict(X_test)
+
+out = clf.eval(y_true, y_proba, pos_label='malignant', threshold=0.5)
+_ = clf.TPFP(out['y_true'], out['y_proba'], threshold=0.5, showfig=True)
+
+
+out = clf.eval(y_true, y_proba, pos_label='malignant', threshold=0.2)
+_ = clf.TPFP(out['y_true'], out['y_proba'], threshold=0.2, showfig=True)
+
+out = clf.eval(y_true, y_proba, pos_label='malignant', threshold=0.5)
 ax = clf.plot(out, figsize=(20,15), fontsize=14)
 
-out = clf.eval(y_true=='malignant', y_proba)
+# %% Two-class: Total evaluation
+X, y = clf.load_example('breast')
+X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
+model = gb.fit(X_train, y_train)
+y_proba = model.predict_proba(X_test)[:,1]
+y_pred = model.predict(X_test)
+
+# Evaluate
+out = clf.eval(y_true, y_proba, pos_label='malignant')
 ax = clf.plot(out, figsize=(20,15), fontsize=14)
 
 # Some results
@@ -52,6 +73,10 @@ y_pred = model.predict(X_test)
 y_proba = model.predict_proba(X_test)
 y_score = model.decision_function(X_test)
 
+# All
+out = clf.eval(y_true, y_proba, y_score, y_pred)
+ax = clf.plot(out)
+
 # ROC evaluation
 out_ROC = clf.ROC.eval(y_true, y_proba, y_score)
 ax = clf.ROC.plot(out_ROC, title='Iris dataset')
@@ -62,8 +87,6 @@ ax = clf.confmatrix.plot(out_CONFMAT)
 out_CONFMAT = clf.confmatrix.eval(y_true, y_pred, normalize=False)
 ax = clf.confmatrix.plot(out_CONFMAT)
 
-out = clf.eval(y_true, y_proba, y_score, y_pred)
-ax = clf.plot(out)
 
 
 # %% Fin

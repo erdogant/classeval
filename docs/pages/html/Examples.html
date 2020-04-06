@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Examples two-class model &mdash; classeval classeval documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Coding quality" href="Coding quality.html" />
+    <link rel="prev" title="Eval" href="Plots.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> classeval
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Installation.html#installation">Installation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Methods</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html">Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#optimizing-model-performance">Optimizing model performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#confusion-matrix">Confusion matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#two-class-evaluation">Two-class evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#multi-class-evaluation">Multi-class evaluation</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Plots</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Plots.html">Eval</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plots.html#roc-auc">ROC-AUC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plots.html#cap">CAP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plots.html#ap">AP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plots.html#confusion-matrix">Confusion matrix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Plots.html#probability-plot">Probability Plot</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples two-class model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#roc-in-two-class">ROC in two-class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#confmatrix-in-two-class">Confmatrix in two-class</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#examples-multi-class-model">Examples multi-class model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#roc-in-multi-class">ROC in multi-class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#confmatrix-in-multi-class">Confmatrix in multi-class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#normalized-confusion-matrix">Normalized confusion matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#performance-tweaking">Performance tweaking</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Coding quality.html">Coding quality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="classeval.classeval.html">API References</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">classeval</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Examples two-class model</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Examples.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <hr class="docutils" id="code-directive" />
+<div class="section" id="examples-two-class-model">
+<h1>Examples two-class model<a class="headerlink" href="#examples-two-class-model" title="Permalink to this headline">¶</a></h1>
+<p>In this example we are going to learn a model, and use the output <cite>y_true</cite>, <cite>y_proba</cite> and <cite>y_pred</cite> in <code class="docutils literal notranslate"><span class="pre">classeval</span></code> for the evaluation of the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>
+
+<span class="c1"># Load example dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">&#39;breast&#39;</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># Train model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">gb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we can evaluate the model by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Evaluate</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Print some results to screen:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print AUC score</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;auc&#39;</span><span class="p">])</span>
+
+<span class="c1"># Print f1-score</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">])</span>
+
+<span class="c1"># Show some results</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;report&#39;</span><span class="p">])</span>
+<span class="c1">#</span>
+<span class="c1">#                 precision    recall  f1-score   support</span>
+<span class="c1">#</span>
+<span class="c1">#          False       0.96      0.96      0.96        70</span>
+<span class="c1">#           True       0.93      0.93      0.93        44</span>
+<span class="c1">#</span>
+<span class="c1">#       accuracy                           0.95       114</span>
+<span class="c1">#      macro avg       0.94      0.94      0.94       114</span>
+<span class="c1">#   weighted avg       0.95      0.95      0.95       114</span>
+<span class="c1">#</span>
+</pre></div>
+</div>
+<p>Plot by using <a class="reference internal" href="classeval.classeval.html#classeval.classeval.plot" title="classeval.classeval.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></a>:</p>
+<dl class="simple">
+<dt>Four subplots are created:</dt><dd><ul class="simple">
+<li><p>top left: ROC curve</p></li>
+<li><p>top right: CAP curve</p></li>
+<li><p>bottom left: AP curve</p></li>
+<li><p>bottom right: Probability curve</p></li>
+</ul>
+</dd>
+</dl>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">15</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="_images/example1_fig1.png" src="_images/example1_fig1.png" />
+</div>
+<p>Class distribution in a bargraph</p>
+<div class="figure align-default">
+<img alt="_images/example1_fig3.png" src="_images/example1_fig3.png" />
+</div>
+<div class="section" id="roc-in-two-class">
+<h2>ROC in two-class<a class="headerlink" href="#roc-in-two-class" title="Permalink to this headline">¶</a></h2>
+<p>Plot ROC using:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute ROC</span>
+<span class="n">out_ROC</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">)</span>
+
+<span class="c1"># Make plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out_ROC</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Breast dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="confmatrix-in-two-class">
+<h2>Confmatrix in two-class<a class="headerlink" href="#confmatrix-in-two-class" title="Permalink to this headline">¶</a></h2>
+<p>It is also possible to plot only the confusion matrix:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute confmatrix</span>
+<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Make plot</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out_CONFMAT</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/example1_fig2.png"><img alt="_images/example1_fig2.png" src="_images/example1_fig2.png" style="width: 400.5px; height: 417.0px;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="examples-multi-class-model">
+<h1>Examples multi-class model<a class="headerlink" href="#examples-multi-class-model" title="Permalink to this headline">¶</a></h1>
+<p>In this example we are going to learn a <strong>multi-class</strong> model, and use the output <cite>y_true</cite>, <cite>y_proba</cite> and <cite>y_pred</cite> in <code class="docutils literal notranslate"><span class="pre">classeval</span></code> for the evaluation of the model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
+<span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>
+
+<span class="c1"># Load example dataset</span>
+<span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Train model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">gb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">y_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">y_score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Lets evaluate the model results:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Plot by using <a class="reference internal" href="classeval.classeval.html#classeval.classeval.plot" title="classeval.classeval.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/multiclass_fig1_1.png"><img alt="_images/multiclass_fig1_1.png" src="_images/multiclass_fig1_1.png" style="width: 585.6px; height: 399.20000000000005px;" /></a>
+</div>
+<p><em>Class distribution in a bargraph</em></p>
+<div class="figure align-default">
+<img alt="_images/multiclass_fig1_3.png" src="_images/multiclass_fig1_3.png" />
+</div>
+<div class="section" id="roc-in-multi-class">
+<h2>ROC in multi-class<a class="headerlink" href="#roc-in-multi-class" title="Permalink to this headline">¶</a></h2>
+<p>ROC uses the same function as for two-class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ROC evaluation</span>
+<span class="n">out_ROC</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">y_score</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out_ROC</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Iris dataset&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="confmatrix-in-multi-class">
+<h2>Confmatrix in multi-class<a class="headerlink" href="#confmatrix-in-multi-class" title="Permalink to this headline">¶</a></h2>
+<p>Confmatrix uses the same function as for two-class.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confmatrix evaluation</span>
+<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out_CONFMAT</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Confusion matrix</p>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/multiclass_fig1_2.png"><img alt="_images/multiclass_fig1_2.png" src="_images/multiclass_fig1_2.png" style="width: 400.5px; height: 420.5px;" /></a>
+</div>
+</div>
+<div class="section" id="normalized-confusion-matrix">
+<h2>Normalized confusion matrix<a class="headerlink" href="#normalized-confusion-matrix" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confusion matrix</span>
+<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out_CONFMAT</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/multiclass_fig1_4.png"><img alt="_images/multiclass_fig1_4.png" src="_images/multiclass_fig1_4.png" style="width: 402.0px; height: 420.5px;" /></a>
+</div>
+</div>
+</div>
+<div class="section" id="performance-tweaking">
+<h1>Performance tweaking<a class="headerlink" href="#performance-tweaking" title="Permalink to this headline">¶</a></h1>
+<p>It can be desired to tweak the performance of the model and thereby adjust, for example the number of False postives. With <code class="docutils literal notranslate"><span class="pre">classeval</span></code> it is easy to determine the most desired model.</p>
+<p>Lets start with a simple model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load example dataset</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">&#39;breast&#39;</span><span class="p">)</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># Fit model</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">gb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default threshold value is 0.5 and gives these results:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set threshold at 0.5 (default)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># [[73  0]</span>
+<span class="c1"># [ 1 40]]</span>
+
+<span class="c1"># Make plot</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/multiclass_threshold_05.png"><img alt="_images/multiclass_threshold_05.png" src="_images/multiclass_threshold_05.png" style="width: 650.7px; height: 434.7px;" /></a>
+</div>
+<p>Lets adjust the model by setting the threshold differently:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set threshold at 0.2</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="c1"># [[72  1]</span>
+<span class="c1"># [ 0 41]]</span>
+
+<span class="c1"># Make plot</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/multiclass_threshold_02.png"><img alt="_images/multiclass_threshold_02.png" src="_images/multiclass_threshold_02.png" style="width: 650.7px; height: 434.7px;" /></a>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Coding quality.html" class="btn btn-neutral float-right" title="Coding quality" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Plots.html" class="btn btn-neutral float-left" title="Eval" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Erdogan Taskesen
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

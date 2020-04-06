@@ -1,6 +1,12 @@
 from classeval.classeval import (
     eval,
     plot,
+    eval_twoclass,
+    eval_multiclass,
+    AP,
+    CAP,
+    TPFP,
+    AUC_multiclass,
     load_example,
 )
 
@@ -9,7 +15,7 @@ import classeval.ROC as ROC
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 
 # module level doc-string
 __doc__ = """

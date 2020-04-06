@@ -3,7 +3,7 @@
 [![Python](https://img.shields.io/pypi/pyversions/classeval)](https://img.shields.io/pypi/pyversions/classeval)
 [![PyPI Version](https://img.shields.io/pypi/v/classeval)](https://pypi.org/project/classeval/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/erdogant/classeval/blob/master/LICENSE)
-[![Downloads](https://pepy.tech/badge/classeval/)](https://pepy.tech/project/classeval/)
+[![Downloads](https://pepy.tech/badge/classeval/week)](https://pepy.tech/project/classeval/week)
 [![Sphinx](https://img.shields.io/badge/Sphinx-Documentation-blue)](https://erdogant.github.io/classeval/)
 [![Donate](https://img.shields.io/badge/donate-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)
 

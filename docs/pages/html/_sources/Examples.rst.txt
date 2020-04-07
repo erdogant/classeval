@@ -223,8 +223,8 @@ Normalized confusion matrix
 
 
 
-Performance tweaking
-'''''''''''''''''''''''''
+Model Performance tweaking
+'''''''''''''''''''''''''''''
 
 
 It can be desired to tweak the performance of the model and thereby adjust, for example the number of False postives. With ``classeval`` it is easy to determine the most desired model.

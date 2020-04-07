@@ -78,8 +78,6 @@ Plotting the ROC is initially desiged for two-class models. However, with some a
 CAP
 ''''''''
 
-The CAP measure is desiged for two-class models.
-
 .. code:: python
 
     # Compute CAP
@@ -95,8 +93,6 @@ The CAP measure is desiged for two-class models.
 
 AP 
 '''''''''''''''''
-
-The AP (Average Precision) measure is desiged for two-class models.
 
 .. code:: python
 
@@ -114,7 +110,8 @@ The AP (Average Precision) measure is desiged for two-class models.
 Confusion matrix 
 '''''''''''''''''''''
 
-A confusion matrix is a table to describe the performance of a classification model. With the function :func:`classeval.confmatrix.eval` the confusion matrix can be examined and plotted for both the two-class as well as multi-class model.
+A confusion matrix is a table to describe the performance of a classification model.
+With the function :func:`classeval.confmatrix.eval` the confusion matrix can be examined and plotted for both the two-class as well as multi-class model.
 
 
 .. code:: python

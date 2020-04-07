@@ -225,7 +225,6 @@
 </div>
 <div class="section" id="cap">
 <h1>CAP<a class="headerlink" href="#cap" title="Permalink to this headline">¶</a></h1>
-<p>The CAP measure is desiged for two-class models.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute CAP</span>
 <span class="n">outCAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">CAP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
@@ -236,7 +235,6 @@
 </div>
 <div class="section" id="ap">
 <h1>AP<a class="headerlink" href="#ap" title="Permalink to this headline">¶</a></h1>
-<p>The AP (Average Precision) measure is desiged for two-class models.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute AP</span>
 <span class="n">outAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">AP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
@@ -247,7 +245,8 @@
 </div>
 <div class="section" id="confusion-matrix">
 <h1>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this headline">¶</a></h1>
-<p>A confusion matrix is a table to describe the performance of a classification model. With the function <a class="reference internal" href="classeval.classeval.html#classeval.confmatrix.eval" title="classeval.confmatrix.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.confmatrix.eval()</span></code></a> the confusion matrix can be examined and plotted for both the two-class as well as multi-class model.</p>
+<p>A confusion matrix is a table to describe the performance of a classification model.
+With the function <a class="reference internal" href="classeval.classeval.html#classeval.confmatrix.eval" title="classeval.confmatrix.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.confmatrix.eval()</span></code></a> the confusion matrix can be examined and plotted for both the two-class as well as multi-class model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute confmatrix</span>
 <span class="n">outCONF</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 

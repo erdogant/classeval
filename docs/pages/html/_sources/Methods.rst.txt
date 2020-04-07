@@ -2,45 +2,50 @@
 
 -------------------------------------
 
-The ``classeval`` library contains various measures to estimate the models performance.
-The main function to evaluated models performance is the function :func:`classeval.classeval.eval`. This function automatically determines whether your trained model is based on a **two-class** or **multi-class** approach. If desired, it is possible to directly use the two-class evalution method using :func:`classeval.classeval.eval_twoclass` and for multi-class: :func:`classeval.classeval.eval_multiclass`. 
-
-
-
-Two-class evaluation
+Methods
 '''''''''''''''''''''''''''''''''
 
-Two-class models are trained on two classes; the class-of-interest versus the rest-class. Such as two-class approach is most frequrently used in machine learning problems.
-The results can be derived from image-recognition, network-analysis, sensor data or any other type of data.
-The :func:`classeval.classeval.eval` function requires at least the following input:
+The ``classeval`` library contains various measures to estimate the models performance.
+The main function to evaluated models performance is the function :func:`classeval.classeval.eval`.
+This function automatically determines whether your trained model is based on a **two-class** or **multi-class** approach.
 
+
+Two-class approach
+--------------------
+
+Two-class models are trained on two classes; the class-of-interest versus the rest-class. Such approach is commonly used across image-recognition, network-analysis, sensor data or any other type of data.
+The :func:`classeval.classeval.eval` function requires three input parameters. It is also possible to directly use the two-class function :func:`classeval.classeval.eval_twoclass`, the outputs are identical.
+
+Parameters required
 	* y_true : The true class label
 	* y_proba : Probability of the predicted class label
 	* y_pred : Predicted class label
 
 
 
-Multi-class evaluation
-''''''''''''''''''''''
-Multi-class models are trained on multiple classes. Such models are often used in textmining where the number of classes are the catagories.
-A disadvantage of multi-class models is a higher complexity and many generic performance statistics can not be used.
-The :func:`classeval.classeval.eval` function requires at least the following input:
+Multi-class approach
+----------------------
 
+Multi-class models are trained on... Yes, multiple classes. These models are often used in textmining where the number of classes are high as these usually represent various textual catagories.
+A disadvantage of multi-class models is a higher model complexity and many generic performance statistics can not be used.
+The :func:`classeval.classeval.eval` function requires three input parameters. It is also possible to directly use the :func:`classeval.classeval.eval_multiclass`. Here, the outputs are also identifical.
+
+Parameters required
 	* y_true : The true class label
 	* y_proba : Probability of the predicted class label
 	* y_score : Model decision function
 
 
 Optimizing model performance
-'''''''''''''''''''''''''''''''''
+----------------------------
 
 The ``classeval`` library can also help in tuning the models performance by examining the effect of the threshold.
 After learning a model, and predicting new samples with it, each sample will get a probability belowing to the class.
 In case of our two-class approach the simple rule account: *P(class-of-interest) = 1-P(not class-of-interest)*
 
 
-Methods
-'''''''''''
+Evaluation methods
+''''''''''''''''''''''
 
 
 Confusion matrix

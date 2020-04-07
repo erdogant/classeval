@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Two-class evaluation &mdash; classeval classeval documentation</title>
+  <title>Methods &mdash; classeval classeval documentation</title>
   
 
   
@@ -87,10 +87,13 @@
 </ul>
 <p class="caption"><span class="caption-text">Methods</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Two-class evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#multi-class-evaluation">Multi-class evaluation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#optimizing-model-performance">Optimizing model performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#methods">Methods</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#two-class-approach">Two-class approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-class-approach">Multi-class approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#optimizing-model-performance">Optimizing model performance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#evaluation-methods">Evaluation methods</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#confusion-matrix">Confusion matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#roc-auc">ROC-AUC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#cap">CAP</a></li>
@@ -165,7 +168,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Two-class evaluation</li>
+      <li>Methods</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -185,42 +188,47 @@
            <div itemprop="articleBody">
             
   <hr class="docutils" id="code-directive" />
+<div class="section" id="methods">
+<h1>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">classeval</span></code> library contains various measures to estimate the models performance.
-The main function to evaluated models performance is the function <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval" title="classeval.classeval.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval()</span></code></a>. This function automatically determines whether your trained model is based on a <strong>two-class</strong> or <strong>multi-class</strong> approach. If desired, it is possible to directly use the two-class evalution method using <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval_twoclass" title="classeval.classeval.eval_twoclass"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval_twoclass()</span></code></a> and for multi-class: <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval_multiclass" title="classeval.classeval.eval_multiclass"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval_multiclass()</span></code></a>.</p>
-<div class="section" id="two-class-evaluation">
-<h1>Two-class evaluation<a class="headerlink" href="#two-class-evaluation" title="Permalink to this headline">¶</a></h1>
-<p>Two-class models are trained on two classes; the class-of-interest versus the rest-class. Such as two-class approach is most frequrently used in machine learning problems.
-The results can be derived from image-recognition, network-analysis, sensor data or any other type of data.
-The <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval" title="classeval.classeval.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval()</span></code></a> function requires at least the following input:</p>
-<blockquote>
-<div><ul class="simple">
+The main function to evaluated models performance is the function <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval" title="classeval.classeval.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval()</span></code></a>.
+This function automatically determines whether your trained model is based on a <strong>two-class</strong> or <strong>multi-class</strong> approach.</p>
+<div class="section" id="two-class-approach">
+<h2>Two-class approach<a class="headerlink" href="#two-class-approach" title="Permalink to this headline">¶</a></h2>
+<p>Two-class models are trained on two classes; the class-of-interest versus the rest-class. Such approach is commonly used across image-recognition, network-analysis, sensor data or any other type of data.
+The <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval" title="classeval.classeval.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval()</span></code></a> function requires three input parameters. It is also possible to directly use the two-class function <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval_twoclass" title="classeval.classeval.eval_twoclass"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval_twoclass()</span></code></a>, the outputs are identical.</p>
+<dl class="simple">
+<dt>Parameters required</dt><dd><ul class="simple">
 <li><p>y_true : The true class label</p></li>
 <li><p>y_proba : Probability of the predicted class label</p></li>
 <li><p>y_pred : Predicted class label</p></li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
 </div>
-<div class="section" id="multi-class-evaluation">
-<h1>Multi-class evaluation<a class="headerlink" href="#multi-class-evaluation" title="Permalink to this headline">¶</a></h1>
-<p>Multi-class models are trained on multiple classes. Such models are often used in textmining where the number of classes are the catagories.
-A disadvantage of multi-class models is a higher complexity and many generic performance statistics can not be used.
-The <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval" title="classeval.classeval.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval()</span></code></a> function requires at least the following input:</p>
-<blockquote>
-<div><ul class="simple">
+<div class="section" id="multi-class-approach">
+<h2>Multi-class approach<a class="headerlink" href="#multi-class-approach" title="Permalink to this headline">¶</a></h2>
+<p>Multi-class models are trained on… Yes, multiple classes. These models are often used in textmining where the number of classes are high as these usually represent various textual catagories.
+A disadvantage of multi-class models is a higher model complexity and many generic performance statistics can not be used.
+The <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval" title="classeval.classeval.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval()</span></code></a> function requires three input parameters. It is also possible to directly use the <a class="reference internal" href="classeval.classeval.html#classeval.classeval.eval_multiclass" title="classeval.classeval.eval_multiclass"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.eval_multiclass()</span></code></a>. Here, the outputs are also identifical.</p>
+<dl class="simple">
+<dt>Parameters required</dt><dd><ul class="simple">
 <li><p>y_true : The true class label</p></li>
 <li><p>y_proba : Probability of the predicted class label</p></li>
 <li><p>y_score : Model decision function</p></li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
 </div>
 <div class="section" id="optimizing-model-performance">
-<h1>Optimizing model performance<a class="headerlink" href="#optimizing-model-performance" title="Permalink to this headline">¶</a></h1>
+<h2>Optimizing model performance<a class="headerlink" href="#optimizing-model-performance" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">classeval</span></code> library can also help in tuning the models performance by examining the effect of the threshold.
 After learning a model, and predicting new samples with it, each sample will get a probability belowing to the class.
 In case of our two-class approach the simple rule account: <em>P(class-of-interest) = 1-P(not class-of-interest)</em></p>
 </div>
-<div class="section" id="methods">
-<h1>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="evaluation-methods">
+<h1>Evaluation methods<a class="headerlink" href="#evaluation-methods" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="confusion-matrix">
 <h2>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this headline">¶</a></h2>
 <p>A confusion matrix is a table that is used to describe the performance of a classification model on a set of test data for which the true values are known.</p>

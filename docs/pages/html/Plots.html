@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Examples two-class model" href="Examples.html" />
-    <link rel="prev" title="Methods" href="Methods.html" /> 
+    <link rel="prev" title="Two-class evaluation" href="Methods.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,11 +87,10 @@
 </ul>
 <p class="caption"><span class="caption-text">Methods</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html">Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#optimizing-model-performance">Optimizing model performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#confusion-matrix">Confusion matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#two-class-evaluation">Two-class evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html">Two-class evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Methods.html#multi-class-evaluation">Multi-class evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#optimizing-model-performance">Optimizing model performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#methods">Methods</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Plots</span></p>
 <ul class="current">
@@ -193,7 +192,7 @@
 </div>
 <p>Evaluate the models performance and use the output for making the plots.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
-<span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>
+<span class="kn">import</span> <span class="nn">classeval</span> <span class="kn">as</span> <span class="nn">clf</span>
 
 <span class="c1"># Evaluate model</span>
 <span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">)</span>
@@ -230,7 +229,7 @@
 <h1>CAP<a class="headerlink" href="#cap" title="Permalink to this headline">¶</a></h1>
 <p>The CAP measure is desiged for two-class models.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute CAP</span>
-<span class="n">outCAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">CAP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">outCAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">CAP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-default">
@@ -241,7 +240,7 @@
 <h1>AP<a class="headerlink" href="#ap" title="Permalink to this headline">¶</a></h1>
 <p>The AP (Average Precision) measure is desiged for two-class models.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute AP</span>
-<span class="n">outAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">AP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">outAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">AP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-default">
@@ -272,7 +271,7 @@
 <p>The probability plot depicts the probabilities of the samples being classified.
 This function is desiged for only two-class models and callable via: <a class="reference internal" href="classeval.classeval.html#classeval.classeval.TPFP" title="classeval.classeval.TPFP"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.TPFP()</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute TPFP</span>
-<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-default">
@@ -291,7 +290,7 @@ This function is desiged for only two-class models and callable via: <a class="r
         <a href="Examples.html" class="btn btn-neutral float-right" title="Examples two-class model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="Methods.html" class="btn btn-neutral float-left" title="Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Methods.html" class="btn btn-neutral float-left" title="Two-class evaluation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

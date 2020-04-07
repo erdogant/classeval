@@ -86,11 +86,10 @@
 </ul>
 <p class="caption"><span class="caption-text">Methods</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html">Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#optimizing-model-performance">Optimizing model performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#confusion-matrix">Confusion matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#two-class-evaluation">Two-class evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html">Two-class evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Methods.html#multi-class-evaluation">Multi-class evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#optimizing-model-performance">Optimizing model performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#methods">Methods</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Plots</span></p>
 <ul>
@@ -178,9 +177,9 @@
   <div class="section" id="module-classeval.classeval">
 <span id="api-references"></span><h1>API References<a class="headerlink" href="#module-classeval.classeval" title="Permalink to this headline">¶</a></h1>
 <p>classeval contains functionalities and plots for fast and easy classifier evaluation.</p>
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.AP">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">AP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">12, 8</span></em>, <em class="sig-param"><span class="n">fontsize</span><span class="o">=</span><span class="default_value">12</span></em>, <em class="sig-param"><span class="n">showfig</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.AP" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">AP</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">title=''</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">figsize=(12</em>, <em class="sig-param">8)</em>, <em class="sig-param">fontsize=12</em>, <em class="sig-param">showfig=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.AP" title="Permalink to this definition">¶</a></dt>
 <dd><p>AP (Average Precision) method.</p>
 <p>A better metric in an imbalanced situation is the AUC PR (Area Under the Curve Precision Recall), or also called AP (Average Precision).
 If the precision decreases when we increase the recall, it shows that we have to choose a prediction thresold adapted to our needs.
@@ -216,9 +215,9 @@ This means that our model has a good predictive power.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.AUC_multiclass">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">AUC_multiclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.AUC_multiclass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">AUC_multiclass</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">verbose=3</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.AUC_multiclass" title="Permalink to this definition">¶</a></dt>
 <dd><p>AUC scoring for multiclass predictions.</p>
 <p>Calculate the AUC using the One-vs-Rest scheme (OvR) and One-vs-One scheme (OvO) schemes.
 The multi-class One-vs-One scheme compares every unique pairwise combination of classes.
@@ -244,9 +243,9 @@ Macro average, and a prevalence-weighted average.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.CAP">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">CAP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em>, <em class="sig-param"><span class="n">label</span><span class="o">=</span><span class="default_value">'Classifier'</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">12, 8</span></em>, <em class="sig-param"><span class="n">fontsize</span><span class="o">=</span><span class="default_value">12</span></em>, <em class="sig-param"><span class="n">showfig</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.CAP" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">CAP</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em>, <em class="sig-param">label='Classifier'</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">figsize=(12</em>, <em class="sig-param">8)</em>, <em class="sig-param">fontsize=12</em>, <em class="sig-param">showfig=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.CAP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute Cumulitive Accuracy Profile (CAP) to measure the performance in a two class classifier.</p>
 <p>The CAP Curve analyse how to effectively identify all data points of a given class using minimum number of tries.
 This function computes Cumulitive Accuracy Profile (CAP) to measure the performance of a classifier.
@@ -273,9 +272,9 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.MCC">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">MCC</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0.5</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.MCC" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">MCC</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">threshold=0.5</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.MCC" title="Permalink to this definition">¶</a></dt>
 <dd><p>MCC is extremely good metric for the imbalanced classification.</p>
 <p>Score Ranges between [−1,1]
 1: perfect prediction
@@ -298,9 +297,9 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.TPFP">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">TPFP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">fontsize</span><span class="o">=</span><span class="default_value">12</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">12, 8</span></em>, <em class="sig-param"><span class="n">showfig</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.TPFP" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">TPFP</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">threshold=0.5</em>, <em class="sig-param">fontsize=12</em>, <em class="sig-param">title=''</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">figsize=(12</em>, <em class="sig-param">8)</em>, <em class="sig-param">showfig=False</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.TPFP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the probabilties for both classes in a ordered manner.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -322,9 +321,9 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.eval">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">eval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">y_score</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_pred</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pos_label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.eval" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">eval</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">y_score=None</em>, <em class="sig-param">y_pred=None</em>, <em class="sig-param">pos_label=None</em>, <em class="sig-param">threshold=0.5</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">verbose=3</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluate and make plots for two-class models.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -348,9 +347,9 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.eval_multiclass">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">eval_multiclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">y_score</span></em>, <em class="sig-param"><span class="n">y_pred</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.eval_multiclass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">eval_multiclass</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">y_score</em>, <em class="sig-param">y_pred</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">verbose=3</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.eval_multiclass" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluate for multi-class model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -379,9 +378,9 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.eval_twoclass">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">eval_twoclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">pos_label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.eval_twoclass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">eval_twoclass</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">pos_label=None</em>, <em class="sig-param">threshold=0.5</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">verbose=3</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.eval_twoclass" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluate for two-class model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -424,9 +423,9 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.load_example">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">load_example</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">'breast'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.load_example" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">load_example</code><span class="sig-paren">(</span><em class="sig-param">data='breast'</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.load_example" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import example dataset from sklearn.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -445,9 +444,9 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.classeval.plot">
-<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">fontsize</span><span class="o">=</span><span class="default_value">12</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">20, 15</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.plot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.classeval.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param">out</em>, <em class="sig-param">title=''</em>, <em class="sig-param">fontsize=12</em>, <em class="sig-param">figsize=(20</em>, <em class="sig-param">15)</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make plot based on evaluated model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -468,9 +467,9 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 </dd></dl>
 
 <span class="target" id="module-classeval.ROC"></span><p>ROC is for computing receiver operator characteristics for two-class and multi-class models.</p>
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.ROC.AUC_multiclass">
-<code class="sig-prename descclassname">classeval.ROC.</code><code class="sig-name descname">AUC_multiclass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.ROC.AUC_multiclass" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.ROC.</code><code class="sig-name descname">AUC_multiclass</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">verbose=3</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.ROC.AUC_multiclass" title="Permalink to this definition">¶</a></dt>
 <dd><p>AUC scoring for multiclass predictions.</p>
 <p>Calculate the AUC using the One-vs-Rest scheme (OvR) and One-vs-One scheme (OvO) schemes.
 The multi-class One-vs-One scheme compares every unique pairwise combination of classes.
@@ -492,9 +491,9 @@ Macro average, and a prevalence-weighted average.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.ROC.eval">
-<code class="sig-prename descclassname">classeval.ROC.</code><code class="sig-name descname">eval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_proba</span></em>, <em class="sig-param"><span class="n">y_score</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pos_label</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">threshold</span><span class="o">=</span><span class="default_value">0.5</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.ROC.eval" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.ROC.</code><code class="sig-name descname">eval</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_proba</em>, <em class="sig-param">y_score=None</em>, <em class="sig-param">pos_label=None</em>, <em class="sig-param">threshold=0.5</em>, <em class="sig-param">verbose=3</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.ROC.eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receiver operator Curve.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -516,9 +515,9 @@ Macro average, and a prevalence-weighted average.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.ROC.plot">
-<code class="sig-prename descclassname">classeval.ROC.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">title</span><span class="o">=</span><span class="default_value">''</span></em>, <em class="sig-param"><span class="n">fontsize</span><span class="o">=</span><span class="default_value">12</span></em>, <em class="sig-param"><span class="n">figsize</span><span class="o">=</span><span class="default_value">12, 8</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.ROC.plot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.ROC.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param">out</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">title=''</em>, <em class="sig-param">fontsize=12</em>, <em class="sig-param">figsize=(12</em>, <em class="sig-param">8)</em>, <em class="sig-param">verbose=3</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.ROC.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot ROC curves.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -541,9 +540,9 @@ Macro average, and a prevalence-weighted average.</p>
 </dd></dl>
 
 <span class="target" id="module-classeval.confmatrix"></span><p>Confusion matrix creating.</p>
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.confmatrix.eval">
-<code class="sig-prename descclassname">classeval.confmatrix.</code><code class="sig-name descname">eval</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">y_true</span></em>, <em class="sig-param"><span class="n">y_pred</span></em>, <em class="sig-param"><span class="n">normalize</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.confmatrix.eval" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">classeval.confmatrix.</code><code class="sig-name descname">eval</code><span class="sig-paren">(</span><em class="sig-param">y_true</em>, <em class="sig-param">y_pred</em>, <em class="sig-param">normalize=False</em>, <em class="sig-param">verbose=3</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.confmatrix.eval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Evaluate the results in a two-class model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -563,7 +562,7 @@ Macro average, and a prevalence-weighted average.</p>
 </dl>
 </dd></dl>
 
-<dl class="py function">
+<dl class="function">
 <dt id="classeval.confmatrix.plot">
 <code class="sig-prename descclassname">classeval.confmatrix.</code><code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param">out</em>, <em class="sig-param">class_names=None</em>, <em class="sig-param">title=''</em>, <em class="sig-param">cmap=&lt;matplotlib.colors.LinearSegmentedColormap object&gt;</em>, <em class="sig-param">figsize=(12</em>, <em class="sig-param">12)</em>, <em class="sig-param">fontsize=14</em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.confmatrix.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the confusion matrix for the two-class or multi-class model.</p>

@@ -87,11 +87,10 @@
 </ul>
 <p class="caption"><span class="caption-text">Methods</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html">Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#optimizing-model-performance">Optimizing model performance</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#confusion-matrix">Confusion matrix</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Methods.html#two-class-evaluation">Two-class evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html">Two-class evaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Methods.html#multi-class-evaluation">Multi-class evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#optimizing-model-performance">Optimizing model performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Methods.html#methods">Methods</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Plots</span></p>
 <ul>
@@ -190,7 +189,7 @@
 <h1>Examples two-class model<a class="headerlink" href="#examples-two-class-model" title="Permalink to this headline">¶</a></h1>
 <p>In this example we are going to learn a model, and use the output <cite>y_true</cite>, <cite>y_proba</cite> and <cite>y_pred</cite> in <code class="docutils literal notranslate"><span class="pre">classeval</span></code> for the evaluation of the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
-<span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>
+<span class="kn">import</span> <span class="nn">classeval</span> <span class="kn">as</span> <span class="nn">clf</span>
 
 <span class="c1"># Load example dataset</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">&#39;breast&#39;</span><span class="p">)</span>
@@ -209,13 +208,13 @@
 </div>
 <p>Print some results to screen:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Print AUC score</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;auc&#39;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;auc&#39;</span><span class="p">])</span>
 
 <span class="c1"># Print f1-score</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;f1&#39;</span><span class="p">])</span>
 
 <span class="c1"># Show some results</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;report&#39;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;report&#39;</span><span class="p">])</span>
 <span class="c1">#</span>
 <span class="c1">#                 precision    recall  f1-score   support</span>
 <span class="c1">#</span>
@@ -264,7 +263,7 @@
 <h2>Confmatrix in two-class<a class="headerlink" href="#confmatrix-in-two-class" title="Permalink to this headline">¶</a></h2>
 <p>It is also possible to plot only the confusion matrix:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute confmatrix</span>
-<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="c1"># Make plot</span>
 <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out_CONFMAT</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
@@ -279,7 +278,7 @@
 <h1>Examples multi-class model<a class="headerlink" href="#examples-multi-class-model" title="Permalink to this headline">¶</a></h1>
 <p>In this example we are going to learn a <strong>multi-class</strong> model, and use the output <cite>y_true</cite>, <cite>y_proba</cite> and <cite>y_pred</cite> in <code class="docutils literal notranslate"><span class="pre">classeval</span></code> for the evaluation of the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
-<span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>
+<span class="kn">import</span> <span class="nn">classeval</span> <span class="kn">as</span> <span class="nn">clf</span>
 
 <span class="c1"># Load example dataset</span>
 <span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
@@ -321,7 +320,7 @@
 <h2>Confmatrix in multi-class<a class="headerlink" href="#confmatrix-in-multi-class" title="Permalink to this headline">¶</a></h2>
 <p>Confmatrix uses the same function as for two-class.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confmatrix evaluation</span>
-<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out_CONFMAT</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -333,7 +332,7 @@
 <div class="section" id="normalized-confusion-matrix">
 <h2>Normalized confusion matrix<a class="headerlink" href="#normalized-confusion-matrix" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confusion matrix</span>
-<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="c1"># Plot</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out_CONFMAT</span><span class="p">)</span>
 </pre></div>
@@ -365,7 +364,7 @@
 <span class="c1"># [ 1 40]]</span>
 
 <span class="c1"># Make plot</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">showfig</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-default">
@@ -379,7 +378,7 @@
 <span class="c1"># [ 0 41]]</span>
 
 <span class="c1"># Make plot</span>
-<span class="n">_</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">showfig</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="p">)</span>
 </pre></div>
 </div>
 <div class="figure align-default">

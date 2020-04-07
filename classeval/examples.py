@@ -64,6 +64,9 @@ ax = clf.plot(out, figsize=(20,15), fontsize=14)
 print(out['report'])
 
 
+# out = clf.CAP(out['y_true'], out['y_proba'])
+
+
 # %% Multi-class
 X,y = clf.load_example('iris')
 X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.5)

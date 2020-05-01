@@ -48,6 +48,7 @@ Example
 
 References
 ----------
+* https://erdogant.github.io/classeval/
 * https://github.com/erdogant/classeval
 * https://scikit-learn.org/stable/modules/model_evaluation.html#scoring-parameter
 * http://arogozhnikov.github.io/2015/10/05/roc-curve.html

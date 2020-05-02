@@ -1,4 +1,4 @@
-"""classeval contains functionalities and plots for fast and easy classifier evaluation."""
+"""classeval is for fast and easy classifier evaluation."""
 # -----------------------------------------------------
 # Name        : classeval.py
 # Author      : E.Taskesen
@@ -122,6 +122,7 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
     elif len(class_names)>2:
         out = eval_multiclass(y_true, y_proba, y_score, y_pred, normalize=normalize, verbose=verbose)
     else:
+        print('[classeval] The input variable [y_true] should contain at least two classes.')
         out=None
 
     # Return

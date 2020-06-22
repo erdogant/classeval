@@ -254,8 +254,8 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
     y_label = y_true.astype(str)
     y_pred = y_proba>=threshold
 
-    if len(np.unique(y_true))>2:
-        raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
+    # if len(np.unique(y_true))>2:
+    #    raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
     if (pos_label is None) and (y_true.dtype!='bool'):
         raise Exception('[classeval] CAP should have input argument <pos_label> or <y_true> being of type bool.')
     if (pos_label is not None) and (y_true.dtype!='bool'):

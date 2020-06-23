@@ -118,6 +118,12 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
     # Create classification report
     class_names = np.unique(y_true)
     if len(class_names)==2:
+        if len(np.shape(y_proba))>1:
+            print('[classeval] In two class evaluation, it is only recomended to specify <y_proba> of interest. The first column is now taken as input.')
+            y_proba = y_proba[:,0]
+        if pos_label is None:
+            print('[classeval] In two class evaluation, it is recomended to specify <pos_label>.')
+            pos_label = np.unique(y_true)[0]
         out = eval_twoclass(y_true, y_proba, threshold=threshold, pos_label=pos_label, normalize=normalize, verbose=verbose)
     elif len(class_names)>2:
         out = eval_multiclass(y_true, y_proba, y_score, y_pred, normalize=normalize, verbose=verbose)

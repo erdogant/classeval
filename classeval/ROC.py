@@ -42,7 +42,7 @@ def eval(y_true, y_proba, y_score=None, pos_label=None, threshold=0.5, verbose=3
         out = _ROC_twoclass(y_true, y_proba, threshold=threshold, pos_label=pos_label, verbose=verbose)
     elif len(np.unique(y_true))>2:
         out = _ROC_multiclass(y_true, y_proba, y_score, threshold=threshold, verbose=verbose)
-        out['roc_auc '] = AUC_multiclass(y_true, y_proba, verbose=verbose)
+        out['roc_auc'] = AUC_multiclass(y_true, y_proba, verbose=verbose)
     else:
         return None
 

@@ -50,23 +50,25 @@ def eval(y_true, y_proba, y_score=None, pos_label=None, threshold=0.5, verbose=3
 
 
 # %% ROC plot
-def plot(out, ax=None, title='', fontsize=12, figsize=(12,8), verbose=3):
+def plot(out, ax=None, title='', label='', color=None, fontsize=12, figsize=(12,8), verbose=3):
     """Plot ROC curves.
 
     Parameters
     ----------
     out : dict
         results from the eval() function.
-    title : str, optional
-        Title of the figure. The default is ''.
-    ax : figure object, optional
-        Figure axis. The default is None.
-    fontsize : int, optional
-        Size of the fonts. The default is 12.
-    figsize : tuple, optional
-        Figure size. The default is (12,8).
-    verbose : int, optional
-        print message to screen. The default is 3.
+    title : str, (default: '')
+        Title of the figure.
+    label : str, (default: '')
+        Label to be listed in the legend.
+    ax : figure object, (default: '')
+        Figure axis.
+    fontsize : int, (default: 12)
+        Size of the fonts.
+    figsize : tuple, (default: (12,8)
+        Figure size.
+    verbose : int, (default: 3)
+        print message to screen.
 
     Returns
     -------
@@ -74,9 +76,9 @@ def plot(out, ax=None, title='', fontsize=12, figsize=(12,8), verbose=3):
 
     """
     if len(out['class_names'])==2:
-        ax = _plot_twoclass(out, fontsize=fontsize, title=title, ax=ax, figsize=figsize)
+        ax = _plot_twoclass(out, fontsize=fontsize, title=title, label=label, ax=ax, color=color, figsize=figsize)
     elif len(out['class_names'])>2:
-        ax = _plot_multiclass(out, fontsize=fontsize, title=title, ax=ax, figsize=figsize, cmap='Set1')
+        ax = _plot_multiclass(out, fontsize=fontsize, title=title, label=label, ax=ax, color=color, figsize=figsize, cmap='Set1')
     else:
         ax = None
 
@@ -84,28 +86,28 @@ def plot(out, ax=None, title='', fontsize=12, figsize=(12,8), verbose=3):
 
 
 # %% ROC plot for multi-class model
-def _plot_multiclass(out, ax=None, fontsize=12, title='', figsize=(12,8), cmap='Set1'):
+def _plot_multiclass(out, ax=None, fontsize=12, title='', label='', figsize=(12,8), color=None, cmap='Set1'):
     fpr = out['fpr']
     tpr = out['tpr']
     roc_auc = out['auc']
-    colors = colourmap.generate(len(out['class_names']), cmap=cmap)
+    if color is None:
+        color = colourmap.generate(len(out['class_names']), cmap=cmap)
     linewidth = 1.5
 
     if ax is None:
         fig,ax = plt.subplots(figsize=figsize)
 
     ax.plot(fpr["micro"], tpr["micro"],
-            label='micro-average ROC curve (area = {0:0.2f})'
-            ''.format(roc_auc["micro"]),
-            color='deeppink', linestyle=':', linewidth=2)
+            label = ( 'micro-average ROC curve (area = %.2f)' %(roc_auc["micro"]) ),
+            color = 'deeppink', linestyle=':', linewidth=2)
 
     ax.plot(fpr["macro"], tpr["macro"],
-            label='macro-average ROC curve (area = {0:0.2f})'
-            ''.format(roc_auc["macro"]),
-            color='navy', linestyle=':', linewidth=2)
+            label = ( 'macro-average ROC curve (area = %.2f)' %(roc_auc["macro"]) ),
+            color = 'navy', linestyle=':', linewidth=2)
 
-    for i, [class_name, color] in enumerate(zip(out['class_names'], colors)):
-        ax.plot(fpr[i], tpr[i], color=color, lw=linewidth, label=('ROC curve of class %s (area = %.2f)' '' %(class_name, roc_auc[i])))
+    for i, [class_name, color] in enumerate(zip(out['class_names'], color)):
+        label = ( 'ROC curve of class %s (area = %.2f) ' %(class_name, roc_auc[i]) ) + label
+        ax.plot(fpr[i], tpr[i], color=color, lw=linewidth, label=label)
 
     ax.plot([0, 1], [0, 1], 'k--', lw=linewidth)
     ax.set_xlabel('False Positive Rate', fontsize=fontsize)
@@ -121,21 +123,19 @@ def _plot_multiclass(out, ax=None, fontsize=12, title='', figsize=(12,8), cmap='
 
 
 # %% ROC plot for two-class model
-def _plot_twoclass(out, fontsize=12, title='', ax=None, figsize=(12,8)):
+def _plot_twoclass(out, fontsize=12, title='', label='', color='darkorange', ax=None, figsize=(12,8)):
     """Plot two-class ROC curve.
 
     Parameters
     ----------
-    fpr : array-like
-        False positive rate.
-    tpr : array-like
-        True positive rate.
-    roc_auc : float
-        AUC scoring.
+    out : dict
+        The dictionary is derived from the .eval() function and contains fpr, tpr, roc_auc 
     fontsize : int, optional
         Size of the fonts. The default is 12.
     title : str, optional
         Title of the figure. The default is ''.
+    label : str, (default: '')
+        Label to be listed in the legend.
     ax : figure object, optional
         Figure axis. The default is None.
     figsize : tuple, optional
@@ -150,12 +150,16 @@ def _plot_twoclass(out, fontsize=12, title='', ax=None, figsize=(12,8)):
     fpr = out['fpr']
     tpr = out['tpr']
     roc_auc = out.get('auc',None)
+    
+    if color is None:
+        color='darkorange'
 
     if ax is None:
         fig,ax= plt.subplots(figsize=figsize)
 
+    label = ('ROC curve (area = %.2f) ' %(roc_auc)) + label
     linewidth = 1.5
-    ax.plot(fpr, tpr, color='darkorange', lw=linewidth, label='ROC curve (area = %.2f)' % roc_auc)
+    ax.plot(fpr, tpr, color=color, lw=linewidth, label=label)
     ax.plot([0, 1], [0, 1], color='navy', lw=linewidth, linestyle='--')
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])

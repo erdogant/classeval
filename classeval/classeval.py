@@ -7,6 +7,10 @@
 # Licence     : MIT
 # -----------------------------------------------------
 
+import colourmap
+import classeval.confmatrix as confmatrix
+import classeval.ROC as ROC
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,9 +21,37 @@ from sklearn.metrics import matthews_corrcoef
 from sklearn.metrics import average_precision_score, precision_recall_curve
 from sklearn.metrics import roc_auc_score
 from funcsigs import signature
-import classeval.confmatrix as confmatrix
-import classeval.ROC as ROC
 
+
+# %% Plot crossvalidation results for two class models.
+def plot_cross(out, title='', fontsize=12, figsize=(15, 8)):
+    """ Plot crossvalidation results for two class models.
+
+    Parameters
+    ----------
+    out : dict
+        dictionary containing multiple evaluated models from the eval() function.
+    title : str, optional
+        Title of the figure. The default is ''.
+    fontsize : int, optional
+        Font-size. The default is 12.
+    figsize : tuple, optional
+        Figure size. The default is (20,15).
+
+    Returns
+    -------
+    fig, ax
+
+    """
+    # Create colors from keys
+    colors = colourmap.generate(len(out.keys()))
+    # Make figure
+    fig, ax = plt.subplots(figsize=figsize)
+    # Plot each ROC
+    for i, key in enumerate(out.keys()):
+        ax = ROC.plot(out.get(key), label=str(key), color=colors[i,:], ax=ax)
+
+    return fig, ax
 
 # %% Main function for all two class results.
 def plot(out, title='', fontsize=12, figsize=(20, 15)):

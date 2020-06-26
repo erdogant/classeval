@@ -16,7 +16,7 @@ import classeval.ROC as ROC
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 # module level doc-string
 __doc__ = """
@@ -34,17 +34,22 @@ Example
 >>> from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 >>> gb = GradientBoostingClassifier()
 >>>
->>> import classeval as clf
->>>
+>>> # Load example dataset
 >>> X, y = clf.load_example('breast')
 >>> X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 >>>
+>>> # Load library
+>>> import classeval as clf
+>>>
+>>> # Fit model
 >>> model = gb.fit(X_train, y_train)
->>> y_proba = model.predict_proba(X_test)
+>>> y_proba = model.predict_proba(X_test)[:,1]
 >>> y_pred = model.predict(X_test)
 >>>
->>> results = clf.eval(y_test, y_proba[:,1])
+>>> # Evaluate results
+>>> results = clf.eval(y_test, y_proba, pos_label='malignant')
 >>> print(results['report'])
+>>> clf.plot(results)
 
 
 References

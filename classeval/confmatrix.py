@@ -33,7 +33,8 @@ def eval(y_true, y_pred, normalize=False, verbose=3):
     if normalize:
         if verbose>=3: print("Normalize confusion matrix")
         confmat = confmat.astype('float') / confmat.sum(axis=1)[:, np.newaxis]
-    if verbose>=3: print(confmat)
+    if verbose>=4:
+        print(confmat)
 
     out = {}
     out['class_names'] = class_names

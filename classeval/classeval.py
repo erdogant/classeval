@@ -48,8 +48,13 @@ def plot_cross(out, title='', fontsize=12, figsize=(15, 8)):
     # Make figure
     fig, ax = plt.subplots(figsize=figsize)
     # Plot each ROC
+    get_auc=[]
     for i, key in enumerate(out.keys()):
-        ax = ROC.plot(out.get(key), label=str(key), color=colors[i,:], ax=ax)
+        ax = ROC.plot(out.get(key), label=str(key), color=colors[i,:], ax=ax, title=title, fontsize=fontsize)
+        get_auc.append(out.get(key)['auc'])
+    
+    # Set title
+    ax.set_title(label=title + ('\nMean AUC: %.3f' %(np.mean(get_auc))), fontsize=fontsize)
 
     return fig, ax
 

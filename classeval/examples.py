@@ -10,6 +10,21 @@ from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
 gb = GradientBoostingClassifier()
 
 
+# %% cross validation example
+X, y = clf.load_example('breast')
+out = {}
+for i in range(0,10):
+    X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
+    # Train model
+    model = gb.fit(X_train, y_train)
+    y_proba = model.predict_proba(X_test)[:,1]
+    y_pred = model.predict(X_test)
+    # Evaluate model
+    out['cross ' +str(i)] = clf.eval(y_true, y_proba, y_pred=y_pred, pos_label='malignant')
+
+clf.plot_cross(out, title='crossvalidation')
+
+
 # %% Two-class
 X, y = clf.load_example('breast')
 X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)

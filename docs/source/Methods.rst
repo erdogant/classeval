@@ -37,7 +37,7 @@ Parameters required
 
 
 Optimizing model performance
-----------------------------
+------------------------------
 
 The ``classeval`` library can also help in tuning the models performance by examining the effect of the threshold.
 After learning a model, and predicting new samples with it, each sample will get a probability belowing to the class.
@@ -48,7 +48,7 @@ Evaluation methods
 ''''''''''''''''''''''
 
 
-Confusion matrix
+Confusion-matrix
 --------------------
 
 A confusion matrix is a table that is used to describe the performance of a classification model on a set of test data for which the true values are known.
@@ -62,7 +62,7 @@ Applicable
 
 
 
-ROC-AUC
+ROC/AUC
 --------------------
 
 The Area Under The Curve (AUC) and Receiver Operating Characteristics curve (ROC) are one of the most important evaluation metrics for checking any classification model’s performance.
@@ -91,7 +91,7 @@ A perfect score would result in an AUC score=1 and ROC curve like this:
 
 
 
-CAP
+CAP analysis
 --------------------
 
 The CAP Curve analyse how to effectively identify all data points of a given class using minimum number of tries.

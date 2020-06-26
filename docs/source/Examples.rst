@@ -46,12 +46,11 @@ Print some results to screen:
     # 		      precision    recall  f1-score   support
     # 
     # 	       False       0.96      0.96      0.96        70
-    # 		True       0.93      0.93      0.93        44
+    #           True       0.93      0.93      0.93        44
     # 
     # 	    accuracy                           0.95       114
     # 	   macro avg       0.94      0.94      0.94       114
     # 	weighted avg       0.95      0.95      0.95       114
-    # 
 	
 
 Plot by using :func:`classeval.classeval.plot`:

@@ -209,3 +209,46 @@ Applicable
     * Two-class approach
     * Imbalanced classes
 
+
+
+Cross validation
+'''''''''''''''''''''''''''''''''
+
+The ``classeval`` library provides an easy way of plotting multiple evaluations of crosses using the function :func:`classeval.classeval.plot_cross`.
+This function requires a dict that contains the evaluations from the **two-class** approach.
+
+
+.. code:: python
+
+    # Import library
+    import classeval as clf
+
+    # Load example dataset
+    X, y = clf.load_example('breast')
+    # Create empty dict to store the results
+    out = {}
+    
+    # 10-fold crossvalidation
+    for i in range(0,10):
+        # Random train/test split
+        X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
+        # Train model and make predictions on test set
+        model = gb.fit(X_train, y_train)
+        y_proba = model.predict_proba(X_test)[:,1]
+        y_pred = model.predict(X_test)
+        # Evaluate model and store in each evalution
+        name = 'cross '+str(i)
+        out[name] = clf.eval(y_true, y_proba, y_pred=y_pred, pos_label='malignant')
+        
+    # After running the cross-validation, the ROC/AUC can be plotted as following:
+    clf.plot_cross(out, title='crossvalidation')
+
+
+
+ROC/AUC 10-fold crossvalidation
+
+.. fig_crossvalidation_evaluation:
+
+.. figure:: ../figs/crossvalidation_evaluation.png
+
+

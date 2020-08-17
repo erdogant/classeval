@@ -147,7 +147,7 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
     if isinstance(y_true, pd.DataFrame):
         print('[classeval] pandas DataFrame not allowed as input for y_true. Use lists or numpy array-like')
     if pos_label is not None:
-        if not np.any(y_true==pos_label):
+        if not np.any(np.isin(y_true, pos_label)):
             raise Exception(['[classeval] pos_label is not found in y_true!'])
     # if (pos_label is None) and (y_true.dtype!='bool') and (len(np.unique(y_true))<=2):
         # raise Exception('[classeval] eval should have input argument <pos_label> or <y_true> being of type bool.')
@@ -238,7 +238,7 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
     y_proba : array of floats
         Probabilities of the predicted labels.
     pos_label : str
-        Positive label (only for the two-class models and when y_ture is of type string. If you set bool, then the positive label is True)
+        Positive label (only for the two-class models and when y_true is of type string. If you set bool, then the positive label is True)
     threshold : float [0-1], optional
         Cut-off point to define the class label. The default is 0.5 in a two-class model.
     normalize : bool, optional
@@ -294,22 +294,25 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
         Cut-off point to assign to a class
 
     """
-    y_label = y_true.astype(str)
+    if (pos_label is None) and (y_true.dtype is not 'bool'):
+        raise Exception('[classeval] CAP should have input argument <pos_label> or <y_true> being of type bool.')
+
     y_pred = y_proba>=threshold
+    y_label = y_true.astype(str)
 
     # if len(np.unique(y_true))>2:
     #    raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
-    if (pos_label is None) and (y_true.dtype!='bool'):
-        raise Exception('[classeval] CAP should have input argument <pos_label> or <y_true> being of type bool.')
-    if (pos_label is not None) and (y_true.dtype!='bool'):
+    if (pos_label is not None) and (y_true.dtype is not 'bool'):
         # If y_true is strings, convert to bool based on positive label
-        y_true = y_label==pos_label
+        pos_label = str(pos_label)
+        # y_true = y_label==pos_label
+        y_true = np.isin(y_label, pos_label)
         neg_label = np.setdiff1d(np.unique(y_label),pos_label)[0]
         # Determine y_pred
         y_pred_label = np.repeat('',len(y_true)).astype(y_label.dtype)
         I = y_proba>=threshold
         y_pred_label[I] = pos_label
-        y_pred_label[I==False] = neg_label
+        y_pred_label[~I] = neg_label
     else:
         pos_label=True
         neg_label=False

@@ -146,11 +146,15 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
         print('[classeval] pandas DataFrame not allowed as input for y_proba. Use lists or numpy array-like')
     if isinstance(y_true, pd.DataFrame):
         print('[classeval] pandas DataFrame not allowed as input for y_true. Use lists or numpy array-like')
+
+    if (pos_label is None) and (str(y_true.dtype) is 'bool'):
+        pos_label = True
+    elif pos_label is None:
+        pos_label = np.unique(y_true)[0]
+        if verbose>=2: print('[classeval] >Warning In two class evaluation, it is recomended to specify <pos_label>. pos_label is set to "%s"' %(pos_label))
     if pos_label is not None:
         if not np.any(np.isin(y_true, pos_label)):
             raise Exception(['[classeval] pos_label is not found in y_true!'])
-    # if (pos_label is None) and (y_true.dtype!='bool') and (len(np.unique(y_true))<=2):
-        # raise Exception('[classeval] eval should have input argument <pos_label> or <y_true> being of type bool.')
 
     # Create classification report
     class_names = np.unique(y_true)
@@ -158,9 +162,6 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
         if len(np.shape(y_proba))>1:
             print('[classeval] Warning >In two class evaluation, it is only recomended to specify <y_proba> of interest. The first column is now taken as input.')
             y_proba = y_proba[:,0]
-        if pos_label is None:
-            pos_label = np.unique(y_true)[0]
-            print('[classeval] >Warning In two class evaluation, it is recomended to specify <pos_label>. pos_label is set to "%s"' %(pos_label))
         out = eval_twoclass(y_true, y_proba, threshold=threshold, pos_label=pos_label, normalize=normalize, verbose=verbose)
     elif len(class_names)>2:
         out = eval_multiclass(y_true, y_proba, y_score, y_pred, normalize=normalize, verbose=verbose)
@@ -294,7 +295,7 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
         Cut-off point to assign to a class
 
     """
-    if (pos_label is None) and (y_true.dtype is not 'bool'):
+    if (pos_label is None) and (str(y_true.dtype) is not 'bool'):
         raise Exception('[classeval] CAP should have input argument <pos_label> or <y_true> being of type bool.')
 
     y_pred = y_proba>=threshold

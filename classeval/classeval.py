@@ -147,7 +147,7 @@ def eval(y_true, y_proba, y_score=None, y_pred=None, pos_label=None, threshold=0
     if isinstance(y_true, pd.DataFrame):
         print('[classeval] pandas DataFrame not allowed as input for y_true. Use lists or numpy array-like')
 
-    if (pos_label is None) and (str(y_true.dtype) is 'bool'):
+    if (pos_label is None) and (str(y_true.dtype) == 'bool'):
         pos_label = True
     elif pos_label is None:
         pos_label = np.unique(y_true)[0]
@@ -295,7 +295,7 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
         Cut-off point to assign to a class
 
     """
-    if (pos_label is None) and (str(y_true.dtype) is not 'bool'):
+    if (pos_label is None) and (str(y_true.dtype) != 'bool'):
         raise Exception('[classeval] CAP should have input argument <pos_label> or <y_true> being of type bool.')
 
     y_pred = y_proba>=threshold
@@ -303,7 +303,7 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
 
     # if len(np.unique(y_true))>2:
     #    raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')
-    if (pos_label is not None) and (y_true.dtype is not 'bool'):
+    if (pos_label is not None) and (y_true.dtype != 'bool'):
         # If y_true is strings, convert to bool based on positive label
         pos_label = str(pos_label)
         # y_true = y_label==pos_label

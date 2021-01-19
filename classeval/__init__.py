@@ -16,7 +16,7 @@ import classeval.ROC as ROC
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '0.1.11'
+__version__ = '0.1.12'
 
 # module level doc-string
 __doc__ = """

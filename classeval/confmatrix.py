@@ -7,7 +7,7 @@ import itertools
 
 # %%
 def _normalize_confmat(confmat, verbose=3):
-    if verbose>=3: print("Normalize confusion matrix")
+    if verbose>=4: print("[classeval] >Normalize confusion matrix")
     return confmat.astype('float') / confmat.sum(axis=1)[:, np.newaxis]
 
 # %% Class evaluation

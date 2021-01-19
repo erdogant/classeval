@@ -5,6 +5,10 @@ from sklearn.metrics import confusion_matrix
 import numpy as np
 import itertools
 
+# %%
+def _normalize_confmat(confmat, verbose=3):
+    if verbose>=3: print("Normalize confusion matrix")
+    return confmat.astype('float') / confmat.sum(axis=1)[:, np.newaxis]
 
 # %% Class evaluation
 def eval(y_true, y_pred, normalize=False, verbose=3):
@@ -26,19 +30,20 @@ def eval(y_true, y_pred, normalize=False, verbose=3):
     dict containing results.
 
     """
-    # Compute confusion matrix
+    # Class names
     class_names = np.unique(np.append(y_true, y_pred))
+    # Compute confusion matrix
     confmat = confusion_matrix(y_true, y_pred, labels=class_names)
-
-    if normalize:
-        if verbose>=3: print("Normalize confusion matrix")
-        confmat = confmat.astype('float') / confmat.sum(axis=1)[:, np.newaxis]
+    # Normalize confmat
+    confmat_norm = _normalize_confmat(confmat, verbose=3)
+    # Print to screen
     if verbose>=4:
         print(confmat)
-
+    # Output dict
     out = {}
     out['class_names'] = class_names
     out['confmat'] = confmat
+    out['confmat_norm'] = confmat_norm
     out['normalized'] = normalize
     return(out)
 
@@ -63,10 +68,15 @@ def plot(out, class_names=None, title='', cmap=plt.cm.Blues, figsize=(12,12), fo
     tuple containing (fig, ax).
 
     """
+    if out['normalized']:
+        confmat = out['confmat_norm']
+    else:
+        confmat = out['confmat']
+        
     if len(out['class_names'])==2:
-        fig, ax = _plot_twoclass(out['confmat'], title, out['normalized'], cmap, figsize, out['class_names'], fontsize)
+        fig, ax = _plot_twoclass(confmat, title, out['normalized'], cmap, figsize, out['class_names'], fontsize)
     elif len(out['class_names'])>2:
-        fig, ax = _plot_multiclass(out['confmat'], title, out['normalized'], cmap, figsize, out['class_names'], fontsize)
+        fig, ax = _plot_multiclass(confmat, title, out['normalized'], cmap, figsize, out['class_names'], fontsize)
     else:
         fig,ax = None, None
 
@@ -94,7 +104,8 @@ def _plot_multiclass(confmat, title, normalize, cmap, figsize, class_names, font
     plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor", fontsize=fontsize)
 
     # Loop over data dimensions and create text annotations.
-    fmt = '.2f' if normalize else 'd'
+    # fmt = '.2f' if normalize else 'd'
+    fmt = 'g'
     thresh = confmat.max() / 2.
     for i in range(confmat.shape[0]):
         for j in range(confmat.shape[1]):
@@ -132,7 +143,8 @@ def _plot_twoclass(confmat, title, normalize, cmap, figsize, class_names, fontsi
     plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor", fontsize=fontsize)
 
     # Numbers in the figure
-    fmt = '.2f' if normalize else 'd'
+    # fmt = '.2f' if normalize else 'd'
+    fmt = 'g'
     thresh = confmat.max() / 2.
     for i, j in itertools.product(range(confmat.shape[0]), range(confmat.shape[1])):
         plt.text(j, i, format(confmat[i, j], fmt), 

@@ -25,7 +25,7 @@ classeval
 
 Description
 -----------
-classeval is a python package for classifier evaluation.
+classeval is a python package for the evaluation of supervised predictions for two-class and multi-class classifiers.
 
 
 Example

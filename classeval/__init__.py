@@ -16,7 +16,7 @@ import classeval.ROC as ROC
 
 __author__ = 'Erdogan Tasksen'
 __email__ = 'erdogant@gmail.com'
-__version__ = '0.1.12'
+__version__ = '0.1.13'
 
 # module level doc-string
 __doc__ = """
@@ -25,7 +25,7 @@ classeval
 
 Description
 -----------
-classeval is a python package for fast and easy classifier evaluation.
+classeval is a python package for classifier evaluation.
 
 
 Example

@@ -83,17 +83,6 @@ out = clf.eval(y_true, y_proba, y_score, y_pred)
 ax = clf.plot(out)
 ```
 
-#### Citation
-Please cite classeval in your publications if this is useful for your research. Here is an example BibTeX entry:
-```BibTeX
-@misc{erdogant2020classeval,
-  title={classeval},
-  author={Erdogan Taskesen},
-  year={2019},
-  howpublished={\url{https://github.com/erdogant/classeval}},
-}
-```
-
 #### Maintainers
 * Erdogan Taskesen, github: [erdogant](https://github.com/erdogant)
 

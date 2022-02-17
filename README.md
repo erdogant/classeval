@@ -6,23 +6,19 @@
 [![Downloads](https://pepy.tech/badge/classeval)](https://pepy.tech/project/classeval)
 [![Downloads](https://pepy.tech/badge/classeval/month)](https://pepy.tech/project/classeval/month)
 [![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/classeval/)
-[![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)
+<!---[![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)-->
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
 
 The library ``classeval`` is developed to evaluate the models performance of any kind of **two-class** or **multi-class** model. ``classeval`` computes many scoring measures in case of a two-class clasification model. Some measures are utilized from ``sklearn``, among them AUC, MCC, Cohen kappa score, matthews correlation coefficient, whereas others are custom. This library can help to consistenly compare the output of various models. In addition, it can also give insights in tuning the models performance as the the threshold being used can be adjusted and evaluated. The output of ``classeval`` can subsequently plotted in terms of ROC curves, confusion matrices, class distributions, and probability plots. Such plots can help in better understanding of the results.
 
-### Docs
-Navigate to [API documentations](https://erdogant.github.io/classeval/) for more detailed information.
+# 
+**Star this repo if you like it! ⭐️**
+#
 
+## Blog/Documentation
 
+* [**classeval documentation pages (Sphinx)**](https://erdogant.github.io/classeval/)
 
-### Contents
-- [Installation](#-installation)
-- [Quick Start](#-quick-start)
-- [Contribute](#-contribute)
-- [Citation](#-citation)
-- [Maintainers](#-maintainers)
-- [License](#-copyright)
 
 ### Installation
 * Install classeval from PyPI (recommended). classeval is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 

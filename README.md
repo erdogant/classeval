@@ -15,7 +15,7 @@ The library ``classeval`` is developed to evaluate the models performance of any
 **Star this repo if you like it! ⭐️**
 #
 
-## Blog/Documentation
+## Documentation
 
 * [**classeval documentation pages (Sphinx)**](https://erdogant.github.io/classeval/)
 

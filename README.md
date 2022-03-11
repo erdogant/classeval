@@ -67,13 +67,24 @@ import classeval as clf
 </p>
 
 
+#### [Example: Model performance tweaking](https://erdogant.github.io/classeval/pages/html/Examples.html#examples-multi-class-model)
 
-#### Maintainers
+<p align="left">
+  <a href="https://erdogant.github.io/classeval/pages/html/Examples.html#examples-multi-class-model">
+  <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_threshold_05.png" width="600" />
+  </a>
+</p>
+<hr>
+
+<hr>
+
+### Contribute
+* All kinds of contributions are welcome!
+
+### Citation
+Please cite ``classeval`` in your publications if this is useful for your research. See column right for citation information.
+
+### Maintainer
 * Erdogan Taskesen, github: [erdogant](https://github.com/erdogant)
-
-#### Contribute
 * Contributions are welcome.
-* If you wish to buy me a <a href="https://www.buymeacoffee.com/erdogant">Coffee</a> for this work, it is very appreciated :)
-
-#### Licence
-* See [LICENSE](LICENSE) for details.
+* If you wish to buy me a <a href="https://erdogant.github.io/donate/?currency=USD&amount=5">Coffee</a> for this work, it is very appreciated :)

@@ -46,6 +46,7 @@ import classeval as clf
 <p align="left">
   <a href="https://erdogant.github.io/classeval/pages/html/Examples.html">
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/Figure_1.png" width="600" />
+    <br>
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/Figure_2.png" width="400" />
   </a>
 </p>
@@ -58,7 +59,9 @@ import classeval as clf
 <p align="left">
   <a href="https://erdogant.github.io/classeval/pages/html/Examples.html#examples-multi-class-model">
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_fig1_1.png" width="400" />
+    <br>
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_fig1_3.png" width="400" />
+    <br>
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_fig1_4.png" width="400" />
   </a>
 </p>

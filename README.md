@@ -67,10 +67,10 @@ import classeval as clf
 </p>
 
 
-#### [Example: Model performance tweaking](https://erdogant.github.io/classeval/pages/html/Examples.html#examples-multi-class-model)
+#### [Example: Model performance tweaking](https://erdogant.github.io/classeval/pages/html/Examples.html#model-performance-tweaking)
 
 <p align="left">
-  <a href="https://erdogant.github.io/classeval/pages/html/Examples.html#examples-multi-class-model">
+  <a href="https://erdogant.github.io/classeval/pages/html/Examples.html#model-performance-tweaking">
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_threshold_05.png" width="600" />
   </a>
 </p>

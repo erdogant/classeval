@@ -12,79 +12,79 @@
 The library ``classeval`` is developed to evaluate the models performance of any kind of **two-class** or **multi-class** model. ``classeval`` computes many scoring measures in case of a two-class clasification model. Some measures are utilized from ``sklearn``, among them AUC, MCC, Cohen kappa score, matthews correlation coefficient, whereas others are custom. This library can help to consistenly compare the output of various models. In addition, it can also give insights in tuning the models performance as the the threshold being used can be adjusted and evaluated. The output of ``classeval`` can subsequently plotted in terms of ROC curves, confusion matrices, class distributions, and probability plots. Such plots can help in better understanding of the results.
 
 # 
-**Star this repo if you like it! ⭐️**
-#
-
-## Documentation
-
-* [**classeval documentation pages (Sphinx)**](https://erdogant.github.io/classeval/)
+**⭐️ Star this repo if you like it ⭐️**
+# 
 
 
-## Installation
-* Install classeval from PyPI (recommended). classeval is compatible with Python 3.6+ and runs on Linux, MacOS X and Windows. 
-* It is distributed under the MIT license.
+### [Documentation pages](https://erdogant.github.io/classeval/)
 
-#### Quick Start
-```
-pip install classeval
-```
+On the [documentation pages](https://erdogant.github.io/classeval/) you can find more information about ``classeval`` with examples. 
 
-* Alternatively, install classeval from the GitHub source:
+# 
+
+##### Install classeval from PyPI
 ```bash
-git clone https://github.com/erdogant/classeval.git
-cd classeval
-python setup.py install
-```  
+pip install classeval     # normal install
+pip install -U classeval  # update if needed
+```
 
-#### Import classeval package
+
+### Import classeval package
 ```python
 import classeval as clf
+
 ```
 
-#### Example two-class model:
-```python
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
-gb = GradientBoostingClassifier()
+<hr>
 
-X, y = clf.load_example('breast')
-X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
-model = gb.fit(X_train, y_train)
-y_proba = model.predict_proba(X_test)[:,1]
-y_pred = model.predict(X_test)
+### Examples
 
-# Evaluate
-out = clf.eval(y_true, y_proba, pos_label='malignant')
-ax = clf.plot(out, figsize=(20,15), fontsize=14)
-```
+# 
 
-<p align="center">
+#### [Example: Evaluate Two-class model](https://erdogant.github.io/classeval/pages/html/Examples.html)
+
+<p align="left">
+  <a href="https://erdogant.github.io/classeval/pages/html/Examples.html">
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/Figure_1.png" width="600" />
+    <br>
   <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/Figure_2.png" width="400" />
+  </a>
 </p>
 
-#### Example multi-class model:
-```python
 
-X,y = clf.load_example('iris')
-X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.5)
+#
 
-model = gb.fit(X_train, y_train)
-y_pred = model.predict(X_test)
-y_proba = model.predict_proba(X_test)
-y_score = model.decision_function(X_test)
+#### [Example: Evaluate multi-class model](https://erdogant.github.io/classeval/pages/html/Examples.html#examples-multi-class-model)
 
-# All
-out = clf.eval(y_true, y_proba, y_score, y_pred)
-ax = clf.plot(out)
-```
+<p align="left">
+  <a href="https://erdogant.github.io/classeval/pages/html/Examples.html#examples-multi-class-model">
+  <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_fig1_1.png" width="400" />
+    <br>
+  <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_fig1_3.png" width="400" />
+    <br>
+  <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_fig1_4.png" width="400" />
+  </a>
+</p>
 
-#### Maintainers
+
+#### [Example: Model performance tweaking](https://erdogant.github.io/classeval/pages/html/Examples.html#model-performance-tweaking)
+
+<p align="left">
+  <a href="https://erdogant.github.io/classeval/pages/html/Examples.html#model-performance-tweaking">
+  <img src="https://github.com/erdogant/classeval/blob/master/docs/figs/multiclass_threshold_05.png" width="600" />
+  </a>
+</p>
+<hr>
+
+<hr>
+
+### Contribute
+* All kinds of contributions are welcome!
+
+### Citation
+Please cite ``classeval`` in your publications if this is useful for your research. See column right for citation information.
+
+### Maintainer
 * Erdogan Taskesen, github: [erdogant](https://github.com/erdogant)
-
-#### Contribute
 * Contributions are welcome.
-* If you wish to buy me a <a href="https://www.buymeacoffee.com/erdogant">Coffee</a> for this work, it is very appreciated :)
-
-#### Licence
-* See [LICENSE](LICENSE) for details.
+* If you wish to buy me a <a href="https://erdogant.github.io/donate/?currency=USD&amount=5">Coffee</a> for this work, it is very appreciated :)

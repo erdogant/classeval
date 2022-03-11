@@ -16,7 +16,7 @@ keywords:
   - "ROC"
 license: "MIT"
 message: "If you use this software, please cite it using these metadata."
-repository-code: "https://github.com/erdogant/classeval"
+repository-code: "https://erdogant.github.io/classeval/"
 title: "classeval is a python package for the evaluation of supervised predictions for two-class and multi-class classifiers."
 version: "0.1.0"
 ...

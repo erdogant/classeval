@@ -22,7 +22,7 @@ setuptools.setup(
      description="Python package classeval",
      long_description=long_description,
      long_description_content_type="text/markdown",
-     url="https://github.com/erdogant/classeval",
+     url="https://erdogant.github.io/classeval/",
 	 download_url = 'https://github.com/erdogant/classeval/archive/'+new_version+'.tar.gz',
      packages=setuptools.find_packages(), # Searches throughout all dirs for files to include
      include_package_data=True, # Must be true to include files depicted in MANIFEST.in

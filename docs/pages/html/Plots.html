@@ -15,6 +15,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -68,9 +69,10 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Blog.html">Blog</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Blog.html#github">Github</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Blog.html#sponsor-this-project">Sponsor this project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html">Sponsor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#medium-blog">Medium Blog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#github">Github</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Documentation.html#citing">Citing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="classeval.classeval.html">API References</a></li>
 </ul>
@@ -103,8 +105,8 @@
              
   <hr class="docutils" id="code-directive" />
 <section id="eval">
-<h1>Eval<a class="headerlink" href="#eval" title="Permalink to this headline"></a></h1>
-<p>The <code class="docutils literal notranslate"><span class="pre">classeval</span></code> library contains various functions to plot the results. The main function to plot is the function <a class="reference internal" href="classeval.classeval.html#classeval.classeval.plot" title="classeval.classeval.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></a>. This function automatically determines whether the trained model is based on a two-class or multi-class approach. Plotting results is possible by simply using the <a class="reference internal" href="classeval.classeval.html#classeval.classeval.plot" title="classeval.classeval.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></a> functionality.</p>
+<h1>Eval<a class="headerlink" href="#eval" title="Permalink to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">classeval</span></code> library contains various functions to plot the results. The main function to plot is the function <code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code>. This function automatically determines whether the trained model is based on a two-class or multi-class approach. Plotting results is possible by simply using the <code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code> functionality.</p>
 <p>Lets first train a simple model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load data</span>
 <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">&#39;breast&#39;</span><span class="p">)</span>
@@ -133,7 +135,7 @@
 </figure>
 </section>
 <section id="roc-auc">
-<h1>ROC-AUC<a class="headerlink" href="#roc-auc" title="Permalink to this headline"></a></h1>
+<h1>ROC-AUC<a class="headerlink" href="#roc-auc" title="Permalink to this heading"></a></h1>
 <p>Plotting the ROC is initially desiged for two-class models. However, with some adjustments it is also possible to plot the ROC for a multi-class model under the assumption that is OvR or OvO schemes. See methods section for more details. With the function <a class="reference internal" href="classeval.classeval.html#classeval.ROC.eval" title="classeval.ROC.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.ROC.eval()</span></code></a> the ROC and AUC can be examined and plotted for both the two-class as well as multi-class models.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute ROC</span>
 <span class="n">outRoc</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">)</span>
@@ -152,7 +154,7 @@
 </figure>
 </section>
 <section id="cap">
-<h1>CAP<a class="headerlink" href="#cap" title="Permalink to this headline"></a></h1>
+<h1>CAP<a class="headerlink" href="#cap" title="Permalink to this heading"></a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute CAP</span>
 <span class="n">outCAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">CAP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -162,7 +164,7 @@
 </figure>
 </section>
 <section id="ap">
-<h1>AP<a class="headerlink" href="#ap" title="Permalink to this headline"></a></h1>
+<h1>AP<a class="headerlink" href="#ap" title="Permalink to this heading"></a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute AP</span>
 <span class="n">outAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">AP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
@@ -172,7 +174,7 @@
 </figure>
 </section>
 <section id="confusion-matrix">
-<h1>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this headline"></a></h1>
+<h1>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this heading"></a></h1>
 <p>A confusion matrix is a table to describe the performance of a classification model.
 With the function <a class="reference internal" href="classeval.classeval.html#classeval.confmatrix.eval" title="classeval.confmatrix.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.confmatrix.eval()</span></code></a> the confusion matrix can be examined and plotted for both the two-class as well as multi-class model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute confmatrix</span>
@@ -192,9 +194,9 @@ With the function <a class="reference internal" href="classeval.classeval.html#c
 </figure>
 </section>
 <section id="probability-plot">
-<h1>Probability Plot<a class="headerlink" href="#probability-plot" title="Permalink to this headline"></a></h1>
+<h1>Probability Plot<a class="headerlink" href="#probability-plot" title="Permalink to this heading"></a></h1>
 <p>The probability plot depicts the probabilities of the samples being classified.
-This function is desiged for only two-class models and callable via: <a class="reference internal" href="classeval.classeval.html#classeval.classeval.TPFP" title="classeval.classeval.TPFP"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.TPFP()</span></code></a></p>
+This function is desiged for only two-class models and callable via: <code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.TPFP()</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute TPFP</span>
 <span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>

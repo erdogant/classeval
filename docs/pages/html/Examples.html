@@ -15,7 +15,6 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -114,7 +113,7 @@
              
   <hr class="docutils" id="code-directive" />
 <section id="examples-two-class-model">
-<h1>Examples two-class model<a class="headerlink" href="#examples-two-class-model" title="Permalink to this heading"></a></h1>
+<h1>Examples two-class model<a class="headerlink" href="#examples-two-class-model" title="Permalink to this headline"></a></h1>
 <p>In this example we are going to learn a model, and use the output <cite>y_true</cite>, <cite>y_proba</cite> and <cite>y_pred</cite> in <code class="docutils literal notranslate"><span class="pre">classeval</span></code> for the evaluation of the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>
@@ -154,7 +153,7 @@
 <span class="c1">#   weighted avg       0.95      0.95      0.95       114</span>
 </pre></div>
 </div>
-<p>Plot by using <code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code>:</p>
+<p>Plot by using <a class="reference internal" href="classeval.classeval.html#classeval.classeval.plot" title="classeval.classeval.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></a>:</p>
 <dl class="simple">
 <dt>Four subplots are created:</dt><dd><ul class="simple">
 <li><p>top left: ROC curve</p></li>
@@ -176,7 +175,7 @@
 <img alt="_images/example1_fig3.png" src="_images/example1_fig3.png" />
 </figure>
 <section id="roc-in-two-class">
-<h2>ROC in two-class<a class="headerlink" href="#roc-in-two-class" title="Permalink to this heading"></a></h2>
+<h2>ROC in two-class<a class="headerlink" href="#roc-in-two-class" title="Permalink to this headline"></a></h2>
 <p>Plot ROC using:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute ROC</span>
 <span class="n">out_ROC</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">)</span>
@@ -187,7 +186,7 @@
 </div>
 </section>
 <section id="confmatrix-in-two-class">
-<h2>Confmatrix in two-class<a class="headerlink" href="#confmatrix-in-two-class" title="Permalink to this heading"></a></h2>
+<h2>Confmatrix in two-class<a class="headerlink" href="#confmatrix-in-two-class" title="Permalink to this headline"></a></h2>
 <p>It is also possible to plot only the confusion matrix:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute confmatrix</span>
 <span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -202,7 +201,7 @@
 </section>
 </section>
 <section id="examples-multi-class-model">
-<h1>Examples multi-class model<a class="headerlink" href="#examples-multi-class-model" title="Permalink to this heading"></a></h1>
+<h1>Examples multi-class model<a class="headerlink" href="#examples-multi-class-model" title="Permalink to this headline"></a></h1>
 <p>In this example we are going to learn a <strong>multi-class</strong> model, and use the output <cite>y_true</cite>, <cite>y_proba</cite> and <cite>y_pred</cite> in <code class="docutils literal notranslate"><span class="pre">classeval</span></code> for the evaluation of the model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>
@@ -222,7 +221,7 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Plot by using <code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></p>
+<p>Plot by using <a class="reference internal" href="classeval.classeval.html#classeval.classeval.plot" title="classeval.classeval.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Make plot</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 </pre></div>
@@ -235,7 +234,7 @@
 <img alt="_images/multiclass_fig1_3.png" src="_images/multiclass_fig1_3.png" />
 </figure>
 <section id="roc-in-multi-class">
-<h2>ROC in multi-class<a class="headerlink" href="#roc-in-multi-class" title="Permalink to this heading"></a></h2>
+<h2>ROC in multi-class<a class="headerlink" href="#roc-in-multi-class" title="Permalink to this headline"></a></h2>
 <p>ROC uses the same function as for two-class.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ROC evaluation</span>
 <span class="n">out_ROC</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">y_score</span><span class="p">)</span>
@@ -244,7 +243,7 @@
 </div>
 </section>
 <section id="confmatrix-in-multi-class">
-<h2>Confmatrix in multi-class<a class="headerlink" href="#confmatrix-in-multi-class" title="Permalink to this heading"></a></h2>
+<h2>Confmatrix in multi-class<a class="headerlink" href="#confmatrix-in-multi-class" title="Permalink to this headline"></a></h2>
 <p>Confmatrix uses the same function as for two-class.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confmatrix evaluation</span>
 <span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -257,7 +256,7 @@
 </figure>
 </section>
 <section id="normalized-confusion-matrix">
-<h2>Normalized confusion matrix<a class="headerlink" href="#normalized-confusion-matrix" title="Permalink to this heading"></a></h2>
+<h2>Normalized confusion matrix<a class="headerlink" href="#normalized-confusion-matrix" title="Permalink to this headline"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Confusion matrix</span>
 <span class="n">out_CONFMAT</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">confmatrix</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># Plot</span>
@@ -270,7 +269,7 @@
 </section>
 </section>
 <section id="model-performance-tweaking">
-<h1>Model Performance tweaking<a class="headerlink" href="#model-performance-tweaking" title="Permalink to this heading"></a></h1>
+<h1>Model Performance tweaking<a class="headerlink" href="#model-performance-tweaking" title="Permalink to this headline"></a></h1>
 <p>It can be desired to tweak the performance of the model and thereby adjust, for example the number of False postives. With <code class="docutils literal notranslate"><span class="pre">classeval</span></code> it is easy to determine the most desired model.</p>
 <p>Lets start with a simple model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load example dataset</span>
@@ -313,7 +312,7 @@
 </figure>
 </section>
 <section id="cross-validation">
-<h1>Cross-validation<a class="headerlink" href="#cross-validation" title="Permalink to this heading"></a></h1>
+<h1>Cross-validation<a class="headerlink" href="#cross-validation" title="Permalink to this headline"></a></h1>
 <p>Below is depicted an example of plotting cross-validation using <code class="docutils literal notranslate"><span class="pre">classeval</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
 <span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>

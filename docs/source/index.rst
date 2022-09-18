@@ -7,7 +7,7 @@ The library ``classeval`` is developed to evaluate the models performance of any
 
 You contribution is important
 ==============================
-If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/classeval/>`_ and have a look at the `sponser page <https://github.com/erdogant/classeval/pages/html/Documentation.html>`_!
+If you ❤️ this project, **star** this repo at the `github page <https://github.com/erdogant/classeval/>`_ and have a look at the `sponser page <https://erdogant.github.io/classeval/pages/html/Documentation.html>`_!
 
 
 Github

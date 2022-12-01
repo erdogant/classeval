@@ -6,7 +6,7 @@ print(clf.__version__)
 
 # %% Import example dataset
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble.gradient_boosting import GradientBoostingClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 gb = GradientBoostingClassifier()
 
 

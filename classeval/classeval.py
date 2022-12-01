@@ -84,7 +84,7 @@ def plot(out, title='', fontsize=12, figsize=(20, 15)):
 
     if len(out['class_names']) == 2:
         # Setup figure
-        _, ax = plt.subplots(2,2, figsize=figsize)
+        fig, ax = plt.subplots(2, 2, figsize=figsize)
         # pr curve
         AP(y_true, y_proba, fontsize=fontsize, title=title, ax=ax[1][0], showfig=True)
         # ROC plot
@@ -98,7 +98,7 @@ def plot(out, title='', fontsize=12, figsize=(20, 15)):
         # Confusion matrix
         _ = confmatrix.plot(out['confmat'], title=title)
         # Stacked bar data
-        class_names = {True:str(out['pos_label']), False:str(out['neg_label'])}
+        class_names = {True: str(out['pos_label']), False: str(out['neg_label'])}
         y_true_str = np.array(list(map(class_names.get, y_true)))
         y_pred_str = np.array(list(map(class_names.get, out['y_pred'])))
         # Make stackedbar plot
@@ -111,7 +111,7 @@ def plot(out, title='', fontsize=12, figsize=(20, 15)):
         _ = confmatrix.plot(out['confmat'])
         _ = _stackedbar_multiclass(out['y_true'], out['y_pred'], showfig=True, fontsize=fontsize)
 
-    return ax
+    return fig, ax
 
 
 # %% Main function for all two class results.

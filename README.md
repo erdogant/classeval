@@ -3,11 +3,17 @@
 [![Python](https://img.shields.io/pypi/pyversions/classeval)](https://img.shields.io/pypi/pyversions/classeval)
 [![PyPI Version](https://img.shields.io/pypi/v/classeval)](https://pypi.org/project/classeval/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/erdogant/classeval/blob/master/LICENSE)
+[![Forks](https://img.shields.io/github/forks/erdogant/classeval.svg)](https://github.com/erdogant/classeval/network)
+[![Open Issues](https://img.shields.io/github/issues/erdogant/classeval.svg)](https://github.com/erdogant/classeval/issues)
+[![Project Status](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Downloads](https://pepy.tech/badge/classeval/month)](https://pepy.tech/project/classeval/)
 [![Downloads](https://pepy.tech/badge/classeval)](https://pepy.tech/project/classeval)
-[![Downloads](https://pepy.tech/badge/classeval/month)](https://pepy.tech/project/classeval/month)
-[![Sphinx](https://img.shields.io/badge/Sphinx-Docs-blue)](https://erdogant.github.io/classeval/)
+[![DOI](https://zenodo.org/badge/246504758.svg)](https://zenodo.org/badge/latestdoi/246504758)
+[![Docs](https://img.shields.io/badge/Sphinx-Docs-Green)](https://erdogant.github.io/classeval/)
+[![Donate](https://img.shields.io/badge/Support%20this%20project-grey.svg?logo=github%20sponsors)](https://erdogant.github.io/classeval/pages/html/Documentation.html#)
 <!---[![BuyMeCoffee](https://img.shields.io/badge/buymea-coffee-yellow.svg)](https://www.buymeacoffee.com/erdogant)-->
 <!---[![Coffee](https://img.shields.io/badge/coffee-black-grey.svg)](https://erdogant.github.io/donate/?currency=USD&amount=5)-->
+
 
 The library ``classeval`` is developed to evaluate the models performance of any kind of **two-class** or **multi-class** model. ``classeval`` computes many scoring measures in case of a two-class clasification model. Some measures are utilized from ``sklearn``, among them AUC, MCC, Cohen kappa score, matthews correlation coefficient, whereas others are custom. This library can help to consistenly compare the output of various models. In addition, it can also give insights in tuning the models performance as the the threshold being used can be adjusted and evaluated. The output of ``classeval`` can subsequently plotted in terms of ROC curves, confusion matrices, class distributions, and probability plots. Such plots can help in better understanding of the results.
 

@@ -22,7 +22,7 @@ for i in range(0,10):
     # Evaluate model
     out['cross ' +str(i)] = clf.eval(y_true, y_proba, y_pred=y_pred, pos_label='malignant')
 
-clf.plot_cross(out, title='crossvalidation')
+fig, ax = clf.plot_cross(out, title='crossvalidation')
 
 
 # %% Two-class

@@ -13,7 +13,7 @@ Classeval's documentation!
 
 -----------------------------------
 
-|python| |pypi| |docs| |LOC| |downloads_month| |downloads_total| |license| |forks| |open issues| |project status| |donate|
+|python| |pypi| |docs| |LOC| |downloads_month| |downloads_total| |license| |forks| |open issues| |project status| |DOI| |donate|
 
 
 The library ``classeval`` is developed to evaluate the models performance of any kind of **two-class** or **multi-class** model. ``classeval`` computes many scoring measures in case of a two-class clasification model. Some measures are utilized from ``sklearn``, among them AUC, MCC, Cohen kappa score, matthews correlation coefficient, whereas others are custom. This library can help to consistenly compare the output of various models. In addition, it can also give insights in tuning the models performance as the the threshold being used can be adjusted and evaluated. The output of ``classeval`` can subsequently plotted in terms of ROC curves, confusion matrices, class distributions, and probability plots. Such plots can help in better understanding of the results.
@@ -136,3 +136,7 @@ Indices and tables
     :scale: 100%
     :target: https://erdogant.github.io/classeval/pages/html/Documentation.html#
 
+.. |DOI| image:: https://zenodo.org/badge/246504758.svg
+    :alt: Cite
+    :scale: 100%
+    :target: https://zenodo.org/badge/latestdoi/246504758

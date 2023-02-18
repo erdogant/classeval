@@ -92,5 +92,3 @@ html_static_path = ['_static']
 html_css_files = ['css/custom.css',]
 
 # html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'carbon_ads.html', 'sourcelink.html', 'searchbox.html'] }
-
-

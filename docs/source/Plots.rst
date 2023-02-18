@@ -1,6 +1,5 @@
-.. _code_directive:
+.. include:: add_top.add
 
--------------------------------------
 
 Eval
 ''''''''
@@ -159,10 +158,6 @@ This function is desiged for only two-class models and callable via: :func:`clas
 .. figure:: ../figs/multiclass_threshold_05.png
     :scale: 90%
 
-.. raw:: html
 
-	<hr>
-	<center>
-		<script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEADP27U&placement=erdogantgithubio" id="_carbonads_js"></script>
-	</center>
-	<hr>
+
+.. include:: add_bottom.add

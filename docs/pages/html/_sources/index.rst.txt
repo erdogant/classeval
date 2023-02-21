@@ -4,8 +4,6 @@ Classeval's documentation!
 
 |python| |pypi| |docs| |LOC| |downloads_month| |downloads_total| |license| |forks| |open issues| |project status| |DOI| |donate|
 
-.. include:: add_top.add
-
 
 .. |figIP1| image:: ../figs/example1_fig1.png
 

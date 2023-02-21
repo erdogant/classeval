@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; classeval classeval documentation</title>
+  <title>Description &mdash; classeval classeval documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -17,6 +17,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -70,12 +71,28 @@
 <li class="toctree-l1"><a class="reference internal" href="Examples.html#cross-validation">Cross-validation</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html">Sponsor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#medium-blog">Medium Blog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#github">Github</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Documentation.html#citing">Citing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Coding%20quality.html">Coding quality</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">AP()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.AUC_multiclass"><code class="docutils literal notranslate"><span class="pre">AUC_multiclass()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.CAP"><code class="docutils literal notranslate"><span class="pre">CAP()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.MCC"><code class="docutils literal notranslate"><span class="pre">MCC()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.TPFP"><code class="docutils literal notranslate"><span class="pre">TPFP()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.eval"><code class="docutils literal notranslate"><span class="pre">eval()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.eval_multiclass"><code class="docutils literal notranslate"><span class="pre">eval_multiclass()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.eval_twoclass"><code class="docutils literal notranslate"><span class="pre">eval_twoclass()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.load_example"><code class="docutils literal notranslate"><span class="pre">load_example()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.plot"><code class="docutils literal notranslate"><span class="pre">plot()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.classeval.plot_cross"><code class="docutils literal notranslate"><span class="pre">plot_cross()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.ROC.AUC_multiclass"><code class="docutils literal notranslate"><span class="pre">AUC_multiclass()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.ROC.eval"><code class="docutils literal notranslate"><span class="pre">eval()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.ROC.plot"><code class="docutils literal notranslate"><span class="pre">plot()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.confmatrix.eval"><code class="docutils literal notranslate"><span class="pre">eval()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="#classeval.confmatrix.plot"><code class="docutils literal notranslate"><span class="pre">plot()</span></code></a></li>
 </ul>
 
     <a href= "genindex.html">Index</a>
@@ -94,7 +111,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>&lt;no title&gt;</li>
+      <li>Description</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/classeval.classeval.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -104,17 +121,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <hr>
-<center>
-        <script async src="https://media.ethicalads.io/media/client/ethicalads.min.js"></script>
-        <div data-ea-publisher="erdogantgithubio" data-ea-type="text"></div>
-        <!-- <div data-ea-publisher="erdogantgithubio" data-ea-type="text" data-ea-style="fixedfooter"></div> -->
-</center>
-<hr><span class="target" id="module-classeval.classeval"></span><p>classeval is for fast and easy classifier evaluation.</p>
+  <span class="target" id="module-classeval.classeval"></span><p>classeval is for fast and easy classifier evaluation.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="classeval.classeval.AP">
 <span class="sig-prename descclassname"><span class="pre">classeval.classeval.</span></span><span class="sig-name descname"><span class="pre">AP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_proba</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.AP" title="Permalink to this definition"></a></dt>
 <dd><p>AP (Average Precision) method.</p>
+<section id="description">
+<h1>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h1>
 <p>A better metric in an imbalanced situation is the AUC PR (Area Under the Curve Precision Recall), or also called AP (Average Precision).
 If the precision decreases when we increase the recall, it shows that we have to choose a prediction thresold adapted to our needs.
 If our goal is to have a high recall, we should set a low prediction thresold that will allow us to detect most of the observations of the positive class,
@@ -127,108 +140,190 @@ For every recall value the precision would stay the same, and this would lead us
 The AP of our model is approximately 0.35, which is more than 8 times higher than the AP of the random method.
 This means that our model has a good predictive power.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em> [</em><em>0-1</em><em>]</em><em>, </em><em>optional</em>) – Cut-off point to define the class label. The default is 0.5 in a two-class model.</p></li>
-<li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – Title of the figure. The default is ‘’.</p></li>
-<li><p><strong>ax</strong> (<em>figure object</em><em>, </em><em>optional</em>) – Figure axis. The default is None.</p></li>
-<li><p><strong>showfig</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show the figure. The default is True.</p></li>
-</ul>
+<dt class="field-odd">param y_true</dt>
+<dd class="field-odd"><p>True labels of the classes.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
+<dt class="field-even">type y_true</dt>
+<dd class="field-even"><p>array-like [list or int]</p>
+</dd>
+<dt class="field-odd">param y_proba</dt>
+<dd class="field-odd"><p>Probabilities of the predicted labels.</p>
+</dd>
+<dt class="field-even">type y_proba</dt>
+<dd class="field-even"><p>array of floats</p>
+</dd>
+<dt class="field-odd">param threshold</dt>
+<dd class="field-odd"><p>Cut-off point to define the class label. The default is 0.5 in a two-class model.</p>
+</dd>
+<dt class="field-even">type threshold</dt>
+<dd class="field-even"><p>float [0-1], optional</p>
+</dd>
+<dt class="field-odd">param title</dt>
+<dd class="field-odd"><p>Title of the figure. The default is ‘’.</p>
+</dd>
+<dt class="field-even">type title</dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param ax</dt>
+<dd class="field-odd"><p>Figure axis. The default is None.</p>
+</dd>
+<dt class="field-even">type ax</dt>
+<dd class="field-even"><p>figure object, optional</p>
+</dd>
+<dt class="field-odd">param showfig</dt>
+<dd class="field-odd"><p>Show the figure. The default is True.</p>
+</dd>
+<dt class="field-even">type showfig</dt>
+<dd class="field-even"><p>bool, optional</p>
+</dd>
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><em>dict containing the following keys</em></p></li>
 <li><p><strong>AP</strong> (<em>float</em>) – Average precision score</p></li>
 <li><p><strong>precision</strong> (<em>list of float</em>) – The precision scores</p></li>
 <li><p><strong>recall</strong> (<em>list of float</em>) – The recall scores</p></li>
 </ul>
-</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="classeval.classeval.AUC_multiclass">
 <span class="sig-prename descclassname"><span class="pre">classeval.classeval.</span></span><span class="sig-name descname"><span class="pre">AUC_multiclass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_proba</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.AUC_multiclass" title="Permalink to this definition"></a></dt>
 <dd><p>AUC scoring for multiclass predictions.</p>
+<section id="id1">
+<h1>Description<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h1>
 <p>Calculate the AUC using the One-vs-Rest scheme (OvR) and One-vs-One scheme (OvO) schemes.
 The multi-class One-vs-One scheme compares every unique pairwise combination of classes.
 Macro average, and a prevalence-weighted average.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
-<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – print message to screen. The default is 3.</p></li>
-</ul>
+<dt class="field-odd">param y_true</dt>
+<dd class="field-odd"><p>True labels of the classes.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><ul class="simple">
+<dt class="field-even">type y_true</dt>
+<dd class="field-even"><p>array-like [list or int]</p>
+</dd>
+<dt class="field-odd">param y_proba</dt>
+<dd class="field-odd"><p>Probabilities of the predicted labels.</p>
+</dd>
+<dt class="field-even">type y_proba</dt>
+<dd class="field-even"><p>array of floats</p>
+</dd>
+<dt class="field-odd">param verbose</dt>
+<dd class="field-odd"><p>print message to screen. The default is 3.</p>
+</dd>
+<dt class="field-even">type verbose</dt>
+<dd class="field-even"><p>int, optional</p>
+</dd>
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><em>dict containing the following keys</em></p></li>
 <li><p><strong>macro_roc_auc_ovo</strong> (<em>float</em>) – AUC score based on One-vs-One scheme</p></li>
 <li><p><strong>weighted_roc_auc_ovo</strong> (<em>float</em>) – Weighted AUC score based on One-vs-One scheme</p></li>
 <li><p><strong>macro_roc_auc_ovr</strong> (<em>float</em>) – AUC score based on One-vs-Rest scheme</p></li>
 <li><p><strong>weighted_roc_auc_ovr</strong> (<em>float</em>) – Weighted AUC score based on One-vs-Rest scheme</p></li>
 </ul>
-</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="classeval.classeval.CAP">
 <span class="sig-prename descclassname"><span class="pre">classeval.classeval.</span></span><span class="sig-name descname"><span class="pre">CAP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Classifier'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">showfig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.CAP" title="Permalink to this definition"></a></dt>
 <dd><p>Compute Cumulitive Accuracy Profile (CAP) to measure the performance in a two class classifier.</p>
+<section id="id2">
+<h1>Description<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h1>
 <p>The CAP Curve analyse how to effectively identify all data points of a given class using minimum number of tries.
 This function computes Cumulitive Accuracy Profile (CAP) to measure the performance of a classifier.
 It ranks the predicted class probabilities (high to low), together with the true values.
 With that, it computes the cumsum which is the final line.
 A perfect model is one which will detect all class 1.0 data points in the same number of tries as there are class 1.0 data points.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>numpy</em><em>]</em>) – list of true labels.</p></li>
-<li><p><strong>y_pred</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>numpy</em><em>]</em>) – list of predicted labels.</p></li>
-<li><p><strong>label</strong> (<em>str</em><em>, </em><em>optional</em>) – Label. The default is ‘Classifier’.</p></li>
-<li><p><strong>ax</strong> (<em>figure object</em><em>, </em><em>optional</em>) – provide an existing axis to make the plot. The default is None.</p></li>
-<li><p><strong>fontsize</strong> (<em>int</em><em>, </em><em>optional</em>) – Fontsize in the figures. The default is 12.</p></li>
-<li><p><strong>showfig</strong> (<em>bool</em><em>, </em><em>optional</em>) – Show figure. The default is True.</p></li>
-</ul>
+<dt class="field-odd">param y_true</dt>
+<dd class="field-odd"><p>list of true labels.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>float</strong></p>
+<dt class="field-even">type y_true</dt>
+<dd class="field-even"><p>array-like [list or numpy]</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>CAP score.</p>
+<dt class="field-odd">param y_pred</dt>
+<dd class="field-odd"><p>list of predicted labels.</p>
+</dd>
+<dt class="field-even">type y_pred</dt>
+<dd class="field-even"><p>array-like [list or numpy]</p>
+</dd>
+<dt class="field-odd">param label</dt>
+<dd class="field-odd"><p>Label. The default is ‘Classifier’.</p>
+</dd>
+<dt class="field-even">type label</dt>
+<dd class="field-even"><p>str, optional</p>
+</dd>
+<dt class="field-odd">param ax</dt>
+<dd class="field-odd"><p>provide an existing axis to make the plot. The default is None.</p>
+</dd>
+<dt class="field-even">type ax</dt>
+<dd class="field-even"><p>figure object, optional</p>
+</dd>
+<dt class="field-odd">param fontsize</dt>
+<dd class="field-odd"><p>Fontsize in the figures. The default is 12.</p>
+</dd>
+<dt class="field-even">type fontsize</dt>
+<dd class="field-even"><p>int, optional</p>
+</dd>
+<dt class="field-odd">param showfig</dt>
+<dd class="field-odd"><p>Show figure. The default is True.</p>
+</dd>
+<dt class="field-even">type showfig</dt>
+<dd class="field-even"><p>bool, optional</p>
+</dd>
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><p><strong>float</strong></p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>CAP score.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="classeval.classeval.MCC">
 <span class="sig-prename descclassname"><span class="pre">classeval.classeval.</span></span><span class="sig-name descname"><span class="pre">MCC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_proba</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.classeval.MCC" title="Permalink to this definition"></a></dt>
 <dd><p>MCC is extremely good metric for the imbalanced classification.</p>
+<section id="id3">
+<h1>Description<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h1>
 <p>Score Ranges between [−1,1]
 1: perfect prediction
 0: random prediction
 −1: Total disagreement between predicted scores and true labels values.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
-<li><p><strong>threshold</strong> (<em>float</em><em> [</em><em>0-1</em><em>]</em><em>, </em><em>optional</em>) – Cut-off point to define the class label. The default is 0.5 in a two-class model.</p></li>
-</ul>
+<dt class="field-odd">param y_true</dt>
+<dd class="field-odd"><p>True labels of the classes.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>MCC</strong> – MCCscore.</p>
+<dt class="field-even">type y_true</dt>
+<dd class="field-even"><p>array-like [list or int]</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
+<dt class="field-odd">param y_proba</dt>
+<dd class="field-odd"><p>Probabilities of the predicted labels.</p>
+</dd>
+<dt class="field-even">type y_proba</dt>
+<dd class="field-even"><p>array of floats</p>
+</dd>
+<dt class="field-odd">param threshold</dt>
+<dd class="field-odd"><p>Cut-off point to define the class label. The default is 0.5 in a two-class model.</p>
+</dd>
+<dt class="field-even">type threshold</dt>
+<dd class="field-even"><p>float [0-1], optional</p>
+</dd>
+<dt class="field-odd">returns</dt>
+<dd class="field-odd"><p><strong>MCC</strong> – MCCscore.</p>
+</dd>
+<dt class="field-even">rtype</dt>
+<dd class="field-even"><p>float</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
@@ -239,7 +334,7 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
+<li><p><strong>y_proba</strong> (<em>array</em><em> of </em><em>floats</em>) – Probabilities of the predicted labels.</p></li>
 <li><p><strong>threshold</strong> (<em>float</em><em> [</em><em>0-1</em><em>]</em><em>, </em><em>optional</em>) – Cut-off point to define the class label. The default is 0.5 in a two-class model.</p></li>
 <li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – Title of the figure. The default is ‘’.</p></li>
 <li><p><strong>ax</strong> (<em>figure object</em><em>, </em><em>optional</em>) – Figure axis. The default is None.</p></li>
@@ -260,8 +355,8 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
-<li><p><strong>y_score</strong> (<em>array of floats</em>) – decision_function for the predicted labels. (only required in case of multi-class)</p></li>
+<li><p><strong>y_proba</strong> (<em>array</em><em> of </em><em>floats</em>) – Probabilities of the predicted labels.</p></li>
+<li><p><strong>y_score</strong> (<em>array</em><em> of </em><em>floats</em>) – decision_function for the predicted labels. (only required in case of multi-class)</p></li>
 <li><p><strong>y_pred</strong> (<em>array-like</em>) – Predicted labels from model.</p></li>
 <li><p><strong>pos_label</strong> (<em>str</em>) – Positive label (only for the two-class models and when y_true is of type string. If you set bool, then the positive label is True)</p></li>
 <li><p><strong>threshold</strong> (<em>float</em><em> [</em><em>0-1</em><em>]</em><em>, </em><em>optional</em>) – Cut-off point to define the class label. The default is 0.5 in a two-class model.</p></li>
@@ -283,8 +378,8 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
-<li><p><strong>y_score</strong> (<em>array of floats</em>) – decision_function for the predicted labels. (only required in case of multi-class)</p></li>
+<li><p><strong>y_proba</strong> (<em>array</em><em> of </em><em>floats</em>) – Probabilities of the predicted labels.</p></li>
+<li><p><strong>y_score</strong> (<em>array</em><em> of </em><em>floats</em>) – decision_function for the predicted labels. (only required in case of multi-class)</p></li>
 <li><p><strong>y_pred</strong> (<em>array-like</em>) – Predicted labels from model.</p></li>
 <li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Normalize the values in the confusion matrix. The default is False.</p></li>
 <li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – print message to screen. The default is 3.</p></li>
@@ -314,7 +409,7 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
+<li><p><strong>y_proba</strong> (<em>array</em><em> of </em><em>floats</em>) – Probabilities of the predicted labels.</p></li>
 <li><p><strong>pos_label</strong> (<em>str</em>) – Positive label (only for the two-class models and when y_true is of type string. If you set bool, then the positive label is True)</p></li>
 <li><p><strong>threshold</strong> (<em>float</em><em> [</em><em>0-1</em><em>]</em><em>, </em><em>optional</em>) – Cut-off point to define the class label. The default is 0.5 in a two-class model.</p></li>
 <li><p><strong>normalize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Normalize the values in the confusion matrix. The default is False.</p></li>
@@ -415,21 +510,35 @@ A perfect model is one which will detect all class 1.0 data points in the same n
 <dt class="sig sig-object py" id="classeval.ROC.AUC_multiclass">
 <span class="sig-prename descclassname"><span class="pre">classeval.ROC.</span></span><span class="sig-name descname"><span class="pre">AUC_multiclass</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_proba</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#classeval.ROC.AUC_multiclass" title="Permalink to this definition"></a></dt>
 <dd><p>AUC scoring for multiclass predictions.</p>
+<section id="id4">
+<h1>Description<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h1>
 <p>Calculate the AUC using the One-vs-Rest scheme (OvR) and One-vs-One scheme (OvO) schemes.
 The multi-class One-vs-One scheme compares every unique pairwise combination of classes.
 Macro average, and a prevalence-weighted average.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
-<li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – print message to screen. The default is 3.</p></li>
-</ul>
+<dt class="field-odd">param y_true</dt>
+<dd class="field-odd"><p>True labels of the classes.</p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>dict containing results.</p>
+<dt class="field-even">type y_true</dt>
+<dd class="field-even"><p>array-like [list or int]</p>
+</dd>
+<dt class="field-odd">param y_proba</dt>
+<dd class="field-odd"><p>Probabilities of the predicted labels.</p>
+</dd>
+<dt class="field-even">type y_proba</dt>
+<dd class="field-even"><p>array of floats</p>
+</dd>
+<dt class="field-odd">param verbose</dt>
+<dd class="field-odd"><p>print message to screen. The default is 3.</p>
+</dd>
+<dt class="field-even">type verbose</dt>
+<dd class="field-even"><p>int, optional</p>
+</dd>
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p>dict containing results.</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py function">
@@ -440,8 +549,8 @@ Macro average, and a prevalence-weighted average.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>y_true</strong> (<em>array-like</em><em> [</em><em>list</em><em> or </em><em>int</em><em>]</em>) – True labels of the classes.</p></li>
-<li><p><strong>y_proba</strong> (<em>array of floats</em>) – Probabilities of the predicted labels.</p></li>
-<li><p><strong>y_score</strong> (<em>array of floats</em>) – decision_function for the predicted labels. (only required in case of multi-class)</p></li>
+<li><p><strong>y_proba</strong> (<em>array</em><em> of </em><em>floats</em>) – Probabilities of the predicted labels.</p></li>
+<li><p><strong>y_score</strong> (<em>array</em><em> of </em><em>floats</em>) – decision_function for the predicted labels. (only required in case of multi-class)</p></li>
 <li><p><strong>pos_label</strong> (<em>str</em>) – Positive label (only for the two-class models and when y_ture is of type string)</p></li>
 <li><p><strong>threshold</strong> (<em>float</em><em> [</em><em>0-1</em><em>]</em><em>, </em><em>optional</em>) – Cut-off point to define the class label. The default is 0.5 in a two-class model.</p></li>
 <li><p><strong>verbose</strong> (<em>int</em><em>, </em><em>optional</em>) – print message to screen. The default is 3.</p></li>
@@ -503,7 +612,7 @@ Macro average, and a prevalence-weighted average.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>out</strong> (<em>dict</em>) – Results from twoclass or multiclass function.</p></li>
-<li><p><strong>class_names</strong> (<em>list of str</em><em>, </em><em>optional</em>) – name of the class labels. The default is None.</p></li>
+<li><p><strong>class_names</strong> (<em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – name of the class labels. The default is None.</p></li>
 <li><p><strong>title</strong> (<em>str</em><em>, </em><em>optional</em>) – Title of the figure. The default is ‘’.</p></li>
 <li><p><strong>cmap</strong> (<em>object</em><em>, </em><em>optional</em>) – colormap. The default is plt.cm.Blues.</p></li>
 </ul>

@@ -11,6 +11,7 @@ gb = GradientBoostingClassifier()
 
 
 # %% cross validation example
+import classeval as clf
 X, y = clf.load_example('breast')
 out = {}
 for i in range(0,10):
@@ -26,6 +27,7 @@ fig, ax = clf.plot_cross(out, title='crossvalidation')
 
 
 # %% Two-class
+import classeval as clf
 X, y = clf.load_example('breast')
 X_train, X_test, y_train, y_true = train_test_split(X, y, test_size=0.2)
 

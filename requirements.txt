@@ -1,0 +1,7 @@
+matplotlib
+numpy
+funcsigs
+sklearn
+colourmap
+scikit-learn
+pandas

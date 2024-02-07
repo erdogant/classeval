@@ -10,10 +10,10 @@ else:
     raise RuntimeError("Unable to find version string in %s." % (VERSIONFILE,))
 
 # Setup ------------
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf8") as fh:
     long_description = fh.read()
 setuptools.setup(
-     install_requires=['matplotlib','numpy','funcsigs','sklearn','colourmap','scikit-learn','pandas'],
+     install_requires=['matplotlib','numpy','funcsigs','scikit-learn','colourmap'],
      python_requires='>=3',
      name='classeval',
      version=new_version,

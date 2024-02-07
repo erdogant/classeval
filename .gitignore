@@ -39,6 +39,8 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+.pypirc
+
 # Unit test / coverage reports
 htmlcov/
 .tox/

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "classeval"
+dynamic = ["version"]
+authors = [{ name = "Erdogan Taskesen", email = "erdogant@gmail.com" },]
+description = "classeval is a Python library for supervised class evaluation."
+readme = "README.md"
+requires-python = ">=3"
+license = { file = "LICENSE" }
+keywords = ["Python", "supervised", "validation", "evaluation metrics", "ROC", "AUC", "plots"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ['matplotlib','numpy','funcsigs','scikit-learn','colourmap']
+
+[project.urls]
+Homepage = "https://erdogant.github.io/classeval"
+Download = "https://github.com/erdogant/classeval/archive/{version}.tar.gz"
+
+[tool.setuptools]
+packages = ["classeval"]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = { attr = "classeval.__version__" }

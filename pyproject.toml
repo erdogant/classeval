@@ -9,13 +9,19 @@ authors = [{ name = "Erdogan Taskesen", email = "erdogant@gmail.com" },]
 description = "classeval is a Python library for supervised class evaluation."
 readme = "README.md"
 requires-python = ">=3"
-license = { file = "LICENSE" }
+license = "MIT"
 keywords = ["Python", "supervised", "validation", "evaluation metrics", "ROC", "AUC", "plots"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Operating System :: Unix",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: MacOS",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
+
 dependencies = ['matplotlib','numpy','funcsigs','scikit-learn','colourmap']
 
 [project.urls]

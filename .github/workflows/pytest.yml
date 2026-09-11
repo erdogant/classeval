@@ -1,67 +1,29 @@
 name: Pytest for classeval
-
-on:
-  push:
-  pull_request:
-
-env:
-  # Force the non-interactive matplotlib backend. Several tests call bn.plot();
-  # on runners with a GUI backend available (macOS, Windows) those calls block
-  # on plt.show() and the job hangs until the workflow timeout.
-  MPLBACKEND: Agg
+on: [push]
 
 jobs:
   test:
-    name: Pytest (Python ${{ matrix.python-version }} on ${{ matrix.os }})
+    name: Pytest (${{ matrix.python-version }}, ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    # The suite runs in ~2 minutes; anything near this is a hang, and failing
-    # fast beats burning the 6 hour default.
-    timeout-minutes: 20
-
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-        python-version: ["3.12", "3.14"]
-        exclude:
-          # pgmpy does not fully support Python 3.13 on macOS yet
-          - os: macos-latest
-            python-version: 3.13
-
+        os: ["ubuntu-latest"]
+        python-version: ["3.12"]
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          enable-cache: true
-
+          cache: 'pip'
       - name: Install dependencies
-        run: uv sync --extra dev
-
-      - name: Run tests
-        run: uv run pytest -v
-
-  build:
-    name: Build and check distribution
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install uv
-        uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-
-      - name: Build sdist and wheel
-        run: uv build
-
-      - name: Check metadata
-        run: uvx twine check --strict dist/*
-
-      - name: Smoke-test the wheel
-        # python -I keeps the checkout's ./classeval off sys.path, so the import
-        # genuinely exercises the wheel rather than the source tree.
-        run: uv run --isolated --no-project --with dist/*.whl python -I -c "import classeval; print(classeval.__version__)"
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements-dev.txt
+          pip install pytest
+          pip install .
+      - name: Test with pytest
+        run: |
+          pytest

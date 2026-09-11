@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quickstart &mdash; classeval classeval documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e0179649" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=89a504da"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -30,14 +29,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> classeval
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            classeval
           </a>
-              <div class="version">
-                0.2.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -111,8 +111,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Quickstart</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quickstart</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/Installation.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -123,20 +123,20 @@
            <div itemprop="articleBody">
              
   <section id="quickstart">
-<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this heading"></a></h1>
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading"></a></h1>
 <p>A quick example how to evaluate the results of a trained model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
-<span class="kn">import</span> <span class="nn">classeval</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">classeval</span>
 
 <span class="c1"># Train model and derive probabilities</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">&#39;breast&#39;</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">'breast'</span><span class="p">)</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">gb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 <span class="n">y_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
 
 <span class="c1"># Evaluate the models performance</span>
-<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">'malignant'</span><span class="p">)</span>
 
 <span class="c1"># Plot results</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
@@ -144,14 +144,14 @@
 </div>
 </section>
 <section id="installation">
-<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading"></a></h1>
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
 <p>Install via <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Installation from pypi
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Installation<span class="w"> </span>from<span class="w"> </span>pypi
 <span class="go">pip install classeval</span>
 </pre></div>
 </div>
 <p>Install via github source:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Install directly from github
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp"># </span>Install<span class="w"> </span>directly<span class="w"> </span>from<span class="w"> </span>github
 <span class="go">pip install git+https://github.com/erdogant/classeval</span>
 </pre></div>
 </div>

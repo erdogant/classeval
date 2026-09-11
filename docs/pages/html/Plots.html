@@ -1,23 +1,22 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eval &mdash; classeval classeval documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=e0179649" />
+
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=89a504da"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -30,14 +29,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> classeval
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            classeval
           </a>
-              <div class="version">
-                0.2.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -111,8 +111,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Eval</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Eval</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/Plots.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -123,11 +123,11 @@
            <div itemprop="articleBody">
              
   <section id="eval">
-<h1>Eval<a class="headerlink" href="#eval" title="Permalink to this heading"></a></h1>
+<h1>Eval<a class="headerlink" href="#eval" title="Link to this heading"></a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">classeval</span></code> library contains various functions to plot the results. The main function to plot is the function <a class="reference internal" href="classeval.classeval.html#classeval.classeval.plot" title="classeval.classeval.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></a>. This function automatically determines whether the trained model is based on a two-class or multi-class approach. Plotting results is possible by simply using the <a class="reference internal" href="classeval.classeval.html#classeval.classeval.plot" title="classeval.classeval.plot"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.plot()</span></code></a> functionality.</p>
 <p>Lets first train a simple model:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load data</span>
-<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">&#39;breast&#39;</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">load_example</span><span class="p">(</span><span class="s1">'breast'</span><span class="p">)</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 
 <span class="c1"># Fit model</span>
@@ -138,10 +138,10 @@
 </div>
 <p>Evaluate the models performance and use the output for making the plots.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import library</span>
-<span class="kn">import</span> <span class="nn">classeval</span> <span class="k">as</span> <span class="nn">clf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">classeval</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">clf</span>
 
 <span class="c1"># Evaluate model</span>
-<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">'malignant'</span><span class="p">)</span>
 
 <span class="c1"># Make plot</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
@@ -153,10 +153,10 @@
 </figure>
 </section>
 <section id="roc-auc">
-<h1>ROC-AUC<a class="headerlink" href="#roc-auc" title="Permalink to this heading"></a></h1>
+<h1>ROC-AUC<a class="headerlink" href="#roc-auc" title="Link to this heading"></a></h1>
 <p>Plotting the ROC is initially desiged for two-class models. However, with some adjustments it is also possible to plot the ROC for a multi-class model under the assumption that is OvR or OvO schemes. See methods section for more details. With the function <a class="reference internal" href="classeval.classeval.html#classeval.ROC.eval" title="classeval.ROC.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.ROC.eval()</span></code></a> the ROC and AUC can be examined and plotted for both the two-class as well as multi-class models.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute ROC</span>
-<span class="n">outRoc</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;malignant&#39;</span><span class="p">)</span>
+<span class="n">outRoc</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">eval</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_proba</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">'malignant'</span><span class="p">)</span>
 
 <span class="c1"># Make plot</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">ROC</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">outRoc</span><span class="p">)</span>
@@ -164,35 +164,39 @@
 </div>
 <p><strong>Two-class</strong></p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/ROC_twoclass.png"><img alt="_images/ROC_twoclass.png" src="_images/ROC_twoclass.png" style="width: 585.6px; height: 399.20000000000005px;" /></a>
+<a class="reference internal image-reference" href="_images/ROC_twoclass.png"><img alt="_images/ROC_twoclass.png" height="820" src="_images/ROC_twoclass.png" width="1170" />
+</a>
 </figure>
 <p><strong>Multi-class</strong></p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/multiclass_fig1_1.png"><img alt="_images/multiclass_fig1_1.png" src="_images/multiclass_fig1_1.png" style="width: 585.6px; height: 399.20000000000005px;" /></a>
+<a class="reference internal image-reference" href="_images/multiclass_fig1_1.png"><img alt="_images/multiclass_fig1_1.png" height="820" src="_images/multiclass_fig1_1.png" width="1170" />
+</a>
 </figure>
 </section>
 <section id="cap">
-<h1>CAP<a class="headerlink" href="#cap" title="Permalink to this heading"></a></h1>
+<h1>CAP<a class="headerlink" href="#cap" title="Link to this heading"></a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute CAP</span>
-<span class="n">outCAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">CAP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">outCAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">CAP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">'y_true'</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">'y_proba'</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/CAP_fig.png"><img alt="_images/CAP_fig.png" src="_images/CAP_fig.png" style="width: 576.0px; height: 399.20000000000005px;" /></a>
+<a class="reference internal image-reference" href="_images/CAP_fig.png"><img alt="_images/CAP_fig.png" height="820" src="_images/CAP_fig.png" width="1152" />
+</a>
 </figure>
 </section>
 <section id="ap">
-<h1>AP<a class="headerlink" href="#ap" title="Permalink to this heading"></a></h1>
+<h1>AP<a class="headerlink" href="#ap" title="Link to this heading"></a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute AP</span>
-<span class="n">outAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">AP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">outAP</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">AP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">'y_true'</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">'y_proba'</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/AP_fig.png"><img alt="_images/AP_fig.png" src="_images/AP_fig.png" style="width: 585.6px; height: 399.20000000000005px;" /></a>
+<a class="reference internal image-reference" href="_images/AP_fig.png"><img alt="_images/AP_fig.png" height="820" src="_images/AP_fig.png" width="1170" />
+</a>
 </figure>
 </section>
 <section id="confusion-matrix">
-<h1>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Permalink to this heading"></a></h1>
+<h1>Confusion matrix<a class="headerlink" href="#confusion-matrix" title="Link to this heading"></a></h1>
 <p>A confusion matrix is a table to describe the performance of a classification model.
 With the function <a class="reference internal" href="classeval.classeval.html#classeval.confmatrix.eval" title="classeval.confmatrix.eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.confmatrix.eval()</span></code></a> the confusion matrix can be examined and plotted for both the two-class as well as multi-class model.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute confmatrix</span>
@@ -204,23 +208,26 @@ With the function <a class="reference internal" href="classeval.classeval.html#c
 </div>
 <p><strong>Two-class</strong></p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/Figure_2.png"><img alt="_images/Figure_2.png" src="_images/Figure_2.png" style="width: 409.0px; height: 428.0px;" /></a>
+<a class="reference internal image-reference" href="_images/Figure_2.png"><img alt="_images/Figure_2.png" height="856" src="_images/Figure_2.png" width="856" />
+</a>
 </figure>
 <p><strong>Multi-class</strong></p>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/multiclass_fig1_4.png"><img alt="_images/multiclass_fig1_4.png" src="_images/multiclass_fig1_4.png" style="width: 402.0px; height: 420.5px;" /></a>
+<a class="reference internal image-reference" href="_images/multiclass_fig1_4.png"><img alt="_images/multiclass_fig1_4.png" height="420" src="_images/multiclass_fig1_4.png" width="402" />
+</a>
 </figure>
 </section>
 <section id="probability-plot">
-<h1>Probability Plot<a class="headerlink" href="#probability-plot" title="Permalink to this heading"></a></h1>
+<h1>Probability Plot<a class="headerlink" href="#probability-plot" title="Link to this heading"></a></h1>
 <p>The probability plot depicts the probabilities of the samples being classified.
 This function is desiged for only two-class models and callable via: <a class="reference internal" href="classeval.classeval.html#classeval.classeval.TPFP" title="classeval.classeval.TPFP"><code class="xref py py-func docutils literal notranslate"><span class="pre">classeval.classeval.TPFP()</span></code></a></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute TPFP</span>
-<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;y_proba&#39;</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">out</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">TPFP</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s1">'y_true'</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s1">'y_proba'</span><span class="p">],</span> <span class="n">showfig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <figure class="align-default">
-<a class="reference internal image-reference" href="_images/multiclass_threshold_05.png"><img alt="_images/multiclass_threshold_05.png" src="_images/multiclass_threshold_05.png" style="width: 650.7px; height: 434.7px;" /></a>
+<a class="reference internal image-reference" href="_images/multiclass_threshold_05.png"><img alt="_images/multiclass_threshold_05.png" height="922" src="_images/multiclass_threshold_05.png" width="1301" />
+</a>
 </figure>
 <hr>
 <center>

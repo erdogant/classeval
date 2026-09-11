@@ -60,8 +60,13 @@ extensions = [
 	"sphinx.ext.intersphinx",
 	"sphinx.ext.autosectionlabel",
 	"rst2pdf.pdfbuilder",
-]
+	]
 
+# Prefix auto-generated section labels with the document path so labels are
+# unique across the project. This prevents warnings about duplicate label
+# descriptions when the same section headings appear in multiple places.
+autosectionlabel_prefix_document = True
+	
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 

@@ -4,4 +4,3 @@ funcsigs
 sklearn
 colourmap
 scikit-learn
-pandas

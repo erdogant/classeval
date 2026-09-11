@@ -22,7 +22,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
-dependencies = ['matplotlib','numpy','funcsigs','scikit-learn','colourmap', 'pandas']
+dependencies = ['matplotlib','numpy','funcsigs','scikit-learn','colourmap']
 
 [project.urls]
 Homepage = "https://erdogant.github.io/classeval"

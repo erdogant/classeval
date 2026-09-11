@@ -8,7 +8,7 @@ dynamic = ["version"]
 authors = [{ name = "Erdogan Taskesen", email = "erdogant@gmail.com" },]
 description = "classeval is a Python library for supervised class evaluation."
 readme = "README.md"
-requires-python = ">=3"
+requires-python = ">=3.12"
 license = "MIT"
 keywords = ["Python", "supervised", "validation", "evaluation metrics", "ROC", "AUC", "plots"]
 classifiers = [
@@ -23,6 +23,9 @@ classifiers = [
 ]
 
 dependencies = ['matplotlib','numpy','funcsigs','scikit-learn','colourmap', 'pandas']
+
+[project.optional-dependencies]
+dev = ["pytest"]
 
 [project.urls]
 Homepage = "https://erdogant.github.io/classeval"

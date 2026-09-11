@@ -110,6 +110,7 @@ def plot(out, title='', fontsize=12, figsize=(20, 15), bar_edgecolor='black'):
     y_true = out['y_true']
     y_proba = out['y_proba']
     threshold = out.get('threshold', None)
+    fig, ax = None, None
 
     if len(out['class_names']) == 2:
         # Setup figure

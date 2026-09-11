@@ -299,7 +299,11 @@ def eval_twoclass(y_true, y_proba, pos_label=None, threshold=0.5, normalize=Fals
         raise Exception('[classeval] CAP should have input argument <pos_label> or <y_true> being of type bool.')
 
     y_pred = y_proba>=threshold
-    y_label = y_true.astype(str)
+    # Ensure y_label is a NumPy array of Python strings. This avoids errors when
+    # y_true is a pandas Series with pandas.StringDtype which NumPy cannot
+    # directly interpret as a dtype (TypeError). Converting to an ndarray of
+    # Python str gives a stable NumPy-compatible dtype.
+    y_label = np.asarray(y_true.astype(str))
 
     # if len(np.unique(y_true))>2:
     #    raise Exception('[classeval] This function is to evaluate two-class models and not multi-class.')

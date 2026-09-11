@@ -50,7 +50,7 @@ def eval(y_true, y_proba, y_score=None, pos_label=None, threshold=0.5, verbose=3
 
 
 # %% ROC plot
-def plot(out, ax=None, title='', label='', color=None, fontsize=12, figsize=(12,8), verbose=3):
+def plot(out, ax=None, title='', label='', color=None, fill_color='#3A86FF', fontsize=12, figsize=(12,8), bg_color='#F8F9FA', verbose=3):
     """Plot ROC curves.
 
     Parameters
@@ -67,6 +67,14 @@ def plot(out, ax=None, title='', label='', color=None, fontsize=12, figsize=(12,
         Size of the fonts.
     figsize : tuple, (default: (12,8)
         Figure size.
+    color : str or None, (default: None)
+        Colour of the ROC curve line. Defaults to '#6C757D'.
+    fill_color : str, (default: '#3A86FF')
+        Colour of the shaded area under the ROC curve (two-class only).
+    bg_color : str or None, (default: '#F8F9FA')
+        Background colour of the figure and axes. Pass any matplotlib colour
+        string (e.g. ``'white'``, ``'#ECECEC'``) or ``None`` to keep the
+        default matplotlib background.
     verbose : int, (default: 3)
         print message to screen.
 
@@ -76,9 +84,9 @@ def plot(out, ax=None, title='', label='', color=None, fontsize=12, figsize=(12,
 
     """
     if len(out['class_names'])==2:
-        ax = _plot_twoclass(out, fontsize=fontsize, title=title, label=label, ax=ax, color=color, figsize=figsize)
+        ax = _plot_twoclass(out, fontsize=fontsize, title=title, label=label, ax=ax, color=color, fill_color=fill_color, figsize=figsize, bg_color=bg_color)
     elif len(out['class_names'])>2:
-        ax = _plot_multiclass(out, fontsize=fontsize, title=title, label=label, ax=ax, color=color, figsize=figsize, cmap='Set1')
+        ax = _plot_multiclass(out, fontsize=fontsize, title=title, label=label, ax=ax, color=color, figsize=figsize, cmap='Set1', bg_color=bg_color, fill_color=fill_color)
     else:
         ax = None
 
@@ -86,44 +94,52 @@ def plot(out, ax=None, title='', label='', color=None, fontsize=12, figsize=(12,
 
 
 # %% ROC plot for multi-class model
-def _plot_multiclass(out, ax=None, fontsize=12, title='', label='', figsize=(12,8), color=None, cmap='Set1'):
+def _plot_multiclass(out, ax=None, fontsize=12, title='', label='', figsize=(12,8), color=None, cmap='Set1', bg_color='#F8F9FA', fill_color='#3A86FF'):
     fpr = out['fpr']
     tpr = out['tpr']
     roc_auc = out['auc']
     if color is None:
         color = colourmap.generate(len(out['class_names']), cmap=cmap)
-    linewidth = 1.5
 
     if ax is None:
-        fig,ax = plt.subplots(figsize=figsize)
+        fig, ax = plt.subplots(figsize=figsize)
+        if bg_color is not None:
+            fig.patch.set_facecolor(bg_color)
+    if bg_color is not None:
+        ax.set_facecolor(bg_color)
 
+    # Random baseline
+    ax.plot([0, 1], [0, 1], color='#6C757D', lw=1.5, linestyle='--', label='Random classifier')
+
+    # Per-class curves with shaded fill
+    for i, (class_name, col) in enumerate(zip(out['class_names'], color)):
+        class_label = ('ROC — %s (AUC = %.2f) ' % (class_name, roc_auc[i])) + label
+        ax.fill_between(fpr[i], tpr[i], alpha=0.07, color=fill_color)
+        ax.plot(fpr[i], tpr[i], color=col, lw=2.0, label=class_label)
+
+    # Aggregate averages on top
     ax.plot(fpr["micro"], tpr["micro"],
-            label = ( 'micro-average ROC curve (area = %.2f)' %(roc_auc["micro"]) ),
-            color = 'deeppink', linestyle=':', linewidth=2)
-
+            label='Micro-average (AUC = %.2f)' % roc_auc["micro"],
+            color='#C2185B', linestyle='-.', linewidth=2.5, zorder=5)
     ax.plot(fpr["macro"], tpr["macro"],
-            label = ( 'macro-average ROC curve (area = %.2f)' %(roc_auc["macro"]) ),
-            color = 'navy', linestyle=':', linewidth=2)
+            label='Macro-average (AUC = %.2f)' % roc_auc["macro"],
+            color='#1A237E', linestyle=':', linewidth=2.5, zorder=5)
 
-    for i, [class_name, color] in enumerate(zip(out['class_names'], color)):
-        label = ( 'ROC curve of class %s (area = %.2f) ' %(class_name, roc_auc[i]) ) + label
-        ax.plot(fpr[i], tpr[i], color=color, lw=linewidth, label=label)
-
-    ax.plot([0, 1], [0, 1], 'k--', lw=linewidth)
     ax.set_xlabel('False Positive Rate', fontsize=fontsize)
     ax.set_ylabel('True Positive Rate', fontsize=fontsize)
-    ax.set_title('Extension of Receiver operating characteristic to multi-class', fontsize=fontsize)
-    ax.legend(loc="lower right", fontsize=fontsize)
-    ax.grid(True)
+    _title = f'Multi-class ROC — {title}' if title else 'Multi-class Receiver Operating Characteristic (ROC)'
+    ax.set_title(_title, fontsize=fontsize + 1, fontweight='bold', pad=12)
+    ax.legend(loc='lower right', fontsize=fontsize - 1, framealpha=0.9)
+    ax.grid(True, linestyle='--', linewidth=0.6, alpha=0.6)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
-    # plt.show()
-    # Return
     return ax
 
 
 # %% ROC plot for two-class model
-def _plot_twoclass(out, fontsize=12, title='', label='', color='darkorange', ax=None, figsize=(12,8)):
+def _plot_twoclass(out, fontsize=12, title='', label='', color='#6C757D', fill_color='#3A86FF', ax=None, figsize=(12,8), bg_color='#F8F9FA'):
     """Plot two-class ROC curve.
 
     Parameters
@@ -140,6 +156,9 @@ def _plot_twoclass(out, fontsize=12, title='', label='', color='darkorange', ax=
         Figure axis. The default is None.
     figsize : tuple, optional
         Figure size. The default is (12,8).
+    bg_color : str or None, optional
+        Background colour of the figure and axes. The default is '#F8F9FA'.
+        Pass ``None`` to keep the default matplotlib background.
 
     Returns
     -------
@@ -149,25 +168,45 @@ def _plot_twoclass(out, fontsize=12, title='', label='', color='darkorange', ax=
     """
     fpr = out['fpr']
     tpr = out['tpr']
-    roc_auc = out.get('auc',None)
-    
+    roc_auc = out.get('auc', None)
+    thresholds = out.get('thresholds', None)
+
     if color is None:
-        color='darkorange'
+        color = '#6C757D'
 
     if ax is None:
-        fig,ax= plt.subplots(figsize=figsize)
+        fig, ax = plt.subplots(figsize=figsize)
+        if bg_color is not None:
+            fig.patch.set_facecolor(bg_color)
+    if bg_color is not None:
+        ax.set_facecolor(bg_color)
 
-    label = ('ROC curve (area = %.2f) ' %(roc_auc)) + label
-    linewidth = 1.5
-    ax.plot(fpr, tpr, color=color, lw=linewidth, label=label)
-    ax.plot([0, 1], [0, 1], color='navy', lw=linewidth, linestyle='--')
+    curve_label = ('ROC curve (AUC = %.3f) ' % roc_auc) + label
+    linewidth = 2.5
+
+    # Shaded AUC area
+    ax.fill_between(fpr, tpr, alpha=0.15, color=fill_color)
+    # ROC curve
+    ax.plot(fpr, tpr, color=color, lw=linewidth, label=curve_label, zorder=3)
+    # Random baseline
+    ax.plot([0, 1], [0, 1], color='#6C757D', lw=1.5, linestyle='--', label='Random classifier (AUC = 0.50)')
+
+    # Mark the point nearest to threshold=0.5 on the curve
+    if thresholds is not None:
+        idx = np.argmin(np.abs(thresholds - 0.5))
+        ax.scatter(fpr[idx], tpr[idx], s=90, color=color, zorder=5,
+                   edgecolors='white', linewidths=1.5, label=f'Threshold = 0.50')
+
     ax.set_xlim([0.0, 1.0])
     ax.set_ylim([0.0, 1.05])
     ax.set_xlabel('False Positive Rate', fontsize=fontsize)
     ax.set_ylabel('True Positive Rate', fontsize=fontsize)
-    ax.set_title('[%s] Receiver operating characteristic. AUC:%.3f' %(title, roc_auc), fontsize=fontsize)
-    ax.legend(loc="lower right", fontsize=fontsize)
-    ax.grid(True)
+    _title = f'ROC Curve — {title}' if title else 'Receiver Operating Characteristic (ROC)'
+    ax.set_title(_title, fontsize=fontsize + 1, fontweight='bold', pad=12)
+    ax.legend(loc='lower right', fontsize=fontsize - 1, framealpha=0.9)
+    ax.grid(True, linestyle='--', linewidth=0.6, alpha=0.6)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
     return ax
 
 

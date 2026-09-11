@@ -26,6 +26,7 @@ for i in range(0,10):
 fig, ax = clf.plot_cross(out, title='crossvalidation')
 
 
+
 # %% Two-class
 import classeval as clf
 X, y = clf.load_example('breast')
@@ -38,7 +39,8 @@ y_pred = model.predict(X_test)
 
 # ROC evaluation
 out_ROC = clf.ROC.eval(y_true, y_proba, pos_label='malignant')
-ax = clf.ROC.plot(out_ROC, title='Breast dataset')
+ax = clf.ROC.plot(out_ROC, title='Breast dataset', bg_color='#F8F9FA')
+
 # Its also OK to set the y_true as bool.
 out_ROC = clf.ROC.eval(y_true=='malignant', y_proba)
 ax = clf.ROC.plot(out_ROC, title='Breast dataset')
@@ -58,7 +60,6 @@ y_pred = model.predict(X_test)
 
 out = clf.eval(y_true, y_proba, pos_label='malignant', threshold=0.5)
 _ = clf.TPFP(out['y_true'], out['y_proba'], threshold=0.5, showfig=True)
-
 
 out = clf.eval(y_true, y_proba, pos_label='malignant', threshold=0.2)
 _ = clf.TPFP(out['y_true'], out['y_proba'], threshold=0.2, showfig=True)
@@ -80,8 +81,7 @@ ax = clf.plot(out, figsize=(20,15), fontsize=14)
 # Some results
 print(out['report'])
 
-
-# out = clf.CAP(out['y_true'], out['y_proba'])
+out = clf.CAP(out['y_true'], out['y_proba'])
 
 
 # %% Multi-class
@@ -95,18 +95,16 @@ y_score = model.decision_function(X_test)
 
 # All
 out = clf.eval(y_true, y_proba, y_score, y_pred)
-ax = clf.plot(out)
+fig, ax = clf.plot(out)
 
 # ROC evaluation
 out_ROC = clf.ROC.eval(y_true, y_proba, y_score)
-ax = clf.ROC.plot(out_ROC, title='Iris dataset')
+ax = clf.ROC.plot(out_ROC, title='Iris dataset', bg_color=None)
 
 # Confmatrix evaluation
 out_CONFMAT = clf.confmatrix.eval(y_true, y_pred, normalize=True)
 ax = clf.confmatrix.plot(out_CONFMAT)
 out_CONFMAT = clf.confmatrix.eval(y_true, y_pred, normalize=False)
 ax = clf.confmatrix.plot(out_CONFMAT)
-
-
 
 # %% Fin

@@ -43,23 +43,49 @@ def plot_cross(out, title='', fontsize=12, figsize=(15, 8)):
     fig, ax
 
     """
-    # Create colors from keys
     colors = colourmap.generate(len(out.keys()))
-    # Make figure
     fig, ax = plt.subplots(figsize=figsize)
-    # Plot each ROC
-    get_auc=[]
+    fig.patch.set_facecolor('#F8F9FA')
+
+    get_auc = []
+    all_fpr = np.linspace(0, 1, 200)
+    tpr_matrix = []
+
     for i, key in enumerate(out.keys()):
-        ax = ROC.plot(out.get(key), label=str(key), color=colors[i,:], ax=ax, title=title, fontsize=fontsize)
-        get_auc.append(out.get(key)['auc'])
-    
-    # Set title
-    ax.set_title(label=title + ('\nMean AUC: %.3f' %(np.mean(get_auc))), fontsize=fontsize)
+        fold_out = out.get(key)
+        ax = ROC.plot(fold_out, label='', color=(*colors[i, :3], 0.55), ax=ax,
+                      title=title, fontsize=fontsize, verbose=0)
+        get_auc.append(fold_out['auc'])
+        tpr_matrix.append(np.interp(all_fpr, fold_out['fpr'], fold_out['tpr']))
+
+    # Mean ± std band
+    tpr_arr = np.array(tpr_matrix)
+    mean_tpr = tpr_arr.mean(axis=0)
+    std_tpr = tpr_arr.std(axis=0)
+    mean_auc = float(np.mean(get_auc))
+    std_auc = float(np.std(get_auc))
+
+    ax.fill_between(all_fpr, mean_tpr - std_tpr, mean_tpr + std_tpr,
+                    alpha=0.18, color='#1A237E', label='± 1 std. dev.')
+    ax.plot(all_fpr, mean_tpr, color='#1A237E', lw=2.5,
+            label=f'Mean ROC (AUC = {mean_auc:.3f} ± {std_auc:.3f})')
+
+    _cv_title = (title + ' — ' if title else '') + 'Cross-validation ROC'
+    ax.set_title(_cv_title, fontsize=fontsize + 1, fontweight='bold', pad=12)
+
+    # Reorder legend so mean appears first
+    handles, labels = ax.get_legend_handles_labels()
+    mean_idx = [i for i, l in enumerate(labels) if 'Mean ROC' in l]
+    std_idx  = [i for i, l in enumerate(labels) if '± 1 std' in l]
+    other_idx = [i for i in range(len(labels)) if i not in mean_idx + std_idx]
+    order = mean_idx + std_idx + other_idx
+    ax.legend([handles[i] for i in order], [labels[i] for i in order],
+              loc='lower right', fontsize=fontsize - 1, framealpha=0.9)
 
     return fig, ax
 
 # %% Main function for all two class results.
-def plot(out, title='', fontsize=12, figsize=(20, 15)):
+def plot(out, title='', fontsize=12, figsize=(20, 15), bar_edgecolor='black'):
     """Make plot based on evaluated model.
 
     Parameters
@@ -72,6 +98,9 @@ def plot(out, title='', fontsize=12, figsize=(20, 15)):
         Font-size. The default is 12.
     figsize : tuple, optional
         Figure size. The default is (20,15).
+    bar_edgecolor : str or None, optional
+        Outline colour of the bars in the stacked bar chart. The default is
+        ``'black'``. Pass ``None`` for no outline.
 
     Returns
     -------
@@ -102,14 +131,12 @@ def plot(out, title='', fontsize=12, figsize=(20, 15)):
         y_true_str = np.array(list(map(class_names.get, y_true)))
         y_pred_str = np.array(list(map(class_names.get, out['y_pred'])))
         # Make stackedbar plot
-        _ = _stackedbar_multiclass(y_true_str, y_pred_str, showfig=True, fontsize=fontsize)
+        _ = _stackedbar_multiclass(y_true_str, y_pred_str, showfig=True, fontsize=fontsize, bar_edgecolor=bar_edgecolor)
     elif len(out['class_names'])>2:
-        # Setup figure
-        # [fig, ax] = plt.subplots(2,1,figsize=figsize)
         ax = None
         _ = ROC.plot(out['ROCAUC'], fontsize=fontsize)
         _ = confmatrix.plot(out['confmat'])
-        _ = _stackedbar_multiclass(out['y_true'], out['y_pred'], showfig=True, fontsize=fontsize)
+        _ = _stackedbar_multiclass(out['y_true'], out['y_pred'], showfig=True, fontsize=fontsize, bar_edgecolor=bar_edgecolor)
 
     return fig, ax
 
@@ -473,15 +500,24 @@ def AP(y_true, y_proba, title='', ax=None, figsize=(12, 8), fontsize=12, showfig
     if showfig:
         if ax is None:
             _, ax = plt.subplots(figsize=figsize)
+        ax.set_facecolor('#F8F9FA')
 
-        ax.step(recall, precision, color='b', alpha=0.2, where='post')
-        ax.fill_between(recall, precision, alpha=0.2, color='b', **step_kwargs)
+        baseline = np.sum(np.asarray(y_true).astype(int)) / len(y_true)
+        _color = '#3A86FF'
+
+        ax.step(recall, precision, color=_color, lw=2.5, where='post', label=f'PR curve (AP = {average_precision:.2f})')
+        ax.fill_between(recall, precision, alpha=0.15, color=_color, **step_kwargs)
+        ax.axhline(baseline, color='#6C757D', linestyle='--', lw=1.5, label=f'Random classifier (AP = {baseline:.2f})')
         ax.set_ylim([0.0, 1.05])
         ax.set_xlim([0.0, 1.0])
         ax.set_xlabel('Recall', fontsize=fontsize)
         ax.set_ylabel('Precision', fontsize=fontsize)
-        ax.set_title('2-class Precision-Recall curve: AP={0:0.2f}'.format(average_precision), fontsize=fontsize)
-        ax.grid(True)
+        _pr_title = f'Precision-Recall Curve — {title}' if title else 'Precision-Recall Curve'
+        ax.set_title(_pr_title, fontsize=fontsize + 1, fontweight='bold', pad=12)
+        ax.legend(loc='upper right', fontsize=fontsize - 1, framealpha=0.9)
+        ax.grid(True, linestyle='--', linewidth=0.6, alpha=0.6)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
 
     out = {}
     out['AP'] = average_precision
@@ -534,24 +570,30 @@ def TPFP(y_true, y_proba, threshold=0.5, fontsize=12, title='', ax=None, figsize
     if showfig:
         if ax is None:
             _, ax = plt.subplots(figsize=figsize)
+        ax.set_facecolor('#F8F9FA')
 
-        # True Positive class
-        ax.plot(tmpout['pred_class'].loc[Itp], 'g.',label='True Positive')
-        # True negative class
-        ax.plot(tmpout['pred_class'].loc[Itn], 'gx',label='True negative')
-        # False positives
-        ax.plot(tmpout['pred_class'].loc[Ifp], 'rx',label='False positive')
-        # False negative class
-        ax.plot(tmpout['pred_class'].loc[Ifn], 'r.',label='False negative')
-        # Styling
-        ax.hlines(threshold, 0,len(Itrue), 'r', linestyles='dashed')
-        ax.set_ylim([-0.1, 1.1])
-        ax.set_ylabel('P(class | X)', fontsize=fontsize)
-        ax.set_xlabel('Samples', fontsize=fontsize)
-        ax.set_title(title, fontsize=fontsize)
-        ax.legend(fontsize=fontsize)
-        ax.grid(True)
-        plt.show()
+        _style = dict(s=50, zorder=3, edgecolors='white', linewidths=0.6)
+        ax.scatter(tmpout.index[Itp], tmpout['pred_class'].loc[Itp],
+                   c='#2CA02C', marker='o', label='True Positive', **_style)
+        ax.scatter(tmpout.index[Itn], tmpout['pred_class'].loc[Itn],
+                   c='#98DF8A', marker='X', label='True Negative', **_style)
+        ax.scatter(tmpout.index[Ifp], tmpout['pred_class'].loc[Ifp],
+                   c='#FF7F7F', marker='X', label='False Positive', **_style)
+        ax.scatter(tmpout.index[Ifn], tmpout['pred_class'].loc[Ifn],
+                   c='#D62728', marker='o', label='False Negative', **_style)
+
+        ax.axhline(threshold, color='#E87722', linestyle='--', lw=1.8,
+                   label=f'Threshold = {threshold:.2f}')
+        ax.set_ylim([-0.08, 1.08])
+        ax.set_ylabel('P(positive class | X)', fontsize=fontsize)
+        ax.set_xlabel('Sample index', fontsize=fontsize)
+        _tpfp_title = f'Prediction Probabilities — {title}' if title else 'Prediction Probabilities'
+        ax.set_title(_tpfp_title, fontsize=fontsize + 1, fontweight='bold', pad=12)
+        ax.legend(fontsize=fontsize - 1, framealpha=0.9,
+                  loc='upper right', ncol=2)
+        ax.grid(True, linestyle='--', linewidth=0.6, alpha=0.6)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
 
     out = {}
     out['TP'] = np.where(Itp)[0]
@@ -657,19 +699,28 @@ def CAP(y_true, y_pred, label='Classifier', ax=None, figsize=(12, 8), fontsize=1
     CAP_score = max(y_values)
 
     if showfig:
-        # Setup figure
-        if ax is None: _,ax = plt.subplots(figsize=figsize)
+        if ax is None:
+            _, ax = plt.subplots(figsize=figsize)
+        ax.set_facecolor('#F8F9FA')
         class_1_count = np.sum(y_true)
-        ax.plot([0, total], [0, class_1_count], c='navy', linestyle='--', label='Random Model')
-        ax.plot([0, class_1_count, total], [0, class_1_count, class_1_count], c='grey', linewidth=1, label='Perfect Model')
-        # Plot accuracy
-        ax.plot(x_values, y_values, c='darkorange', label=label, linewidth=2)
-        # Set legends
-        ax.legend(loc='lower right', fontsize=fontsize)
+
+        # Filled area between model and random
+        ax.fill_between(x_values, y_values, np.linspace(0, class_1_count, len(x_values)),
+                        alpha=0.12, color='#E87722')
+
+        ax.plot([0, total], [0, class_1_count], c='#6C757D', linestyle='--', lw=1.5, label='Random model')
+        ax.plot([0, class_1_count, total], [0, class_1_count, class_1_count],
+                c='#2CA02C', linestyle='-.', lw=1.5, label='Perfect model')
+        ax.plot(x_values, y_values, c='#E87722', label=label, linewidth=2.5, zorder=3)
+
+        ax.legend(loc='lower right', fontsize=fontsize - 1, framealpha=0.9)
         ax.set_xlabel('Total observations', fontsize=fontsize)
         ax.set_ylabel('Class observations', fontsize=fontsize)
-        ax.set_title(('Cumulitive Accuracy Profile (CAP), score: %s' %(CAP_score)), fontsize=fontsize)
-        ax.grid(True)
+        ax.set_title(f'Cumulative Accuracy Profile (CAP)  |  Score: {CAP_score}',
+                     fontsize=fontsize + 1, fontweight='bold', pad=12)
+        ax.grid(True, linestyle='--', linewidth=0.6, alpha=0.6)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
 
     return(CAP_score)
 
@@ -713,7 +764,7 @@ def load_example(data='breast'):
 
 
 # %% Two class results
-def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False):
+def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False, bar_edgecolor='black'):
     uiy = np.unique(y_true)
     df = pd.DataFrame(data=np.zeros((len(uiy),len(uiy))), index=uiy, columns=uiy)
     for y in uiy:
@@ -723,10 +774,36 @@ def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False):
         df.loc[labels, y] = n
 
     if showfig:
-        df.plot(kind='bar', stacked=True)
-        plt.ylabel('Number of predicted classes', fontsize=fontsize)
-        plt.xlabel('True class', fontsize=12)
-        plt.title('Class prediction', fontsize=12)
-        plt.grid(True)
+        palette = plt.cm.Set2(np.linspace(0, 0.85, len(uiy)))
+        ax_bar = df.T.plot(kind='bar', stacked=True, color=palette,
+                           figsize=(max(8, len(uiy) * 2), 6), edgecolor=bar_edgecolor, linewidth=0.8)
+        fig_bar = ax_bar.get_figure()
+        fig_bar.patch.set_facecolor('#F8F9FA')
+        ax_bar.set_facecolor('#F8F9FA')
 
-    return(df)
+        # Annotate each segment with its count (skip zeros)
+        for container in ax_bar.containers:
+            for bar in container:
+                h = bar.get_height()
+                if h > 0:
+                    ax_bar.text(
+                        bar.get_x() + bar.get_width() / 2,
+                        bar.get_y() + h / 2,
+                        f'{int(h)}',
+                        ha='center', va='center',
+                        fontsize=fontsize - 2, color='white', fontweight='bold'
+                    )
+
+        ax_bar.set_ylabel('Number of predictions', fontsize=fontsize)
+        ax_bar.set_xlabel('True class', fontsize=fontsize)
+        ax_bar.set_title('Predicted class distribution per true class',
+                         fontsize=fontsize + 1, fontweight='bold', pad=12)
+        ax_bar.set_xticklabels(ax_bar.get_xticklabels(), rotation=30, ha='right', fontsize=fontsize - 1)
+        ax_bar.legend(title='Predicted class', fontsize=fontsize - 2,
+                      title_fontsize=fontsize - 2, framealpha=0.9)
+        ax_bar.grid(axis='y', linestyle='--', linewidth=0.6, alpha=0.6)
+        ax_bar.spines['top'].set_visible(False)
+        ax_bar.spines['right'].set_visible(False)
+        fig_bar.tight_layout()
+
+    return df

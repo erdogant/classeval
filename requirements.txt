@@ -1,7 +1,7 @@
 matplotlib
 numpy
 funcsigs
-sklearn
+scikit-learn
 colourmap
 scikit-learn
 pandas

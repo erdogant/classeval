@@ -715,7 +715,8 @@ def _stackedbar_multiclass(y_true, y_pred, fontsize=12, showfig=False):
     for y in uiy:
         I = y_true==y
         labels, n = np.unique(y_pred[I], return_counts=True)
-        df[y].loc[labels]=n
+        # Use single-step .loc assignment to avoid pandas SettingWithCopyWarning.
+        df.loc[labels, y] = n
 
     if showfig:
         df.plot(kind='bar', stacked=True)

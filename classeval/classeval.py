@@ -24,7 +24,7 @@ from funcsigs import signature
 
 
 # %% Plot crossvalidation results for two class models.
-def plot_cross(out, title='', fontsize=12, figsize=(15, 8)):
+def plot_cross(out, title='', fontsize=12, figsize=(15, 8), fill_color='#D0E8FF', band_color='#90C4F9'):
     """ Plot crossvalidation results for two class models.
 
     Parameters
@@ -36,7 +36,14 @@ def plot_cross(out, title='', fontsize=12, figsize=(15, 8)):
     fontsize : int, optional
         Font-size. The default is 12.
     figsize : tuple, optional
-        Figure size. The default is (20,15).
+        Figure size. The default is (15,8).
+    fill_color : str, optional
+        Colour of the shaded area under each individual fold's ROC curve.
+        Defaults to a very light blue (``'#D0E8FF'``) so stacked folds stay
+        legible rather than accumulating into a dark block.
+    band_color : str, optional
+        Colour of the mean ± 1 std. dev. band. Defaults to a slightly deeper
+        blue (``'#90C4F9'``) to visually separate it from the per-fold fills.
 
     Returns
     -------
@@ -53,7 +60,7 @@ def plot_cross(out, title='', fontsize=12, figsize=(15, 8)):
 
     for i, key in enumerate(out.keys()):
         fold_out = out.get(key)
-        ax = ROC.plot(fold_out, label='', color=(*colors[i, :3], 0.55), ax=ax,
+        ax = ROC.plot(fold_out, label='', color=(*colors[i, :3], 0.55), fill_color=fill_color, ax=ax,
                       title=title, fontsize=fontsize, verbose=0)
         get_auc.append(fold_out['auc'])
         tpr_matrix.append(np.interp(all_fpr, fold_out['fpr'], fold_out['tpr']))
@@ -66,7 +73,7 @@ def plot_cross(out, title='', fontsize=12, figsize=(15, 8)):
     std_auc = float(np.std(get_auc))
 
     ax.fill_between(all_fpr, mean_tpr - std_tpr, mean_tpr + std_tpr,
-                    alpha=0.18, color='#1A237E', label='± 1 std. dev.')
+                    alpha=0.35, color=band_color, label='± 1 std. dev.')
     ax.plot(all_fpr, mean_tpr, color='#1A237E', lw=2.5,
             label=f'Mean ROC (AUC = {mean_auc:.3f} ± {std_auc:.3f})')
 
